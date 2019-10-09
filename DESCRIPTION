@@ -15,3 +15,5 @@ Imports:
     raster,
     colorspace
 RoxygenNote: 6.1.1
+URL: https://github.com/mstrimas/colorist
+BugReports: https://github.com/mstrimas/colorist/issues
