@@ -12,11 +12,7 @@ Package description
 ## Installation
 
 You can install the development version of colorist from
-[GitHub](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("colorist")
-```
+[GitHub](https://github.com/mstrimas/colorist) with:
 
 ``` r
 # install.packages("remotes")
@@ -27,7 +23,7 @@ remotes::install_github("mstrimas/colorist")
 
 ``` r
 library(raster)
-#> Loading required package: sp
+library(ggplot2)
 library(colorist)
 
 # load example data, elephant utlization distribution
@@ -38,8 +34,21 @@ r <- annual_cycle_metrics(elephant_ud)
 pal <- make_hcl_palette(elephant_ud)
 
 # assign colors
-rgb <- metrics_to_colors(r, pal)
-plotRGB(rgb, scale = 1)
+cell_colors <- metrics_to_hex(r, pal)
+
+# map
+cols <- cell_colors$color
+names(cols) <- cell_colors$color
+ggplot(cell_colors) +
+  aes(x = x, y = y, fill = color, alpha = alpha) +
+  geom_tile() +
+  scale_fill_manual(values = cols) +
+  scale_alpha_continuous(trans = scales::boxcox_trans(0.15),
+                         range = c(0.02, 1)) +
+  guides(fill = FALSE, alpha = FALSE) + 
+  coord_equal() +
+  theme_void() +
+  theme(panel.border = element_rect(fill = NA, color = "black"))
 ```
 
 <img src="man/figures/README-usage-1.png" width="100%" />
