@@ -2,13 +2,23 @@ Package: colorist
 Title: What the Package Does (One Line, Title Case)
 Version: 0.1.0
 Authors@R: 
-    person(given = "First",
-           family = "Last",
-           role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+    c(person(given = "Matthew",
+             family = "Strimas-Mackey",
+             role = c("aut", "cre"),
+             email = "mes335@cornell.edu",
+             comment = c(ORCID = "0000-0001-8929-7776")),
+      person(given = "Tom",
+             family = "Auer",
+             role = c("aut"),
+             email = "mta45@cornell.edu",
+             comment = c(ORCID = "0000-0001-8619-7147")),
+      person(given = "Justin",
+             family = "Schuetz",
+             role = "aut",
+             email = "justinschuetz@gmail.com",
+             comment = c(ORCID = "")))
 Description: What the package does (one paragraph).
-License: What license it uses
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports: 
