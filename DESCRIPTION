@@ -1,8 +1,13 @@
 Package: colorist
-Title: What the Package Does (One Line, Title Case)
+Title: Tools for Coloring and Visualizing Wildlife Distributions in Space-time 
 Version: 0.1.0
 Authors@R: 
-    c(person(given = "Matthew",
+    c(person(given = "Justin",
+             family = "Schuetz",
+             role = "aut",
+             email = "justinschuetz@gmail.com",
+             comment = c(ORCID = "0000-0002-6163-538X")),
+      person(given = "Matthew",
              family = "Strimas-Mackey",
              role = c("aut", "cre"),
              email = "mes335@cornell.edu",
@@ -11,13 +16,8 @@ Authors@R:
              family = "Auer",
              role = c("aut"),
              email = "mta45@cornell.edu",
-             comment = c(ORCID = "0000-0001-8619-7147")),
-      person(given = "Justin",
-             family = "Schuetz",
-             role = "aut",
-             email = "justinschuetz@gmail.com",
-             comment = c(ORCID = "")))
-Description: What the package does (one paragraph).
+             comment = c(ORCID = "0000-0001-8619-7147")))
+Description: Functions are provided for coloring and visualizing wildlife distributions in space-time using raster data. In addition to enabling display of sequential change in distributions through the use of small multiples and animations, colorist provides functions for extracting several features of interest from a sequence of distributions and for visualizing those features using HCL (hue-chroma-luminance) color palettes. Resulting maps allow for "fair" visual comparison of intensity values (e.g., occurrence, abundance, or density) across space and time and can be used to address questions about where, when, and how consistently a species, group, or individual is likely to be found.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
