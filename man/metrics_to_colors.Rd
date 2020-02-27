@@ -7,18 +7,20 @@
 metrics_to_colors(x, palette)
 }
 \arguments{
-\item{x}{RasterStack of seasonility metrics from [annual_cycle_metrics()]}
+\item{x}{RasterStack of seasonility metrics from \code{\link[=annual_cycle_metrics]{annual_cycle_metrics()}}}
 
 \item{palette}{data frame containing an HCL color palette as output from
-[make_hcl_palette()]}
+\code{\link[=make_hcl_palette]{make_hcl_palette()}}}
 }
 \value{
 A RasterStack with four layers, specifying the RGB color and alpha
-  level, all on the 0-1 scale:
-  - `r`: red channel
-  - `g`: green channel
-  - `b`: blue channel
-  - `alpha`: alpha level
+level, all on the 0-1 scale:
+\itemize{
+\item \code{r}: red channel
+\item \code{g}: green channel
+\item \code{b}: blue channel
+\item \code{alpha}: alpha level
+}
 }
 \description{
 Assign cell colors and alpha levels based on annual cycle metrics

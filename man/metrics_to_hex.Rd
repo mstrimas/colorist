@@ -7,14 +7,14 @@
 metrics_to_hex(x, palette)
 }
 \arguments{
-\item{x}{RasterStack of seasonility metrics from [annual_cycle_metrics()]}
+\item{x}{RasterStack of seasonility metrics from \code{\link[=annual_cycle_metrics]{annual_cycle_metrics()}}}
 
 \item{palette}{data frame containing an HCL color palette as output from
-[make_hcl_palette()]}
+\code{\link[=make_hcl_palette]{make_hcl_palette()}}}
 }
 \value{
-A data frame with four columns, specifying cell center (`x` and `y`),
-  the color (`color`), and the alpha level (`alpha`).
+A data frame with four columns, specifying cell center (\code{x} and \code{y}),
+the color (\code{color}), and the alpha level (\code{alpha}).
 }
 \description{
 Assign cell colors and alpha levels based on annual cycle metrics

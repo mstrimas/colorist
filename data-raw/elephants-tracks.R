@@ -68,4 +68,5 @@ elephant_ud <- elephant_ud / raster::cellStats(elephant_ud, sum)
 
 # save package data
 names(elephant_ud) <- paste0("year", ud_year$study_year)
+elephant_ud <- raster::stack(elephant_ud)
 usethis::use_data(elephant_ud, overwrite = TRUE)
