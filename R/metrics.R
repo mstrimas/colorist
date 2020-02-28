@@ -1,7 +1,7 @@
 #' Transform a raster stack to intensity values
 #'
-#' @param x RasterStack with each layer typically corresponding to a time
-#'   interval.
+#' @param x RasterStack with each layer typically corresponding to the
+#'   distribution of an individual or species at a given time interval.
 #'
 #' @return A RasterStack resulting from converting the input stack to intensity
 #'   values by dividing each layer by the maximum pixel value in that layer.
@@ -10,11 +10,10 @@
 #' @family metrics
 #' @export
 #' @examples
-#' library(raster)
 #' data("elephant_ud")
-#'
 #' r <- metrics_pull(elephant_ud)
 #' print(r)
+#' # maximum values for each layer stored as an attribute
 #' attr(r, "maximum")
 metrics_pull <- function(x) {
   stopifnot(inherits(x, c("RasterStack", "RasterBrick")))
@@ -35,11 +34,11 @@ metrics_pull <- function(x) {
 
 #' Distill a raster stack into a set of metrics for each cells
 #'
-#' @param x RasterStack with each layer typically corresponding to a time
-#'   interval.
+#' @param x RasterStack with each layer typically corresponding to the
+#'   distribution of an individual or species at a given time interval.
 #'
 #' @return A RasterStack with four layers:
-#'   - `intensity_max`: the maximum pixel intensity across all layers
+#'   - `intensity`: the maximum pixel intensity across all layers
 #'   - `intensity_mean`: the mean pixel intensity across all layers
 #'   - `peak_layer`: the layer number associated with the maximum intensity.
 #'   - `specificity`: the amount of variation between layers for each cell, this
@@ -72,13 +71,18 @@ metrics_distill <- function(x) {
   intensity <- x / maximum
 
   # calculate metrics
+  which_max <- function(x, ...) {
+    max_idx <- which.max(x)
+    max_idx <- ifelse(length(max_idx) == 0, NA, max_idx)
+    return(max_idx)
+  }
   r_n <- raster::calc(intensity, length_nona)
   r_max <- raster::calc(intensity, max, na.rm = TRUE)
   r_mean <- raster::calc(intensity, mean, na.rm = TRUE)
-  r_peak <- raster::calc(intensity, which.max)
+  r_peak <- raster::calc(intensity, which_max)
   r_specificity <- raster::calc(intensity, specificity)
   r <- raster::stack(r_max, r_mean, r_peak, r_specificity, r_n)
-  names(r) <- c("intensity_max", "intensity_mean",
+  names(r) <- c("intensity", "intensity_mean",
                 "peak_layer", "specificity", "n_layers")
 
   # set attributes
@@ -94,9 +98,9 @@ length_nona <- function(x) {
 
 specificity <- function(x) {
   sum_x <- (length(x) - 1) * mean(x, na.rm = TRUE)
-  if (sum_x == 0) {
+  if (!is.finite(sum_x) || sum_x == 0) {
     return(NA)
   }
   residuals <- abs(x - mean(x, na.rm = TRUE))
-  round(50 * sum(residuals) / sum_x)
+  round(50 * sum(residuals, na.rm = TRUE) / sum_x)
 }

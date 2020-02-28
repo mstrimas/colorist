@@ -7,13 +7,13 @@
 metrics_distill(x)
 }
 \arguments{
-\item{x}{RasterStack with each layer typically corresponding to a time
-interval.}
+\item{x}{RasterStack with each layer typically corresponding to the
+distribution of an individual or species at a given time interval.}
 }
 \value{
 A RasterStack with four layers:
 \itemize{
-\item \code{intensity_max}: the maximum pixel intensity across all layers
+\item \code{intensity}: the maximum pixel intensity across all layers
 \item \code{intensity_mean}: the mean pixel intensity across all layers
 \item \code{peak_layer}: the layer number associated with the maximum intensity.
 \item \code{specificity}: the amount of variation between layers for each cell, this

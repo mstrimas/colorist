@@ -1,5 +1,5 @@
 Package: colorist
-Title: Tools for Coloring and Visualizing Wildlife Distributions in Space-time 
+Title: Tools for Coloring and Visualizing Wildlife Distributions in Space-time
 Version: 0.1.0
 Authors@R: 
     c(person(given = "Justin",
@@ -32,9 +32,11 @@ URL: https://github.com/mstrimas/colorist
 BugReports: https://github.com/mstrimas/colorist/issues
 Imports: 
     colorspace,
-    raster
-Suggests: 
-    ggplot2
+    raster,
+    stats,
+    ggplot2,
+    scales,
+    tidyr
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

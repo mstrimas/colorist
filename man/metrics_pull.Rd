@@ -7,8 +7,8 @@
 metrics_pull(x)
 }
 \arguments{
-\item{x}{RasterStack with each layer typically corresponding to a time
-interval.}
+\item{x}{RasterStack with each layer typically corresponding to the
+distribution of an individual or species at a given time interval.}
 }
 \value{
 A RasterStack resulting from converting the input stack to intensity
@@ -19,11 +19,10 @@ These layer maxima are stored as the \code{"maximum"} attribute.
 Transform a raster stack to intensity values
 }
 \examples{
-library(raster)
 data("elephant_ud")
-
 r <- metrics_pull(elephant_ud)
 print(r)
+# maximum values for each layer stored as an attribute
 attr(r, "maximum")
 }
 \seealso{
