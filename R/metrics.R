@@ -10,13 +10,14 @@
 #' @family metrics
 #' @export
 #' @examples
+#' # load elephant data
 #' data("elephant_ud")
 #' r <- metrics_pull(elephant_ud)
 #' print(r)
 #' # maximum values for each layer stored as an attribute
 #' attr(r, "maximum")
 metrics_pull <- function(x) {
-  stopifnot(inherits(x, c("RasterStack", "RasterBrick")))
+  stopifnot(class(x) %in% c("RasterStack", "RasterBrick"))
 
   # scale layers by their maximum
   maximum <- raster::cellStats(x, "max")
@@ -40,7 +41,7 @@ metrics_pull <- function(x) {
 #' @return A RasterStack with four layers:
 #'   - `intensity`: the maximum pixel intensity across all layers
 #'   - `intensity_mean`: the mean pixel intensity across all layers
-#'   - `peak_layer`: the layer number associated with the maximum intensity.
+#'   - `layer`: the layer number associated with the maximum intensity.
 #'   - `specificity`: the amount of variation between layers for each cell, this
 #'   is a measure of seasonality if the layers represents different times of
 #'   year.
@@ -53,14 +54,14 @@ metrics_pull <- function(x) {
 #' @family metrics
 #' @export
 #' @examples
-#' library(raster)
+#' # load elephant data
 #' data("elephant_ud")
-#'
 #' r <- metrics_distill(elephant_ud)
 #' print(r)
+#' # maximum value across all layers stored as an attribute
 #' attr(r, "maximum")
 metrics_distill <- function(x) {
-  stopifnot(inherits(x, c("RasterStack", "RasterBrick")))
+  stopifnot(class(x) %in% c("RasterStack", "RasterBrick"))
 
   # scale layers by overall maximum
   maximum <- raster::cellStats(x, "max")
@@ -76,14 +77,16 @@ metrics_distill <- function(x) {
     max_idx <- ifelse(length(max_idx) == 0, NA, max_idx)
     return(max_idx)
   }
-  r_n <- raster::calc(intensity, length_nona)
-  r_max <- raster::calc(intensity, max, na.rm = TRUE)
-  r_mean <- raster::calc(intensity, mean, na.rm = TRUE)
-  r_peak <- raster::calc(intensity, which_max)
-  r_specificity <- raster::calc(intensity, specificity)
+  suppressWarnings({
+    r_n <- raster::calc(intensity, length_nona)
+    r_max <- raster::calc(intensity, max, na.rm = TRUE)
+    r_mean <- raster::calc(intensity, mean, na.rm = TRUE)
+    r_peak <- raster::calc(intensity, which_max)
+    r_specificity <- raster::calc(intensity, specificity)
+  })
   r <- raster::stack(r_max, r_mean, r_peak, r_specificity, r_n)
   names(r) <- c("intensity", "intensity_mean",
-                "peak_layer", "specificity", "n_layers")
+                "layer", "specificity", "n_layers")
 
   # set attributes
   attr(r, "metric") <- "distill"

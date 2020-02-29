@@ -19,6 +19,7 @@ These layer maxima are stored as the \code{"maximum"} attribute.
 Transform a raster stack to intensity values
 }
 \examples{
+# load elephant data
 data("elephant_ud")
 r <- metrics_pull(elephant_ud)
 print(r)

@@ -9,10 +9,25 @@
 #' @param lambda integer controlling the offset in the Box-Cox transformation of
 #'   intensities to alpha levels via the [scales::modulus_trans()] function. Use
 #'   0 for Box-Cox type 1 or any non-negative number for Box-Cox type 2.
+#' @param return_df logical specifying whether the function should return a
+#'   ggplot2 plot object (FALSE) or a data frame containing the raster data and
+#'   associated cell colors.
 #'
-#' @return A ggplot2 plot object.
+#' @return A ggplot2 plot object of the map. Alternatively, `return_df = TRUE`
+#'   will return a data frame containing the raster data in data frame format
+#'   along with the associated cell colors. The data frame columns are:
+#'   - `x`,`y`: coordinates of raster cell centers.
+#'   - `cell_number`: integer indicating the cell number.
+#'   - `intensity`: maximum cell value across layers divided by the maximum
+#'   value across all layers and cells; mapped to alpha level.
+#'   - `specificity`: amount of variation between layers; mapped to chroma.
+#'   - `layer`: layer with the maximum cell value; mapped to hue.
+#'   - `color`: color associated with the given specificity and peak layer.
+#'
+#' @family map
 #' @export
 #' @examples
+#' # load elephant data
 #' data("elephant_ud")
 #'
 #' # prepare metrics
@@ -23,13 +38,13 @@
 #'
 #' # produce map
 #' map_single(r, pal)
-map_single <- function(x, palette, layer, lambda = 0) {
-  stopifnot(inherits(x, c("RasterStack", "RasterBrick")))
+map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
+  stopifnot(class(x) %in% c("RasterStack", "RasterBrick"))
   stopifnot(inherits(palette, "data.frame"),
             inherits(palette, c("palette_timeline",
                                 "palette_timecycle",
                                 "palette_groups")),
-            c("specificity", "peak_layer", "color") %in% names(palette))
+            c("specificity", "layer", "color") %in% names(palette))
   stopifnot(length(lambda) == 1, is.numeric(lambda), lambda >= 0)
 
   # convert raster to data frame, pull vs. distill
@@ -54,10 +69,10 @@ map_single <- function(x, palette, layer, lambda = 0) {
     r <- raster::as.data.frame(x[[layer]], xy = TRUE)
     names(r)[3] <- "intensity"
     r$specificity <- 100
-    r$peak_layer <- layer
+    r$layer <- layer
     r$cell_number <- seq.int(nrow(r))
   } else if (isTRUE(attr(x, "metric") == "distill")) {
-    l <- c("intensity", "specificity", "peak_layer")
+    l <- c("intensity", "specificity", "layer")
     if (!all(l %in% names(x))) {
       stop(paste("Input raster missing layers:", setdiff(l, names(x))))
     }
@@ -70,24 +85,29 @@ map_single <- function(x, palette, layer, lambda = 0) {
   r <- r[stats::complete.cases(r), ]
 
   # join palette
-  r_pal <- merge(r, palette, by = c("specificity", "peak_layer"), sort = FALSE)
+  r_pal <- merge(r, palette, by = c("specificity", "layer"), sort = FALSE)
   # order rows
   r_pal <- r_pal[, c("x", "y", "cell_number",
-                     "intensity", "specificity", "peak_layer",
+                     "intensity", "specificity", "layer",
                      "color")]
   # remove zeros
   r_pal <- r_pal[r_pal$intensity > 0, ]
+
+  # return the underlying data frame if requested
+  if (isTRUE(return_df)) {
+    return(r_pal)
+  }
 
   # make vector of colors for geom_tile
   map_colors <- r_pal$color
   names(map_colors) <- r_pal$cell_number
 
   # generate plot
-  m <- ggplot2::ggplot() +
-    ggplot2::geom_tile(data = r_pal,
-                       ggplot2::aes_(x = ~ x, y = ~y,
-                                     fill = ~ factor(cell_number),
-                                     alpha = ~ intensity)) +
+  m <- ggplot2::ggplot(data = r_pal) +
+    ggplot2::aes_(x = ~ x, y = ~y,
+                  fill = ~ factor(cell_number),
+                  alpha = ~ intensity) +
+    ggplot2::geom_tile() +
     ggplot2::scale_fill_manual(values = map_colors) +
     ggplot2::scale_color_manual(values = map_colors) +
     ggplot2::scale_alpha_continuous(trans = scales::modulus_trans(lambda),
@@ -109,6 +129,7 @@ map_single <- function(x, palette, layer, lambda = 0) {
   return(m)
 }
 
+
 #' Visualize distributions as a single map
 #'
 #' @param x RasterStack of distributions processed by [metrics_pull()].
@@ -119,10 +140,27 @@ map_single <- function(x, palette, layer, lambda = 0) {
 #'   0 for Box-Cox type 1 or any non-negative number for Box-Cox type 2.
 #' @param labels character vector of layer labels for each plot. The default is
 #'   to not show labels.
+#' @param return_df logical specifying whether the function should return a
+#'   ggplot2 plot object (FALSE) or a data frame containing the raster data and
+#'   associated cell colors.
 #'
-#' @return A ggplot2 plot object.
+#' @return A ggplot2 plot object of the map. Alternatively, `return_df = TRUE`
+#'   will return a data frame containing the raster data in data frame format
+#'   along with the associated cell colors. The data frame columns are:
+#'   - `x`,`y`: coordinates of raster cell centers.
+#'   - `cell_number`: integer indicating the cell number.
+#'   - `layer_cell`: a unique ID for the cell within the layer in the format:
+#'   `"layer-cell_number"`.
+#'   - `intensity`: cell value divided by the maximum in the layer; mapped to
+#'   alpha level.
+#'   - `specificity`: amount of variation between layers; mapped to chroma.
+#'   - `layer`: raster layer that this value came from; mapped to hue.
+#'   - `color`: color associated with the given specificity and peak layer.
+#'
+#' @family map
 #' @export
 #' @examples
+#' # load elephant data
 #' data("elephant_ud")
 #'
 #' # prepare data
@@ -133,13 +171,14 @@ map_single <- function(x, palette, layer, lambda = 0) {
 #'
 #' # produce map
 #' map_multiples(r, pal)
-map_multiples <- function(x, palette, ncol, lambda = 0, labels = NULL) {
-  stopifnot(inherits(x, c("RasterStack", "RasterBrick")))
+map_multiples <- function(x, palette, ncol, lambda = 0, labels = NULL,
+                          return_df = FALSE) {
+  stopifnot(class(x) %in% c("RasterStack", "RasterBrick"))
   stopifnot(inherits(palette, "data.frame"),
             inherits(palette, c("palette_timeline",
                                 "palette_timecycle",
                                 "palette_groups")),
-            c("specificity", "peak_layer", "color") %in% names(palette))
+            c("specificity", "layer", "color") %in% names(palette))
   stopifnot(length(lambda) == 1, is.numeric(lambda), lambda >= 0)
   if (missing(ncol)) {
     ncol <- round(sqrt(raster::nlayers(x)))
@@ -159,21 +198,26 @@ map_multiples <- function(x, palette, ncol, lambda = 0, labels = NULL) {
   r <- raster::as.data.frame(x, xy = TRUE)
   names(r) <- c("x", "y", seq.int(raster::nlayers(x)))
   r <- tidyr::pivot_longer(r, cols = seq(3, raster::nlayers(x) + 2),
-                           names_to = "peak_layer",
+                           names_to = "layer",
                            values_to = "intensity")
   r$specificity <- 100
   r$cell_number <- seq.int(nrow(r))
   r <- r[stats::complete.cases(r), ]
-  r$layer_cell <- paste(r$peak_layer, r$cell_number, sep = "-")
+  r$layer_cell <- paste(r$layer, r$cell_number, sep = "-")
 
   # join palette
-  r_pal <- merge(r, palette, by = c("specificity", "peak_layer"), sort = FALSE)
+  r_pal <- merge(r, palette, by = c("specificity", "layer"), sort = FALSE)
   # order rows
   r_pal <- r_pal[, c("x", "y", "cell_number", "layer_cell",
-                     "intensity", "specificity", "peak_layer",
+                     "intensity", "specificity", "layer",
                      "color")]
   # remove zeros
   r_pal <- r_pal[r_pal$intensity > 0, ]
+
+  # return the underlying data frame if requested
+  if (isTRUE(return_df)) {
+    return(r_pal)
+  }
 
   # make vector of colors for geom_tile
   map_colors <- r_pal$color
@@ -191,22 +235,23 @@ map_multiples <- function(x, palette, ncol, lambda = 0, labels = NULL) {
   }
 
   # generate multipanel plot
-  m <- ggplot2::ggplot() +
-    ggplot2::geom_tile(data = r_pal,
-                       ggplot2::aes_(x = ~ x, y = ~y,
-                                     fill = ~ factor(layer_cell),
-                                     alpha = ~ intensity)) +
+  m <- ggplot2::ggplot(data = r_pal) +
+    ggplot2::aes_(x = ~ x, y = ~ y,
+                  fill = ~ factor(layer_cell),
+                  alpha = ~ intensity) +
+    ggplot2::geom_tile() +
     ggplot2::scale_fill_manual(values = map_colors) +
     #ggplot2::scale_color_manual(values = map_colors) +
     ggplot2::scale_alpha_continuous(trans = scales::modulus_trans(lambda),
                                     range = c(0, 1)) +
-    ggplot2::facet_wrap(~ peak_layer, ncol = ncol,
-                        labeller = labeller(peak_layer = labels)) +
+    ggplot2::facet_wrap(~ layer, ncol = ncol,
+                        labeller = ggplot2::labeller(layer = labels)) +
     ggplot2::guides(fill = FALSE, alpha = FALSE) +
     ggplot2::theme(strip.background = ggplot2::element_rect(fill = "white"),
                    plot.background = ggplot2::element_rect(fill = "white"),
                    panel.background = ggplot2::element_rect(fill = "white"),
-                   panel.border = element_rect(fill = NA, color = "white"),
+                   panel.border = ggplot2::element_rect(fill = NA,
+                                                        color = "white"),
                    legend.key = ggplot2::element_blank(),
                    axis.title = ggplot2::element_blank(),
                    axis.text = ggplot2::element_blank(),

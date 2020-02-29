@@ -19,16 +19,19 @@ giving a yellow-green-blue palette.}
 \value{
 A data frame with the following columns:
 \itemize{
-\item \code{specificity}: seasonality; mapped to chroma.
-\item \code{peak_layer}: layer with the maximum cell value; mapped to hue.
-\item \code{color}: ex color associated with the given specificity and peak layer.
+\item \code{specificity}: amount of variation between layers; mapped to chroma.
+\item \code{layer}: layer with the maximum cell value; mapped to hue.
+\item \code{color}: color associated with the given specificity and peak layer.
 }
 }
 \description{
 Make HCL palette for a linear sequence of distributions
 }
 \examples{
+# load field sparrow data
 data(fiespa_occ)
+
+# generate hcl color palette
 pal_a <- palette_timeline(fiespa_occ)
 head(pal_a)
 
@@ -37,14 +40,16 @@ pal_b <- palette_timeline(fiespa_occ, start = 50)
 
 # visualize the palette in HCL space  with colorspace::hclplot
 library(colorspace)
-hclplot(pal_a[pal_a$specificity == 50, ]$color)
-hclplot(pal_a[pal_b$specificity == 50, ]$color)
+hclplot(pal_a[pal_a$specificity == 100, ]$color)
+hclplot(pal_b[pal_b$specificity == 100, ]$color)
 }
 \seealso{
 \link{palette_timecycle} for cyclical sequences of distributions and
 \link{palette_groups} for distributions of distinct groups.
 
 Other palette: 
+\code{\link{legend_timecycle}()},
+\code{\link{legend_timeline}()},
 \code{\link{palette_groups}()},
 \code{\link{palette_timecycle}()}
 }

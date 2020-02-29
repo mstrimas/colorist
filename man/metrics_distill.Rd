@@ -15,7 +15,7 @@ A RasterStack with four layers:
 \itemize{
 \item \code{intensity}: the maximum pixel intensity across all layers
 \item \code{intensity_mean}: the mean pixel intensity across all layers
-\item \code{peak_layer}: the layer number associated with the maximum intensity.
+\item \code{layer}: the layer number associated with the maximum intensity.
 \item \code{specificity}: the amount of variation between layers for each cell, this
 is a measure of seasonality if the layers represents different times of
 year.
@@ -30,11 +30,11 @@ cell value across all layers. This maximum value is stored as the
 Distill a raster stack into a set of metrics for each cells
 }
 \examples{
-library(raster)
+# load elephant data
 data("elephant_ud")
-
 r <- metrics_distill(elephant_ud)
 print(r)
+# maximum value across all layers stored as an attribute
 attr(r, "maximum")
 }
 \seealso{

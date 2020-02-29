@@ -4,14 +4,7 @@
 \alias{map_multiples}
 \title{Visualize distributions as a single map}
 \usage{
-map_multiples(
-  x,
-  palette,
-  ncol,
-  lambda = 0,
-  labels = NULL,
-  suppress_map = FALSE
-)
+map_multiples(x, palette, ncol, lambda = 0, labels = NULL, return_df = FALSE)
 }
 \arguments{
 \item{x}{RasterStack of distributions processed by \code{\link[=metrics_pull]{metrics_pull()}}.}
@@ -27,16 +20,31 @@ intensities to alpha levels via the \code{\link[scales:modulus_trans]{scales::mo
 \item{labels}{character vector of layer labels for each plot. The default is
 to not show labels.}
 
-\item{suppress_map}{logical controlling whether the map should be printed
-only (TRUE) or printed and returned.}
+\item{return_df}{logical specifying whether the function should return a
+ggplot2 plot object (FALSE) or a data frame containing the raster data and
+associated cell colors.}
 }
 \value{
-A ggplot2 plot object.
+A ggplot2 plot object of the map. Alternatively, \code{return_df = TRUE}
+will return a data frame containing the raster data in data frame format
+along with the associated cell colors. The data frame columns are:
+\itemize{
+\item \code{x},\code{y}: coordinates of raster cell centers.
+\item \code{cell_number}: integer indicating the cell number.
+\item \code{layer_cell}: a unique ID for the cell within the layer in the format:
+\code{"layer-cell_number"}.
+\item \code{intensity}: cell value divided by the maximum in the layer; mapped to
+alpha level.
+\item \code{specificity}: amount of variation between layers; mapped to chroma.
+\item \code{layer}: raster layer that this value came from; mapped to hue.
+\item \code{color}: color associated with the given specificity and peak layer.
+}
 }
 \description{
 Visualize distributions as a single map
 }
 \examples{
+# load elephant data
 data("elephant_ud")
 
 # prepare data
@@ -46,5 +54,10 @@ r <- metrics_pull(elephant_ud)
 pal <- palette_timeline(elephant_ud)
 
 # produce map
-map_multiples(x, palette)
+map_multiples(r, pal)
 }
+\seealso{
+Other map: 
+\code{\link{map_single}()}
+}
+\concept{map}

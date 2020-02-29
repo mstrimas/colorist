@@ -14,7 +14,7 @@ color palette for.}
 A data frame with the following columns:
 \itemize{
 \item \code{specificity}: seasonality; mapped to chroma.
-\item \code{peak_layer}: layer with the maximum cell value; mapped to hue.
+\item \code{layer}: layer with the maximum cell value; mapped to hue.
 \item \code{color}: ex color associated with the given specificity and peak layer.
 }
 }
@@ -35,6 +35,8 @@ hclplot(pal[pal$specificity == 50, ]$color)
 \link{palette_timeline} for linear sequences of distributions.
 
 Other palette: 
+\code{\link{legend_timecycle}()},
+\code{\link{legend_timeline}()},
 \code{\link{palette_timecycle}()},
 \code{\link{palette_timeline}()}
 }

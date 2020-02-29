@@ -7,16 +7,22 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
-Functions are provided for coloring and visualizing wildlife
-distributions in space-time using raster data. In addition to enabling
-display of sequential change in distributions through the use of small
-multiples and animations, colorist provides functions for extracting
-several features of interest from a sequence of distributions and for
-visualizing those features using HCL (hue-chroma-luminance) color
-palettes. Resulting maps allow for “fair” visual comparison of intensity
-values (e.g., occurrence, abundance, or density) across space and time
-and can be used to address questions about where, when, and how
-consistently a species, group, or individual is likely to be found.
+Maps are essential tools for communicating information about wildlife
+distributions in space and time. However, mapping these dynamic,
+space-time distributions in a static map is challenging because **…
+(Justin can you add something here? What’s the fundamental challenge
+that this package is trying to address)**. `colorist` is designed to
+address these challenges, providing a novel approach coloring and
+visualizing wildlife distributions in space-time using raster data. In
+addition to enabling display of sequential change in distributions
+through the use of small multiples and animations, colorist provides
+functions for extracting several features of interest from a sequence of
+distributions and for visualizing those features using HCL
+(hue-chroma-luminance) color palettes. The resulting maps allow for
+“fair” visual comparison of intensity values (e.g., occurrence,
+abundance, or density) across space and time and can be used to address
+questions about where, when, and how consistently a species, group, or
+individual is likely to be found.
 
 ## Installation
 
@@ -28,37 +34,38 @@ You can install the development version of colorist from
 remotes::install_github("mstrimas/colorist")
 ```
 
+## Background
+
+**Justin: ** can you fill this in with a single paragraph giving some of
+the necessary theoretical background, i.e. a bit about HCL color space
+and how the metrics are mapped. We’ll also have a vignette where you can
+add more information, this should just be the basics.
+
 ## Usage
 
-`colorist` can be used to visualize mutliple years of distribution data
-in a single map.
+`colorist` works on raster data stored as `RasterStack` objects
+representing the distribution of either an individual animal or a
+species. Each layer of the stack will typically represent the
+distribution for a given point in time (e.g., layers may represent years
+or seasons) or the distribution for different individuals. The basic
+workflow for `colorist` is as follows:
+
+1.  **Metrics:**
+2.  **Color palette:**
+3.  **Map:**
+4.  **Legend:**
+
+We can demonstrate this workflow using an example dataset of weekly
+Field Sparrow occurrence probability estimates from [eBird Status &
+Trends](https://ebird.org/science/status-and-trends).
 
 ``` r
 library(colorist)
 
-# load example data, elephant utilization distribution
-data("elephant_ud")
-
-# generate distribution metrics
-r <- metrics_distill(elephant_ud)
-
-# generate hcl color palette
-pal <- palette_timeline(elephant_ud)
-
-# map
-map_single(r, pal)
-```
-
-<img src="man/figures/README-elephant-1.png" width="100%" />
-
-Alternatively, it can be used to visualize data covering different times
-in a single year.
-
-``` r
-# load example data, elephant utilization distribution
+# load example data, field sparrow occurrence probability
 data("fiespa_occ")
 
-# generate distribution metrics
+# calculate distribution metrics
 r <- metrics_distill(fiespa_occ)
 
 # generate hcl color palette
@@ -68,4 +75,12 @@ pal <- palette_timecycle(fiespa_occ)
 map_single(r, pal)
 ```
 
-<img src="man/figures/README-fiespa-1.png" width="100%" />
+<img src="man/figures/README-elephant-1.png" width="100%" />
+
+``` r
+
+# legend
+legend_timecycle(fiespa_occ)
+```
+
+<img src="man/figures/README-elephant-2.png" width="100%" />

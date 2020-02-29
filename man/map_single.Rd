@@ -4,7 +4,7 @@
 \alias{map_single}
 \title{Visualize distributions as a single map}
 \usage{
-map_single(x, palette, layer, lambda = 0, suppress_map = FALSE)
+map_single(x, palette, layer, lambda = 0, return_df = FALSE)
 }
 \arguments{
 \item{x}{RasterStack of distributions processed by \code{\link[=metrics_pull]{metrics_pull()}} or
@@ -20,16 +20,29 @@ used.}
 intensities to alpha levels via the \code{\link[scales:modulus_trans]{scales::modulus_trans()}} function. Use
 0 for Box-Cox type 1 or any non-negative number for Box-Cox type 2.}
 
-\item{suppress_map}{logical controlling whether the map should be printed
-only (TRUE) or printed and returned.}
+\item{return_df}{logical specifying whether the function should return a
+ggplot2 plot object (FALSE) or a data frame containing the raster data and
+associated cell colors.}
 }
 \value{
-A ggplot2 plot object.
+A ggplot2 plot object of the map. Alternatively, \code{return_df = TRUE}
+will return a data frame containing the raster data in data frame format
+along with the associated cell colors. The data frame columns are:
+\itemize{
+\item \code{x},\code{y}: coordinates of raster cell centers.
+\item \code{cell_number}: integer indicating the cell number.
+\item \code{intensity}: maximum cell value across layers divided by the maximum
+value across all layers and cells; mapped to alpha level.
+\item \code{specificity}: amount of variation between layers; mapped to chroma.
+\item \code{layer}: layer with the maximum cell value; mapped to hue.
+\item \code{color}: color associated with the given specificity and peak layer.
+}
 }
 \description{
 Visualize distributions as a single map
 }
 \examples{
+# load elephant data
 data("elephant_ud")
 
 # prepare metrics
@@ -39,5 +52,10 @@ r <- metrics_distill(elephant_ud)
 pal <- palette_timeline(elephant_ud)
 
 # produce map
-map_single(x, palette)
+map_single(r, pal)
 }
+\seealso{
+Other map: 
+\code{\link{map_multiples}()}
+}
+\concept{map}

@@ -6,21 +6,24 @@
 #'   color palette for.
 #'
 #' @return A data frame with the following columns:
-#'   - `specificity`: seasonality; mapped to chroma.
-#'   - `peak_layer`: layer with the maximum cell value; mapped to hue.
-#'   - `color`: ex color associated with the given specificity and peak layer.
+#'   - `specificity`: amount of variation between layers; mapped to chroma.
+#'   - `layer`: layer with the maximum cell value; mapped to hue.
+#'   - `color`: color associated with the given specificity and peak layer.
 #' @family palette
 #' @seealso [palette_timeline] for linear sequences of distributions and
 #'   [palette_groups] for distributions of distinct groups.
 #' @export
 #' @examples
+#' # load field sparrow data
 #' data(fiespa_occ)
+#'
+#' # generate hcl color palette
 #' pal <- palette_timecycle(fiespa_occ)
 #' head(pal)
 #'
 #' # visualize the palette in HCL space with colorspace::hclplot
 #' library(colorspace)
-#' hclplot(pal[pal$specificity == 50, ]$color)
+#' hclplot(pal[pal$specificity == 100, ]$color)
 palette_timecycle <- function(x) {
   UseMethod("palette_timecycle")
 }
@@ -34,7 +37,7 @@ palette_timecycle.integer <- function(x) {
   start <- round(0.67 * x, 0)
   layer <- c(start:1, x:(start + 1))
   wheel <- data.frame(specificity = rep(0:100, each = x),
-                      peak_layer = rep(layer, times = 101),
+                      layer = rep(layer, times = 101),
                       color = NA_character_,
                       stringsAsFactors = FALSE)
   # generate palettes for each chroma value
@@ -47,7 +50,7 @@ palette_timecycle.integer <- function(x) {
                                                      end = 360 * ((x - 1)  / x),
                                                      fixup = TRUE)
   }
-  wheel <- wheel[order(wheel[["specificity"]], wheel[["peak_layer"]]), ]
+  wheel <- wheel[order(wheel[["specificity"]], wheel[["layer"]]), ]
   class(wheel) <- c("palette_timecycle", "data.frame")
   return(wheel)
 }
@@ -76,15 +79,18 @@ palette_timecycle.Raster<- function(x) {
 #'   giving a yellow-green-blue palette.
 #'
 #' @return A data frame with the following columns:
-#'   - `specificity`: seasonality; mapped to chroma.
-#'   - `peak_layer`: layer with the maximum cell value; mapped to hue.
-#'   - `color`: ex color associated with the given specificity and peak layer.
+#'   - `specificity`: amount of variation between layers; mapped to chroma.
+#'   - `layer`: layer with the maximum cell value; mapped to hue.
+#'   - `color`: color associated with the given specificity and peak layer.
 #' @family palette
 #' @seealso [palette_timecycle] for cyclical sequences of distributions and
 #'   [palette_groups] for distributions of distinct groups.
 #' @export
 #' @examples
+#' # load field sparrow data
 #' data(fiespa_occ)
+#'
+#' # generate hcl color palette
 #' pal_a <- palette_timeline(fiespa_occ)
 #' head(pal_a)
 #'
@@ -93,8 +99,8 @@ palette_timecycle.Raster<- function(x) {
 #'
 #' # visualize the palette in HCL space  with colorspace::hclplot
 #' library(colorspace)
-#' hclplot(pal_a[pal_a$specificity == 50, ]$color)
-#' hclplot(pal_a[pal_b$specificity == 50, ]$color)
+#' hclplot(pal_a[pal_a$specificity == 100, ]$color)
+#' hclplot(pal_b[pal_b$specificity == 100, ]$color)
 palette_timeline <- function(x, start_hue = -130) {
   UseMethod("palette_timeline")
 }
@@ -108,10 +114,10 @@ palette_timeline.integer <- function(x, start_hue = -130) {
 
   # set up color wheel
   wheel <- expand.grid(specificity = 0:100,
-                       peak_layer = seq_len(x),
+                       layer = seq_len(x),
                        color = NA_character_,
                        stringsAsFactors = FALSE)
-  wheel <- wheel[order(wheel[["specificity"]], wheel[["peak_layer"]]), ]
+  wheel <- wheel[order(wheel[["specificity"]], wheel[["layer"]]), ]
   row.names(wheel) <- NULL
 
   # generate palettes for each chroma value
@@ -148,7 +154,7 @@ palette_timeline.Raster<- function(x, start_hue = -130) {
 #'
 #' @return A data frame with the following columns:
 #'   - `specificity`: seasonality; mapped to chroma.
-#'   - `peak_layer`: layer with the maximum cell value; mapped to hue.
+#'   - `layer`: layer with the maximum cell value; mapped to hue.
 #'   - `color`: ex color associated with the given specificity and peak layer.
 #' @family palette
 #' @seealso [palette_timecycle] for cyclical sequences of distributions and
@@ -177,10 +183,10 @@ palette_groups.integer <- function(x) {
 
   # set up color wheel
   wheel <- expand.grid(specificity = 0:100,
-                       peak_layer = seq_len(x),
+                       layer = seq_len(x),
                        color = NA_character_,
                        stringsAsFactors = FALSE)
-  wheel <- wheel[order(wheel[["specificity"]], wheel[["peak_layer"]]), ]
+  wheel <- wheel[order(wheel[["specificity"]], wheel[["layer"]]), ]
   row.names(wheel) <- NULL
 
   # generate palettes for each chroma value
@@ -198,11 +204,11 @@ palette_groups.integer <- function(x) {
 }
 
 #' @export
-palette_groups.numeric <- function(x, start_hue) {
+palette_groups.numeric <- function(x) {
   palette_groups(as.integer(x))
 }
 
 #' @export
-palette_groups.Raster<- function(x, start_hue) {
+palette_groups.Raster<- function(x) {
   palette_groups(raster::nlayers(x))
 }
