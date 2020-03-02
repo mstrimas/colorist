@@ -39,7 +39,7 @@
 #' # produce map
 #' map_single(r, pal)
 map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
-  stopifnot(class(x) %in% c("RasterStack", "RasterBrick"))
+  stopifnot(inherits(x, c("RasterStack", "RasterBrick")))
   stopifnot(inherits(palette, "data.frame"),
             inherits(palette, c("palette_timeline",
                                 "palette_timecycle",
@@ -79,7 +79,7 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
     r <- raster::as.data.frame(x[[l]], xy = TRUE)
     r$cell_number <- seq.int(nrow(r))
   } else {
-    stop(paset0("No metric function called on the input raster.",
+    stop(paste0("No metric function called on the input raster.",
                 "Try using metric_pull() or metric_distill()."))
   }
   r <- r[stats::complete.cases(r), ]
@@ -104,7 +104,7 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
 
   # generate plot
   m <- ggplot2::ggplot(data = r_pal) +
-    ggplot2::aes_(x = ~ x, y = ~y,
+    ggplot2::aes_(x = ~ x, y = ~ y,
                   fill = ~ factor(cell_number),
                   alpha = ~ intensity) +
     ggplot2::geom_tile() +
@@ -124,7 +124,7 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
                    axis.ticks = ggplot2::element_blank()) +
     ggplot2::xlab("Longitude") +
     ggplot2::ylab("Latitude") +
-    ggplot2::coord_sf()
+    ggplot2::coord_equal()
 
   return(m)
 }
@@ -173,7 +173,7 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
 #' map_multiples(r, pal)
 map_multiples <- function(x, palette, ncol, lambda = 0, labels = NULL,
                           return_df = FALSE) {
-  stopifnot(class(x) %in% c("RasterStack", "RasterBrick"))
+  stopifnot(inherits(x, c("RasterStack", "RasterBrick")))
   stopifnot(inherits(palette, "data.frame"),
             inherits(palette, c("palette_timeline",
                                 "palette_timecycle",
@@ -187,10 +187,10 @@ map_multiples <- function(x, palette, ncol, lambda = 0, labels = NULL,
               ncol <= raster::nlayers(x))
   }
   if (isTRUE(attr(x, "metric") == "distill")) {
-    stop(paset0("map_multiples() does not work with metric_distill().",
+    stop(paste0("map_multiples() does not work with metric_distill().",
                 "Try using metric_pull()."))
   } else if (!isTRUE(attr(x, "metric") == "pull")) {
-    stop(paset0("No metric function called on the input raster.",
+    stop(paste0("No metric function called on the input raster.",
                 "Try using metric_pull()."))
   }
 
@@ -258,10 +258,11 @@ map_multiples <- function(x, palette, ncol, lambda = 0, labels = NULL,
                    axis.ticks = ggplot2::element_blank()) +
     ggplot2::xlab("Longitude") +
     ggplot2::ylab("Latitude") +
-    ggplot2::coord_sf()
+    ggplot2::coord_equal()
 
   return(m)
 }
+
 
 is_integer <- function(x) {
   is.integer(x) || (is.numeric(x) && all(x == as.integer(x)))

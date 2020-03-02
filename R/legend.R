@@ -5,7 +5,7 @@
 #' @param x RasterStack or integer giving the number of layers to build the
 #'   HCL legend for.
 #' @param specificity logical indicating whether to show a single color wheel or
-#'   three wheels demonstrating the palette for intensity values of 0, 50, and
+#'   three wheels demonstrating the palette for specificity values of 0, 50, and
 #'   100.
 #' @param return_df logical indicating whether to return the legend as a
 #'   `ggplot2` object or return a data frame containing the necessary data to
@@ -20,8 +20,9 @@
 #'   - `intensity`: maximum cell value across layers divided by the maximum
 #'   value across all layers and cells; mapped to alpha level.
 #'
-#' @family palette
-#' @seealso [legend_timeline] for linear sequences of distributions.
+#' @family legend
+#' @seealso [legend_timeline] for linear sequences of distributions and
+#'   [legend_groups] for distributions of distinct groups.
 #' @export
 #' @examples
 #' # load field sparrow data
@@ -45,7 +46,7 @@ legend_timecycle.integer <- function(x, specificity = TRUE, return_df = FALSE) {
   layer <- c(start:1, x:(start + 1))
   specs <- c(0, 50, 100)
   wheel <- data.frame(specificity = rep(specs, each = x),
-                      layer = rep(layer, times = 3),
+                      layer = rep(layer, times = length(specs)),
                       color = NA_character_,
                       stringsAsFactors = FALSE)
   # generate palettes for each chroma value
@@ -63,6 +64,7 @@ legend_timecycle.integer <- function(x, specificity = TRUE, return_df = FALSE) {
   wheel <- merge(wheel, data.frame(intensity = seq(0, 1, 0.05)))
   wheel <- wheel[order(wheel[["specificity"]], wheel[["layer"]],
                        wheel[["intensity"]]), ]
+  row.names(wheel) <- NULL
   class(wheel) <- c("legend_timecycle", "data.frame")
 
   # return data without plotting if requested
@@ -89,7 +91,7 @@ legend_timecycle.integer <- function(x, specificity = TRUE, return_df = FALSE) {
                   alpha = ~ intensity) +
     ggplot2::geom_tile(size = 0) +
     ggplot2::facet_wrap(~ specificity, nrow = 1,
-               labeller = ggplot2::labeller(specificity = labs)) +
+                        labeller = ggplot2::labeller(specificity = labs)) +
     ggplot2::scale_fill_manual(values = tile_colors) +
     ggplot2::scale_alpha_continuous(range = c(0, 1)) +
     ggplot2::coord_polar(theta = "x", start = 0) +
@@ -132,8 +134,8 @@ legend_timecycle.Raster <- function(x, specificity = TRUE, return_df = FALSE) {
 #'   further details, consult the documentation for [colorspace::rainbow_hcl].
 #'   Recommended values are -130, giving a blue-pink-yellow palette, and 50,
 #'   giving a yellow-green-blue palette.
-#' @param specificity logical indicating whether to show a single color wheel or
-#'   three wheels demonstrating the palette for intensity values of 0, 50, and
+#' @param specificity logical indicating whether to show a single legend or
+#'   three legend demonstrating the palette for specificity values of 0, 50, and
 #'   100.
 #' @param time_labels character vector with two elements to be used as labels
 #'   for the start and end points of the time axis (i.e. x-axis) in the legend.
@@ -150,15 +152,16 @@ legend_timecycle.Raster <- function(x, specificity = TRUE, return_df = FALSE) {
 #'   - `intensity`: maximum cell value across layers divided by the maximum
 #'   value across all layers and cells; mapped to alpha level.
 #'
-#' @family palette
-#' @seealso [palette_timecycle] for cyclical sequences of distributions.
+#' @family legend
+#' @seealso [legend_timecycle] for cyclical sequences of distributions and
+#'   [legend_groups] for distributions of distinct groups.
 #' @export
 #' @examples
-#' # load field sparrow data
-#' data(fiespa_occ)
+#' # load elephant data
+#' data(elephant_ud)
 #'
 #' # generate hcl legend
-#' legend_timeline(fiespa_occ)
+#' legend_timeline(elephant_ud)
 legend_timeline <- function(x, start_hue = -130, specificity = TRUE,
                             time_labels = NULL, return_df = FALSE) {
   UseMethod("legend_timeline")
@@ -172,7 +175,10 @@ legend_timeline.integer <- function(x, start_hue = -130, specificity = TRUE,
   }
   stopifnot(length(start_hue) == 1, start_hue >= -360, start_hue <= 360)
   stopifnot(is.logical(specificity), length(specificity) == 1)
-  stopifnot(is.character(time_labels), length(time_labels) == 2)
+  if (!is.null(time_labels)) {
+    stopifnot(is.character(time_labels), length(time_labels) == 2)
+  }
+
   stopifnot(is.logical(return_df), length(return_df) == 1)
 
   # start the palette at blue
@@ -182,6 +188,7 @@ legend_timeline.integer <- function(x, start_hue = -130, specificity = TRUE,
                        color = NA_character_,
                        stringsAsFactors = FALSE)
   wheel <- wheel[order(wheel[["specificity"]], wheel[["layer"]]), ]
+  row.names(wheel) <- NULL
   row.names(wheel) <- NULL
 
   # generate palettes for each chroma value
@@ -227,18 +234,18 @@ legend_timeline.integer <- function(x, start_hue = -130, specificity = TRUE,
     ggplot2::geom_tile(size = 0) +
     ggplot2::facet_wrap(~ specificity, ncol = 1,
                         labeller = ggplot2::labeller(specificity = labs)) +
-    scale_x_continuous(breaks = c(1, x), labels = time_labels) +
+    ggplot2::scale_x_continuous(breaks = c(1, x), labels = time_labels) +
     ggplot2::scale_fill_manual(values = tile_colors) +
     ggplot2::scale_alpha_continuous(range = c(0, 1)) +
     ggplot2::theme(strip.background = ggplot2::element_blank(),
-          panel.grid = ggplot2::element_blank(),
-          panel.background = ggplot2::element_blank(),
-          panel.spacing = ggplot2::unit(0, "lines"),
-          plot.background = ggplot2::element_rect(fill = "white"),
-          plot.title = ggplot2::element_text(size = 11, hjust = 0.5),
-          axis.text.y = ggplot2::element_blank(),
-          axis.ticks = ggplot2::element_blank(),
-          aspect.ratio = 0.4) +
+                   panel.grid = ggplot2::element_blank(),
+                   panel.background = ggplot2::element_blank(),
+                   panel.spacing = ggplot2::unit(0, "lines"),
+                   plot.background = ggplot2::element_rect(fill = "white"),
+                   plot.title = ggplot2::element_text(size = 11, hjust = 0.5),
+                   axis.text.y = ggplot2::element_blank(),
+                   axis.ticks = ggplot2::element_blank(),
+                   aspect.ratio = 0.4) +
     ggplot2::guides(fill = FALSE, alpha = FALSE) +
     ggplot2::xlab("Interval") +
     ggplot2::ylab("Maximum\nintensity")
@@ -258,4 +265,147 @@ legend_timeline.Raster <- function(x, start_hue = -130, specificity = TRUE,
                                    time_labels = NULL, return_df = FALSE) {
   legend_timeline(raster::nlayers(x), start_hue, specificity, time_labels,
                   return_df)
+}
+
+
+# legend_groups ----
+
+#' Make HCL legend for the distributions of distinct groups
+#'
+#' @param x RasterStack or integer giving the number of layers to build the
+#'   HCL legend for.
+#' @param specificity logical indicating whether to visualize the variation in
+#'   intensity in the legend or to fix intensity at 100.
+#' @param group_labels character vector with two elements to be used as labels
+#'   for the start and end points of the time axis (i.e. x-axis) in the legend.
+#' @param return_df logical indicating whether to return the legend as a
+#'   `ggplot2` object or return a data frame containing the necessary data to
+#'   build the legend.
+#'
+#' @return A ggplot2 plot object of the legend. Alternatively,
+#'   `return_df = TRUE` will return a data frame containing a data frame
+#'   containing the data needed to build the legend. The data frame columns are:
+#'   - `specificity`: amount of variation between layers; mapped to chroma.
+#'   - `layer`: layer with the maximum cell value; mapped to hue.
+#'   - `color`: color associated with the given specificity and peak layer.
+#'   - `intensity`: maximum cell value across layers divided by the maximum
+#'   value across all layers and cells; mapped to alpha level.
+#'
+#' @family legend
+#' @seealso [legend_timecycle] for cyclical sequences of distributions and
+#'   [legend_timeline] for linear sequences of distributions.
+#' @export
+#' @examples
+#' # load elephant data
+#' data(elephant_ud)
+#' # treat layers as groups of elephants, not years for a single elephant
+#' names(elephant_ud) <- paste0("group", 1:4)
+#'
+#' # generate hcl legend
+#' legend_groups(elephant_ud)
+legend_groups <- function(x, specificity = TRUE, group_labels = NULL,
+                          return_df = FALSE) {
+  UseMethod("legend_groups")
+}
+
+#' @export
+legend_groups.integer <- function(x, specificity = TRUE, group_labels = NULL,
+                                  return_df = FALSE) {
+  if (x < 2) {
+    stop("At least two intervals are required to generate a palette.")
+  }
+  stopifnot(is.logical(specificity), length(specificity) == 1)
+  if (!is.null(group_labels)) {
+    stopifnot(is.character(group_labels), length(group_labels) == x)
+  }
+
+  stopifnot(is.logical(return_df), length(return_df) == 1)
+
+  # set up color wheel
+  layer <- c(6, 1, 3, 8, 5, 2, 7, 4)
+  n <- length(layer)
+  wheel <- data.frame(specificity = rep(0:100, each = n),
+                      layer = rep(layer, times = 101),
+                      color = NA_character_,
+                      stringsAsFactors = FALSE)
+
+  # generate palettes for each chroma value
+  for (i in 0:100) {
+    idx <- seq(i * n + 1, (i + 1) * n, by = 1)
+    wheel[["color"]][idx] <- colorspace::rainbow_hcl(n,
+                                                     c = i,
+                                                     l = 45,
+                                                     start = 240,
+                                                     end = 240 - 360 * (7/8),
+                                                     fixup = TRUE)
+  }
+
+  # add intensity
+  wheel <- wheel[wheel$layer %in% seq.int(x), ]
+  wheel <- merge(wheel, data.frame(intensity = seq(0, 1, 0.01)))
+  wheel <- wheel[order(wheel[["specificity"]], wheel[["layer"]],
+                       wheel[["intensity"]]), ]
+  row.names(wheel) <- NULL
+  class(wheel) <- c("legend_timeline", "data.frame")
+
+  # return data without plotting if requested
+  if (isTRUE(return_df)) {
+    return(wheel)
+  }
+
+  # whether to show 3 or 1 wheels
+  if (!isTRUE(specificity)) {
+    wheel <- wheel[wheel$specificity == 100, ]
+  }
+
+  # make named vector of colors
+  tile_colors <- sort(unique(wheel$color))
+  names(tile_colors) <- tile_colors
+
+  # make labels for groups
+  if (is.null(group_labels)) {
+    group_labels <- seq.int(x)
+    names(group_labels) <- seq.int(x)
+  } else {
+    names(group_labels) <- seq.int(x)
+  }
+
+  # describe ggplot
+  p <- ggplot2::ggplot(data = wheel) +
+    ggplot2::aes_(x = ~ specificity, y = ~ intensity, fill = ~ color,
+                  alpha = ~ intensity) +
+    ggplot2::geom_tile(size = 0) +
+    ggplot2::facet_wrap(~ layer, ncol = x,
+                        labeller = ggplot2::labeller(layer = group_labels)) +
+    ggplot2::scale_fill_manual(values = tile_colors) +
+    ggplot2::scale_alpha_continuous(range = c(0, 1)) +
+    ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5, size = 11),
+                   strip.background = ggplot2::element_blank(),
+                   panel.grid = ggplot2::element_blank(),
+                   panel.background = ggplot2::element_rect(fill = "white"),
+                   panel.spacing = ggplot2::unit(0, "lines"),
+                   plot.background = ggplot2::element_rect(fill = "white"),
+                   aspect.ratio = 1,
+                   axis.text = ggplot2::element_blank(),
+                   axis.ticks = ggplot2::element_blank()) +
+    ggplot2::guides(fill = FALSE, alpha = FALSE) +
+    ggplot2::xlab("Specificity") +
+    ggplot2::ylab("Maximum\nintensity")
+
+  return(p)
+}
+
+#' @export
+legend_groups.numeric <- function(x, specificity = TRUE, group_labels = NULL,
+                                  return_df = FALSE) {
+  legend_groups(as.integer(x), specificity, group_labels, return_df)
+}
+
+#' @export
+legend_groups.Raster <- function(x, specificity = TRUE, group_labels = NULL,
+                                 return_df = FALSE) {
+  if (is.null(group_labels)) {
+    group_labels <- names(x)
+  }
+  legend_groups(raster::nlayers(x), specificity, group_labels, return_df)
 }

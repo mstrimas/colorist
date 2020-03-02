@@ -14,29 +14,31 @@ color palette for.}
 A data frame with the following columns:
 \itemize{
 \item \code{specificity}: seasonality; mapped to chroma.
-\item \code{layer}: layer with the maximum cell value; mapped to hue.
-\item \code{color}: ex color associated with the given specificity and peak layer.
+\item \code{layer}: layer number for each group; mapped to hue.
+\item \code{color}: color associated with the given specificity and peak layer.
 }
 }
 \description{
 Make HCL palette for the distributions of distinct groups
 }
 \examples{
+# load elephant data
+# treat layers as groups of elephants, not years for a single elephant
 data(elephant_ud)
+
+# generate hcl color palette
 pal <- palette_groups(elephant_ud)
 head(pal)
 
 # visualize the palette in HCL space  with colorspace::hclplot
 library(colorspace)
-hclplot(pal[pal$specificity == 50, ]$color)
+hclplot(pal[pal$specificity == 100, ]$color)
 }
 \seealso{
 \link{palette_timecycle} for cyclical sequences of distributions and
 \link{palette_timeline} for linear sequences of distributions.
 
 Other palette: 
-\code{\link{legend_timecycle}()},
-\code{\link{legend_timeline}()},
 \code{\link{palette_timecycle}()},
 \code{\link{palette_timeline}()}
 }

@@ -4,3 +4,7 @@
 ^README\.Rmd$
 supplementary/
 ^LICENSE\.md$
+^appveyor\.yml$
+^\.travis\.yml$
+^docs$
+^makefile.R$

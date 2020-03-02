@@ -11,7 +11,7 @@ legend_timecycle(x, specificity = TRUE, return_df = FALSE)
 HCL legend for.}
 
 \item{specificity}{logical indicating whether to show a single color wheel or
-three wheels demonstrating the palette for intensity values of 0, 50, and
+three wheels demonstrating the palette for specificity values of 0, 50, and
 100.}
 
 \item{return_df}{logical indicating whether to return the legend as a
@@ -41,12 +41,11 @@ data(fiespa_occ)
 legend_timecycle(fiespa_occ)
 }
 \seealso{
-\link{legend_timeline} for linear sequences of distributions.
+\link{legend_timeline} for linear sequences of distributions and
+\link{legend_groups} for distributions of distinct groups.
 
-Other palette: 
-\code{\link{legend_timeline}()},
-\code{\link{palette_groups}()},
-\code{\link{palette_timecycle}()},
-\code{\link{palette_timeline}()}
+Other legend: 
+\code{\link{legend_groups}()},
+\code{\link{legend_timeline}()}
 }
-\concept{palette}
+\concept{legend}

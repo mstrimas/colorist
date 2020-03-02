@@ -96,7 +96,7 @@ metrics_distill <- function(x) {
 }
 
 length_nona <- function(x) {
-  length(na.omit(x))
+  length(stats::na.omit(x))
 }
 
 specificity <- function(x) {

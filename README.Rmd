@@ -18,7 +18,10 @@ knitr::opts_chunk$set(
 # colorist
 
 <!-- badges: start -->
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/mstrimas/colorist?branch=master&svg=true)](https://ci.appveyor.com/project/mstrimas/colorist)
+[![Travis build status](https://travis-ci.org/mstrimas/colorist.svg?branch=master)](https://travis-ci.org/mstrimas/colorist)
+[![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 <!-- badges: end -->
 
 Maps are essential tools for communicating information about wildlife distributions in space and time. However, mapping these dynamic, space-time distributions in a static map is challenging because **... (Justin can you add something here? What's the fundamental challenge that this package is trying to address)**. `colorist` is designed to address these challenges, providing a novel approach coloring and visualizing wildlife distributions in space-time using raster data. In addition to enabling display of sequential change in distributions through the use of small multiples and animations, colorist provides functions for extracting several features of interest from a sequence of distributions and for visualizing those features using HCL (hue-chroma-luminance) color palettes. The resulting maps allow for "fair" visual comparison of intensity values (e.g., occurrence, abundance, or density) across space and time and can be used to address questions about where, when, and how consistently a species, group, or individual is likely to be found.

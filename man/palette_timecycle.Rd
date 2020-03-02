@@ -38,8 +38,6 @@ hclplot(pal[pal$specificity == 100, ]$color)
 \link{palette_groups} for distributions of distinct groups.
 
 Other palette: 
-\code{\link{legend_timecycle}()},
-\code{\link{legend_timeline}()},
 \code{\link{palette_groups}()},
 \code{\link{palette_timeline}()}
 }

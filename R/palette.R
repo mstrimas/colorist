@@ -51,6 +51,7 @@ palette_timecycle.integer <- function(x) {
                                                      fixup = TRUE)
   }
   wheel <- wheel[order(wheel[["specificity"]], wheel[["layer"]]), ]
+  row.names(wheel) <- NULL
   class(wheel) <- c("palette_timecycle", "data.frame")
   return(wheel)
 }
@@ -87,15 +88,15 @@ palette_timecycle.Raster<- function(x) {
 #'   [palette_groups] for distributions of distinct groups.
 #' @export
 #' @examples
-#' # load field sparrow data
-#' data(fiespa_occ)
+#' # load elephant data
+#' data(elephant_ud)
 #'
 #' # generate hcl color palette
-#' pal_a <- palette_timeline(fiespa_occ)
+#' pal_a <- palette_timeline(elephant_ud)
 #' head(pal_a)
 #'
 #' # try a different starting hue
-#' pal_b <- palette_timeline(fiespa_occ, start = 50)
+#' pal_b <- palette_timeline(elephant_ud, start = 50)
 #'
 #' # visualize the palette in HCL space  with colorspace::hclplot
 #' library(colorspace)
@@ -154,20 +155,24 @@ palette_timeline.Raster<- function(x, start_hue = -130) {
 #'
 #' @return A data frame with the following columns:
 #'   - `specificity`: seasonality; mapped to chroma.
-#'   - `layer`: layer with the maximum cell value; mapped to hue.
-#'   - `color`: ex color associated with the given specificity and peak layer.
+#'   - `layer`: layer number for each group; mapped to hue.
+#'   - `color`: color associated with the given specificity and peak layer.
 #' @family palette
 #' @seealso [palette_timecycle] for cyclical sequences of distributions and
 #'   [palette_timeline] for linear sequences of distributions.
 #' @export
 #' @examples
+#' # load elephant data
+#' # treat layers as groups of elephants, not years for a single elephant
 #' data(elephant_ud)
+#'
+#' # generate hcl color palette
 #' pal <- palette_groups(elephant_ud)
 #' head(pal)
 #'
 #' # visualize the palette in HCL space  with colorspace::hclplot
 #' library(colorspace)
-#' hclplot(pal[pal$specificity == 50, ]$color)
+#' hclplot(pal[pal$specificity == 100, ]$color)
 palette_groups <- function(x) {
   UseMethod("palette_groups")
 }
@@ -175,31 +180,36 @@ palette_groups <- function(x) {
 #' @export
 palette_groups.integer <- function(x) {
   if (x < 2) {
-    stop("At least two intervals are required to generate a palette.")
+    stop("At least two groups are required to generate a palette.")
   } else if (x > 8) {
     stop(paste("Too many layers for palette_group.",
                "Try palette_timecycle or palette_timeline."))
   }
 
   # set up color wheel
-  wheel <- expand.grid(specificity = 0:100,
-                       layer = seq_len(x),
-                       color = NA_character_,
-                       stringsAsFactors = FALSE)
-  wheel <- wheel[order(wheel[["specificity"]], wheel[["layer"]]), ]
-  row.names(wheel) <- NULL
+  layer <- c(6, 1, 3, 8, 5, 2, 7, 4)
+  n <- length(layer)
+  wheel <- data.frame(specificity = rep(0:100, each = n),
+                      layer = rep(layer, times = 101),
+                      color = NA_character_,
+                      stringsAsFactors = FALSE)
 
   # generate palettes for each chroma value
   for (i in 0:100) {
-    idx <- seq(i * x + 1, (i + 1) * x, by = 1)
-    wheel[["color"]][idx] <- colorspace::rainbow_hcl(x,
+    idx <- seq(i * n + 1, (i + 1) * n, by = 1)
+    wheel[["color"]][idx] <- colorspace::rainbow_hcl(n,
                                                      c = i,
                                                      l = 45,
-                                                     start = start_hue,
-                                                     end = start_hue + 180,
+                                                     start = 240,
+                                                     end = 240 - 360 * (7/8),
                                                      fixup = TRUE)
   }
-  class(wheel) <- c("palette_timecycle", "data.frame")
+
+  # drop irrelevant layers
+  wheel <- wheel[wheel$layer %in% seq.int(x), ]
+  wheel <- wheel[order(wheel[["specificity"]], wheel[["layer"]]), ]
+  row.names(wheel) <- NULL
+  class(wheel) <- c("palette_groups", "data.frame")
   return(wheel)
 }
 

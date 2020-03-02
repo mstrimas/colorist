@@ -28,15 +28,15 @@ A data frame with the following columns:
 Make HCL palette for a linear sequence of distributions
 }
 \examples{
-# load field sparrow data
-data(fiespa_occ)
+# load elephant data
+data(elephant_ud)
 
 # generate hcl color palette
-pal_a <- palette_timeline(fiespa_occ)
+pal_a <- palette_timeline(elephant_ud)
 head(pal_a)
 
 # try a different starting hue
-pal_b <- palette_timeline(fiespa_occ, start = 50)
+pal_b <- palette_timeline(elephant_ud, start = 50)
 
 # visualize the palette in HCL space  with colorspace::hclplot
 library(colorspace)
@@ -48,8 +48,6 @@ hclplot(pal_b[pal_b$specificity == 100, ]$color)
 \link{palette_groups} for distributions of distinct groups.
 
 Other palette: 
-\code{\link{legend_timecycle}()},
-\code{\link{legend_timeline}()},
 \code{\link{palette_groups}()},
 \code{\link{palette_timecycle}()}
 }
