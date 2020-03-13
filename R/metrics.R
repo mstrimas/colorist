@@ -1,6 +1,10 @@
 #' Transform raster stack values to intensity values
 #'
-#' @param x RasterStack. Layers typically contain information about the distribution of
+#' @description This function transforms raster stack values that describe
+#'   individual distributions or species distributions into standardized intensity values.
+#'   All the distributional information in the original raster stack is preserved for visualization.
+#'
+#' @param x RasterStack of distributions. Layers typically contain information about the distribution of
 #'   a single individual or species at multiple points in time.
 #'   Alternatively, layers may contain information about the distributions of
 #'   multiple individuals or species within a single time period. Other
@@ -39,9 +43,13 @@ metrics_pull <- function(x) {
   return(r)
 }
 
-#' Distill a raster stack into a set of distribution metrics in each cell
+#' Distill a raster stack into a set of distribution metrics
 #'
-#' @param x RasterStack. Layers typically contain information about the distribution of
+#' @description This function is used to summarize several distributional
+#'   features of interest across a series of distributions. Distributional
+#'   information in the original raster stack is "distilled" for subsequent visualization.
+#'
+#' #' @param x RasterStack of distributions. Layers typically contain information about the distribution of
 #'   a single individual or species at multiple points in time.
 #'   Alternatively, layers may contain information about the distributions of
 #'   multiple individuals or species within a single time period. Other
@@ -66,10 +74,12 @@ metrics_pull <- function(x) {
 #'   by all individuals, 100 = exclusive use by one individual).
 #'
 #'   The number of layers with non-NA values is recorded to aid interpretation of
-#'   distributions. Ideally, users have equal knowledge of distributions in each layer
-#'   and n_layers values are identical in every cell. Distributions are more likely
-#'   to be misrepresented and misinterpreted if cells do not contain intensity values
-#'   in every layer.
+#'   distributions. Ideally, n_layers values are identical in every cell,
+#'   indicating that users have knowledge of distributions over the same area
+#'   in every layer of their raster stack. When n_layers values are unequal,
+#'   it indicates that users have unequal knowledge of distributions in their
+#'   raster stack. Distributions are more likely to be misrepresented and
+#'   misinterpreted if cells do not contain intensity values in every layer.
 #'
 #'
 #' @family metrics
