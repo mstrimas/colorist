@@ -1,14 +1,19 @@
-#' Visualize distributions as a single map
+#' Visualize distributions in a single map
+#'
+#' @description This function enables visualization of distributional information
+#'   in a single map by combining distribution metrics and an HCL color palette.
 #'
 #' @param x RasterStack of distributions processed by [metrics_pull()] or
 #'   [metrics_distill()].
-#' @param palette data frame containing an HCL color palette.
-#' @param layer integer or character corresponding to the index or name of the
+#' @param palette data frame containing an HCL color palette generated using [palette_timecycle()],
+#'   [palette_timeline()], or [palette_groups()].
+#' @param layer integer (or character) corresponding to the index (or name) of a
 #'   single layer to map. This argument is ignored if [metrics_distill()] was
-#'   used.
-#' @param lambda integer controlling the offset in the Box-Cox transformation of
-#'   intensities to alpha levels via the [scales::modulus_trans()] function. Use
-#'   0 for Box-Cox type 1 or any non-negative number for Box-Cox type 2.
+#'   used to generate x.
+#' @param lambda number that allows visual tuning of intensity values
+#'   via the [scales::modulus_trans()] function (see Details). Negative numbers
+#'   decrease apparent skew of intensity values. Positive numbers increase apparent
+#'   skew of intensity values.
 #' @param return_df logical specifying whether the function should return a
 #'   ggplot2 plot object (FALSE) or a data frame containing the raster data and
 #'   associated cell colors.
@@ -23,6 +28,16 @@
 #'   - `specificity`: amount of variation between layers; mapped to chroma.
 #'   - `layer`: layer with the maximum cell value; mapped to hue.
 #'   - `color`: color associated with the given specificity and peak layer.
+#'
+#' @details The lambda parameter allows for visual tuning of highly skewed
+#'   distribution data. It is not uncommon for distributions to contain highly skewed
+#'   intensity values because individuals spend a vast majority of their
+#'   time within a relatively small area or because populations are relatively
+#'   dense during some seasons and relatively dispersed during others. This can
+#'   make visualizing distributions a challenge. The lambda parameter transforms
+#'   intensity values via the [scales::modulus_trans()] function, allowing
+#'   users to adjust the relative visual weight of high and low intensity values.
+#'
 #'
 #' @family map
 #' @export
@@ -45,7 +60,7 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
                                 "palette_timecycle",
                                 "palette_groups")),
             c("specificity", "layer", "color") %in% names(palette))
-  stopifnot(length(lambda) == 1, is.numeric(lambda), lambda >= 0)
+  stopifnot(length(lambda) == 1, is.numeric(lambda))
 
   # convert raster to data frame, pull vs. distill
   if (isTRUE(attr(x, "metric") == "pull")) {
@@ -110,7 +125,7 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
     ggplot2::geom_tile() +
     ggplot2::scale_fill_manual(values = map_colors) +
     ggplot2::scale_color_manual(values = map_colors) +
-    ggplot2::scale_alpha_continuous(trans = scales::modulus_trans(lambda),
+    ggplot2::scale_alpha_continuous(trans = scales::modulus_trans(lambda + 1),
                                     range = c(0, 1)) +
     ggplot2::guides(fill = FALSE, alpha = FALSE) +
     ggplot2::theme(strip.background = ggplot2::element_rect(fill = "white"),
@@ -130,21 +145,36 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
 }
 
 
-#' Visualize distributions as a single map
+#' Visualize multiple distributions in a series of maps
+#'
+#' @description This function enables visualization of distributional information
+#'   in a series of small multiples by combining distribution metrics and an HCL color palette.
 #'
 #' @param x RasterStack of distributions processed by [metrics_pull()].
-#' @param palette data frame containing an HCL color palette.
+#' @param palette data frame containing an HCL color palette generated using [palette_timecycle()],
+#'   [palette_timeline()], or [palette_groups()].
 #' @param ncol integer specifying the number of columns in the grid of plots.
-#' @param lambda integer controlling the offset in the Box-Cox transformation of
-#'   intensities to alpha levels via the [scales::modulus_trans()] function. Use
-#'   0 for Box-Cox type 1 or any non-negative number for Box-Cox type 2.
+#' @param lambda number that allows visual tuning of intensity values
+#'   via the [scales::modulus_trans()] function (see Details). Negative numbers
+#'   decrease apparent skew of intensity values. Positive numbers increase apparent
+#'   skew of intensity values.
 #' @param labels character vector of layer labels for each plot. The default is
 #'   to not show labels.
 #' @param return_df logical specifying whether the function should return a
 #'   ggplot2 plot object (FALSE) or a data frame containing the raster data and
 #'   associated cell colors.
 #'
-#' @return A ggplot2 plot object of the map. Alternatively, `return_df = TRUE`
+#' @details The lambda parameter allows for visual tuning of highly skewed
+#'   distribution data. It is not uncommon for distributions to contain highly skewed
+#'   intensity values because individuals spend a vast majority of their
+#'   time within a relatively small area or because populations are relatively
+#'   dense during some seasons and relatively dispersed during others. This can
+#'   make visualizing distributions a challenge. The lambda parameter transforms
+#'   intensity values via the [scales::modulus_trans()] function, allowing
+#'   users to adjust the relative visual weight of high and low intensity values.
+#'
+#'
+#'#' @return A ggplot2 plot object of the map. Alternatively, `return_df = TRUE`
 #'   will return a data frame containing the raster data in data frame format
 #'   along with the associated cell colors. The data frame columns are:
 #'   - `x`,`y`: coordinates of raster cell centers.
@@ -179,7 +209,7 @@ map_multiples <- function(x, palette, ncol, lambda = 0, labels = NULL,
                                 "palette_timecycle",
                                 "palette_groups")),
             c("specificity", "layer", "color") %in% names(palette))
-  stopifnot(length(lambda) == 1, is.numeric(lambda), lambda >= 0)
+  stopifnot(length(lambda) == 1, is.numeric(lambda))
   if (missing(ncol)) {
     ncol <- round(sqrt(raster::nlayers(x)))
   } else {
@@ -242,7 +272,7 @@ map_multiples <- function(x, palette, ncol, lambda = 0, labels = NULL,
     ggplot2::geom_tile() +
     ggplot2::scale_fill_manual(values = map_colors) +
     #ggplot2::scale_color_manual(values = map_colors) +
-    ggplot2::scale_alpha_continuous(trans = scales::modulus_trans(lambda),
+    ggplot2::scale_alpha_continuous(trans = scales::modulus_trans(lambda + 1),
                                     range = c(0, 1)) +
     ggplot2::facet_wrap(~ layer, ncol = ncol,
                         labeller = ggplot2::labeller(layer = labels)) +
