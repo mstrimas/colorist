@@ -1,14 +1,20 @@
 # palette_timecycle ----
 
-#' Make HCL palette for a cyclical sequence of distributions
+#' Make an HCL palette for visualizing a cyclical sequence of distributions
 #'
-#' @param x RasterStack or integer giving the number of layers to build the
-#'   color palette for.
+#' @description This function generates an HCL palette for visualizing
+#'   a cyclical sequence of distributions (e.g., a series of species
+#'   distributions describing occurrence throughout a 52-week annual
+#'   cycle or utilization distributions describing space use throughout
+#'   a 24-hour daily cycle)
 #'
-#' @return A data frame with the following columns:
-#'   - `specificity`: amount of variation between layers; mapped to chroma.
-#'   - `layer`: layer with the maximum cell value; mapped to hue.
-#'   - `color`: color associated with the given specificity and peak layer.
+#' @param x RasterStack or integer describing the number of layers for which colors need to be generated.
+#'
+#' @return A data frame with three columns:
+#'   - `layer`: the layer containing the maximum intensity value; mapped to hue.
+#'   - `specificity`: the degree to which intensity values are unevenly distributed across layers; mapped to chroma.
+#'   - `color`: the hexadecimal color associated with the given layer and specificity values.
+#'
 #' @family palette
 #' @seealso [palette_timeline] for linear sequences of distributions and
 #'   [palette_groups] for distributions of distinct groups.
@@ -69,20 +75,26 @@ palette_timecycle.Raster<- function(x) {
 
 # palette_timeline ----
 
-#' Make HCL palette for a linear sequence of distributions
+#' Make an HCL palette for visualizing a linear sequence of distributions
 #'
-#' @param x RasterStack or integer giving the number of layers to build the
-#'   color palette for.
+#' @description This function generates an HCL palette for visualizing
+#'   a linear sequence of distributions (e.g., a series of utilization
+#'   distributions describing space use across multiple years or a series of
+#'   species distributions projected across an evenly spaced sequence of
+#'   changes to mean annual temperature).
+#'
+#' @param x RasterStack or integer describing the number of layers for which colors
+#'   need to be generated.
 #' @param start_hue integer between -360 and 360 representing the starting hue
 #'   in the color wheel. The ending hue will be `start_hue` + 180. For
 #'   further details, consult the documentation for [colorspace::rainbow_hcl].
-#'   Recommended values are -130, giving a blue-pink-yellow palette, and 50,
-#'   giving a yellow-green-blue palette.
+#'   Recommended values are -130 (blue-pink-yellow palette) and 50
+#'   (yellow-green-blue palette).
 #'
-#' @return A data frame with the following columns:
-#'   - `specificity`: amount of variation between layers; mapped to chroma.
-#'   - `layer`: layer with the maximum cell value; mapped to hue.
-#'   - `color`: color associated with the given specificity and peak layer.
+#' @return A data frame with three columns:
+#'   - `layer`: the layer containing the maximum intensity value; mapped to hue.
+#'   - `specificity`: the degree to which intensity values are unevenly distributed across layers; mapped to chroma.
+#'   - `color`: the hexadecimal color associated with the given layer and specificity values.
 #' @family palette
 #' @seealso [palette_timecycle] for cyclical sequences of distributions and
 #'   [palette_groups] for distributions of distinct groups.
@@ -148,15 +160,21 @@ palette_timeline.Raster<- function(x, start_hue = -130) {
 
 # palette_groups ----
 
-#' Make HCL palette for the distributions of distinct groups
+#' Make an HCL palette for visualizing the distributions of distinct groups
 #'
-#' @param x RasterStack or integer giving the number of layers to build the
-#'   color palette for.
+#' @description This function generates an HCL palette for visualizing
+#'   a small set of distributions (e.g., utilization
+#'   distributions describing space use by five individuals or
+#'   species distributions for five separate species).
 #'
-#' @return A data frame with the following columns:
-#'   - `specificity`: seasonality; mapped to chroma.
-#'   - `layer`: layer number for each group; mapped to hue.
-#'   - `color`: color associated with the given specificity and peak layer.
+#' @param x RasterStack or integer describing the number of layers for which colors
+#'   need to be generated.
+#'
+#' @return A data frame with three columns:
+#'   - `layer`: the layer containing the maximum intensity value; mapped to hue.
+#'   - `specificity`: the degree to which intensity values are unevenly distributed across layers; mapped to chroma.
+#'   - `color`: the hexadecimal color associated with the given layer and specificity values.
+#'
 #' @family palette
 #' @seealso [palette_timecycle] for cyclical sequences of distributions and
 #'   [palette_timeline] for linear sequences of distributions.
