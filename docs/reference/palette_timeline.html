@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Make HCL palette for a linear sequence of distributions — palette_timeline • colorist</title>
+<title>Make an HCL palette for visualizing a linear sequence of distributions — palette_timeline • colorist</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,12 @@
 
 
 
-<meta property="og:title" content="Make HCL palette for a linear sequence of distributions — palette_timeline" />
-<meta property="og:description" content="Make HCL palette for a linear sequence of distributions" />
+<meta property="og:title" content="Make an HCL palette for visualizing a linear sequence of distributions — palette_timeline" />
+<meta property="og:description" content="This function generates an HCL palette for visualizing
+a linear sequence of distributions (e.g., a series of utilization
+distributions describing space use across multiple years or a series of
+species distributions projected across an evenly spaced sequence of
+changes to mean annual temperature)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -105,41 +109,55 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Make HCL palette for a linear sequence of distributions</h1>
+    <h1>Make an HCL palette for visualizing a linear sequence of distributions</h1>
     <small class="dont-index">Source: <a href='https://github.com/mstrimas/colorist/blob/master/R/palette.R'><code>R/palette.R</code></a></small>
     <div class="hidden name"><code>palette_timeline.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Make HCL palette for a linear sequence of distributions</p>
+    <p>This function generates an HCL palette for visualizing
+a linear sequence of distributions (e.g., a series of utilization
+distributions describing space use across multiple years or a series of
+species distributions projected across an evenly spaced sequence of
+changes to mean annual temperature).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>palette_timeline</span>(<span class='no'>x</span>, <span class='kw'>start_hue</span> <span class='kw'>=</span> -<span class='fl'>130</span>)</pre>
+    <pre class="usage"><span class='fu'>palette_timeline</span>(<span class='no'>x</span>, <span class='kw'>start_hue</span> <span class='kw'>=</span> -<span class='fl'>130</span>, <span class='kw'>clockwise</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>RasterStack or integer giving the number of layers to build the
-color palette for.</p></td>
+      <td><p>RasterStack or integer describing the number of layers for which
+colors need to be generated.</p></td>
     </tr>
     <tr>
       <th>start_hue</th>
       <td><p>integer between -360 and 360 representing the starting hue
-in the color wheel. The ending hue will be <code>start_hue</code> + 180. For
-further details, consult the documentation for <a href='http://colorspace.R-Forge.R-project.org//reference/rainbow_hcl.html'>colorspace::rainbow_hcl</a>.
-Recommended values are -130, giving a blue-pink-yellow palette, and 50,
-giving a yellow-green-blue palette.</p></td>
+in the color wheel. For further details, consult the documentation for
+<a href='http://colorspace.R-Forge.R-project.org//reference/rainbow_hcl.html'>colorspace::rainbow_hcl</a>. Recommended values are -130 (blue-pink-yellow
+palette) and 50 (yellow-green-blue palette).</p></td>
+    </tr>
+    <tr>
+      <th>clockwise</th>
+      <td><p>logical indicating which direction to move through HCL
+space. The ending hue will be <code>start_hue + 180</code> when <code>clockwise = FALSE</code>
+and <code>start_hue - 180</code> when <code>clockwise = FALSE</code>. For example, with
+the default <code>start_hue = -130</code>, <code>clockwise = FALSE</code> will yield a
+blue-pink-yellow palette palette, while <code>clockwise = TRUE</code> will yield a
+blue-green-yellow palette.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame with the following columns:</p><ul>
-<li><p><code>specificity</code>: amount of variation between layers; mapped to chroma.</p></li>
-<li><p><code>layer</code>: layer with the maximum cell value; mapped to hue.</p></li>
-<li><p><code>color</code>: color associated with the given specificity and peak layer.</p></li>
+    <p>A data frame with three columns:</p><ul>
+<li><p><code>layer</code>: the layer containing the maximum intensity value; mapped to hue.</p></li>
+<li><p><code>specificity</code>: the degree to which intensity values are unevenly
+distributed across layers; mapped to chroma.</p></li>
+<li><p><code>color</code>: the hexadecimal color associated with the given layer and
+specificity values.</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -163,12 +181,15 @@ giving a yellow-green-blue palette.</p></td>
 #&gt; 4           0     4 #6A6A6A
 #&gt; 5           1     1 #6A6B6B
 #&gt; 6           1     2 #6B6A6C</div><div class='input'>
+<span class='co'># use a clockwise palette</span>
+<span class='no'>pal_b</span> <span class='kw'>&lt;-</span> <span class='fu'>palette_timeline</span>(<span class='no'>elephant_ud</span>, <span class='kw'>clockwise</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
 <span class='co'># try a different starting hue</span>
-<span class='no'>pal_b</span> <span class='kw'>&lt;-</span> <span class='fu'>palette_timeline</span>(<span class='no'>elephant_ud</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>50</span>)
+<span class='no'>pal_c</span> <span class='kw'>&lt;-</span> <span class='fu'>palette_timeline</span>(<span class='no'>elephant_ud</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>50</span>)
 
 <span class='co'># visualize the palette in HCL space  with colorspace::hclplot</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>colorspace</span>)
-<span class='fu'><a href='http://colorspace.R-Forge.R-project.org//reference/hclplot.html'>hclplot</a></span>(<span class='no'>pal_a</span>[<span class='no'>pal_a</span>$<span class='no'>specificity</span> <span class='kw'>==</span> <span class='fl'>100</span>, ]$<span class='no'>color</span>)</div><div class='img'><img src='palette_timeline-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='http://colorspace.R-Forge.R-project.org//reference/hclplot.html'>hclplot</a></span>(<span class='no'>pal_b</span>[<span class='no'>pal_b</span>$<span class='no'>specificity</span> <span class='kw'>==</span> <span class='fl'>100</span>, ]$<span class='no'>color</span>)</div><div class='img'><img src='palette_timeline-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='http://colorspace.R-Forge.R-project.org//reference/hclplot.html'>hclplot</a></span>(<span class='no'>pal_a</span>[<span class='no'>pal_a</span>$<span class='no'>specificity</span> <span class='kw'>==</span> <span class='fl'>100</span>, ]$<span class='no'>color</span>)</div><div class='img'><img src='palette_timeline-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='http://colorspace.R-Forge.R-project.org//reference/hclplot.html'>hclplot</a></span>(<span class='no'>pal_b</span>[<span class='no'>pal_b</span>$<span class='no'>specificity</span> <span class='kw'>==</span> <span class='fl'>100</span>, ]$<span class='no'>color</span>)</div><div class='img'><img src='palette_timeline-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='http://colorspace.R-Forge.R-project.org//reference/hclplot.html'>hclplot</a></span>(<span class='no'>pal_c</span>[<span class='no'>pal_b</span>$<span class='no'>specificity</span> <span class='kw'>==</span> <span class='fl'>100</span>, ]$<span class='no'>color</span>)</div><div class='img'><img src='palette_timeline-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

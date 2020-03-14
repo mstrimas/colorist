@@ -2,32 +2,54 @@
 % Please edit documentation in R/metrics.R
 \name{metrics_distill}
 \alias{metrics_distill}
-\title{Distill a raster stack into a set of metrics for each cells}
+\title{Distill a raster stack into a set of distribution metrics}
 \usage{
 metrics_distill(x)
 }
 \arguments{
-\item{x}{RasterStack with each layer typically corresponding to the
-distribution of an individual or species at a given time interval.}
+\item{x}{RasterStack of distributions. Layers typically contain information
+about the distribution of a single individual or species at multiple points
+in time. Alternatively, layers may contain information about the
+distributions of multiple individuals or species within a single time
+period. Other conceptualizations are possible.}
 }
 \value{
 A RasterStack with four layers:
 \itemize{
-\item \code{intensity}: the maximum pixel intensity across all layers
-\item \code{intensity_mean}: the mean pixel intensity across all layers
-\item \code{layer}: the layer number associated with the maximum intensity.
-\item \code{specificity}: the amount of variation between layers for each cell, this
-is a measure of seasonality if the layers represents different times of
-year.
-\item \code{n_layers}: the number of intervals with a non-NA pixel value
+\item \code{intensity}: the maximum intensity value across all layers.
+\item \code{layer}: the layer containing the maximum intensity value.
+\item \code{specificity}: the degree to which intensity values are unevenly
+distributed across layers (see Details).
+\item \code{n_layers}: the number of layers with non-NA values (see Details).
 }
 
-Here intensity is the result of dividing all cell values by the maximum
-cell value across all layers. This maximum value is stored as the
-\code{"maximum"} attribute.
+The maximum cell value in the stack is stored as the \code{"maximum"} attribute.
 }
 \description{
-Distill a raster stack into a set of metrics for each cells
+This function is used to summarize several distributional
+features of interest across a series of distributions. Distributional
+information in the original raster stack is "distilled" for subsequent
+visualization.
+}
+\details{
+Specificity values range from 0 to 100. Values of 0 indicate
+intensity values are identical in all layers. Values of 100 indicate
+intensity values are restricted to a single layer. Interpretation of
+specificity values depends on the layers provided. If layers describe the
+distribution of a species at different times of the year, specificity can
+be interpreted as a measure of seasonality (i.e., 0 = stable year-round
+occurrence in a cell, 100 = highly seasonal occurrence). If layers describe
+space use by multiple individuals, specificity can be interpreted as a
+measure of exclusivity (i.e., 0 = equal use of a cell by all individuals,
+100 = exclusive use by one individual).
+
+The number of layers with non-NA values is recorded to aid interpretation
+of distributions. Ideally, n_layers values are identical in every cell,
+indicating that users have knowledge of distributions over the same area in
+every layer of their raster stack. When n_layers values are unequal, it
+indicates that users have unequal knowledge of distributions in their
+raster stack. Distributions are more likely to be misrepresented and
+misinterpreted if cells do not contain intensity values in every layer.
 }
 \examples{
 # load elephant data

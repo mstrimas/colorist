@@ -2,24 +2,29 @@
 % Please edit documentation in R/palette.R
 \name{palette_groups}
 \alias{palette_groups}
-\title{Make HCL palette for the distributions of distinct groups}
+\title{Make an HCL palette for visualizing the distributions of distinct groups}
 \usage{
 palette_groups(x)
 }
 \arguments{
-\item{x}{RasterStack or integer giving the number of layers to build the
-color palette for.}
+\item{x}{RasterStack or integer describing the number of layers for which
+colors need to be generated.}
 }
 \value{
-A data frame with the following columns:
+A data frame with three columns:
 \itemize{
-\item \code{specificity}: seasonality; mapped to chroma.
-\item \code{layer}: layer number for each group; mapped to hue.
-\item \code{color}: color associated with the given specificity and peak layer.
+\item \code{layer}: the layer containing the maximum intensity value; mapped to hue.
+\item \code{specificity}: the degree to which intensity values are unevenly
+distributed across layers; mapped to chroma.
+\item \code{color}: the hexadecimal color associated with the given layer and
+specificity values.
 }
 }
 \description{
-Make HCL palette for the distributions of distinct groups
+This function generates an HCL palette for visualizing
+a small set of distributions (e.g., utilization
+distributions describing space use by five individuals or
+species distributions for five separate species).
 }
 \examples{
 # load elephant data

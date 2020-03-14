@@ -1,19 +1,20 @@
 #' Visualize distributions in a single map
 #'
-#' @description This function enables visualization of distributional information
-#'   in a single map by combining distribution metrics and an HCL color palette.
+#' @description This function enables visualization of distributional
+#'   information in a single map by combining distribution metrics and an HCL
+#'   color palette.
 #'
 #' @param x RasterStack of distributions processed by [metrics_pull()] or
 #'   [metrics_distill()].
-#' @param palette data frame containing an HCL color palette generated using [palette_timecycle()],
-#'   [palette_timeline()], or [palette_groups()].
+#' @param palette data frame containing an HCL color palette generated using
+#'   [palette_timecycle()], [palette_timeline()], or [palette_groups()].
 #' @param layer integer (or character) corresponding to the index (or name) of a
 #'   single layer to map. This argument is ignored if [metrics_distill()] was
 #'   used to generate x.
-#' @param lambda number that allows visual tuning of intensity values
-#'   via the [scales::modulus_trans()] function (see Details). Negative numbers
-#'   decrease apparent skew of intensity values. Positive numbers increase apparent
-#'   skew of intensity values.
+#' @param lambda number that allows visual tuning of intensity values via the
+#'   [scales::modulus_trans()] function (see Details). Negative numbers decrease
+#'   apparent skew of intensity values. Positive numbers increase apparent skew
+#'   of intensity values.
 #' @param return_df logical specifying whether the function should return a
 #'   ggplot2 plot object (FALSE) or a data frame containing the raster data and
 #'   associated cell colors.
@@ -30,14 +31,13 @@
 #'   - `color`: color associated with the given specificity and peak layer.
 #'
 #' @details The lambda parameter allows for visual tuning of highly skewed
-#'   distribution data. It is not uncommon for distributions to contain highly skewed
-#'   intensity values because individuals spend a vast majority of their
+#'   distribution data. It is not uncommon for distributions to contain highly
+#'   skewed intensity values because individuals spend a vast majority of their
 #'   time within a relatively small area or because populations are relatively
 #'   dense during some seasons and relatively dispersed during others. This can
 #'   make visualizing distributions a challenge. The lambda parameter transforms
-#'   intensity values via the [scales::modulus_trans()] function, allowing
-#'   users to adjust the relative visual weight of high and low intensity values.
-#'
+#'   intensity values via the [scales::modulus_trans()] function, allowing users
+#'   to adjust the relative visual weight of high and low intensity values.
 #'
 #' @family map
 #' @export
@@ -147,17 +147,18 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
 
 #' Visualize multiple distributions in a series of maps
 #'
-#' @description This function enables visualization of distributional information
-#'   in a series of small multiples by combining distribution metrics and an HCL color palette.
+#' @description This function enables visualization of distributional
+#'   information in a series of small multiples by combining distribution
+#'   metrics and an HCL color palette.
 #'
 #' @param x RasterStack of distributions processed by [metrics_pull()].
-#' @param palette data frame containing an HCL color palette generated using [palette_timecycle()],
-#'   [palette_timeline()], or [palette_groups()].
+#' @param palette data frame containing an HCL color palette generated using
+#'   [palette_timecycle()], [palette_timeline()], or [palette_groups()].
 #' @param ncol integer specifying the number of columns in the grid of plots.
-#' @param lambda number that allows visual tuning of intensity values
-#'   via the [scales::modulus_trans()] function (see Details). Negative numbers
-#'   decrease apparent skew of intensity values. Positive numbers increase apparent
-#'   skew of intensity values.
+#' @param lambda number that allows visual tuning of intensity values via the
+#'   [scales::modulus_trans()] function (see Details). Negative numbers decrease
+#'   apparent skew of intensity values. Positive numbers increase apparent skew
+#'   of intensity values.
 #' @param labels character vector of layer labels for each plot. The default is
 #'   to not show labels.
 #' @param return_df logical specifying whether the function should return a
@@ -165,13 +166,13 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
 #'   associated cell colors.
 #'
 #' @details The lambda parameter allows for visual tuning of highly skewed
-#'   distribution data. It is not uncommon for distributions to contain highly skewed
-#'   intensity values because individuals spend a vast majority of their
+#'   distribution data. It is not uncommon for distributions to contain highly
+#'   skewed intensity values because individuals spend a vast majority of their
 #'   time within a relatively small area or because populations are relatively
 #'   dense during some seasons and relatively dispersed during others. This can
 #'   make visualizing distributions a challenge. The lambda parameter transforms
-#'   intensity values via the [scales::modulus_trans()] function, allowing
-#'   users to adjust the relative visual weight of high and low intensity values.
+#'   intensity values via the [scales::modulus_trans()] function, allowing users
+#'   to adjust the relative visual weight of high and low intensity values.
 #'
 #'
 #'#' @return A ggplot2 plot object of the map. Alternatively, `return_df = TRUE`

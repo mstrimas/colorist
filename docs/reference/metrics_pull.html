@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Transform a raster stack to intensity values — metrics_pull • colorist</title>
+<title>Transform raster stack values to intensity values — metrics_pull • colorist</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,11 @@
 
 
 
-<meta property="og:title" content="Transform a raster stack to intensity values — metrics_pull" />
-<meta property="og:description" content="Transform a raster stack to intensity values" />
+<meta property="og:title" content="Transform raster stack values to intensity values — metrics_pull" />
+<meta property="og:description" content="This function transforms raster stack values that describe
+individual distributions or species distributions into standardized
+intensity values. All the distributional information in the original raster
+stack is preserved for visualization." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -105,13 +108,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Transform a raster stack to intensity values</h1>
+    <h1>Transform raster stack values to intensity values</h1>
     <small class="dont-index">Source: <a href='https://github.com/mstrimas/colorist/blob/master/R/metrics.R'><code>R/metrics.R</code></a></small>
     <div class="hidden name"><code>metrics_pull.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Transform a raster stack to intensity values</p>
+    <p>This function transforms raster stack values that describe
+individual distributions or species distributions into standardized
+intensity values. All the distributional information in the original raster
+stack is preserved for visualization.</p>
     </div>
 
     <pre class="usage"><span class='fu'>metrics_pull</span>(<span class='no'>x</span>)</pre>
@@ -121,16 +127,21 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>RasterStack with each layer typically corresponding to the
-distribution of an individual or species at a given time interval.</p></td>
+      <td><p>RasterStack of distributions. Layers typically contain information
+about the distribution of a single individual or species at multiple points
+in time. Alternatively, layers may contain information about the
+distributions of multiple individuals or species within a single time
+period. Other conceptualizations are possible.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A RasterStack resulting from converting the input stack to intensity
-values by dividing each layer by the maximum pixel value in that layer.
-These layer maxima are stored as the <code>"maximum"</code> attribute.</p>
+    <p>A RasterStack containing intensity values. Intensity values are
+calculated by dividing cell values in every layer by the maximum cell value
+in the entire stack, thus ensuring intensities are comparable across
+layers.</p>
+<p>The maximum cell value in the stack is stored as the <code>"maximum"</code> attribute.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other metrics: 
@@ -146,11 +157,11 @@ These layer maxima are stored as the <code>"maximum"</code> attribute.</p>
 #&gt; extent     : 1472441, 1582441, -2379329, -2270329  (xmin, xmax, ymin, ymax)
 #&gt; crs        : +proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs 
 #&gt; source     : memory
-#&gt; names      : year1, year2, year3, year4 
-#&gt; min values :     0,     0,     0,     0 
-#&gt; max values :     1,     1,     1,     1 
-#&gt; </div><div class='input'><span class='co'># maximum values for each layer stored as an attribute</span>
-<span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>r</span>, <span class='st'>"maximum"</span>)</div><div class='output co'>#&gt; [1] 0.003741765 0.004792186 0.004750540 0.003533928</div></pre>
+#&gt; names      :     year1,     year2,     year3,     year4 
+#&gt; min values :         0,         0,         0,         0 
+#&gt; max values : 0.7808055, 1.0000000, 0.9913096, 0.7374355 
+#&gt; </div><div class='input'><span class='co'># maximum value for the stack stored as an attribute</span>
+<span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>r</span>, <span class='st'>"maximum"</span>)</div><div class='output co'>#&gt; [1] 0.004792186</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

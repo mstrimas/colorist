@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Make HCL palette for a cyclical sequence of distributions — palette_timecycle • colorist</title>
+<title>Make an HCL palette for visualizing a cyclical sequence of distributions — palette_timecycle • colorist</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,12 @@
 
 
 
-<meta property="og:title" content="Make HCL palette for a cyclical sequence of distributions — palette_timecycle" />
-<meta property="og:description" content="Make HCL palette for a cyclical sequence of distributions" />
+<meta property="og:title" content="Make an HCL palette for visualizing a cyclical sequence of distributions — palette_timecycle" />
+<meta property="og:description" content="This function generates an HCL palette for visualizing
+a cyclical sequence of distributions (e.g., a series of species
+distributions describing occurrence throughout a 52-week annual
+cycle or utilization distributions describing space use throughout
+a 24-hour daily cycle)" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -105,33 +109,53 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Make HCL palette for a cyclical sequence of distributions</h1>
+    <h1>Make an HCL palette for visualizing a cyclical sequence of distributions</h1>
     <small class="dont-index">Source: <a href='https://github.com/mstrimas/colorist/blob/master/R/palette.R'><code>R/palette.R</code></a></small>
     <div class="hidden name"><code>palette_timecycle.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Make HCL palette for a cyclical sequence of distributions</p>
+    <p>This function generates an HCL palette for visualizing
+a cyclical sequence of distributions (e.g., a series of species
+distributions describing occurrence throughout a 52-week annual
+cycle or utilization distributions describing space use throughout
+a 24-hour daily cycle)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>palette_timecycle</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>palette_timecycle</span>(<span class='no'>x</span>, <span class='kw'>start_hue</span> <span class='kw'>=</span> <span class='fl'>240</span>, <span class='kw'>clockwise</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>RasterStack or integer giving the number of layers to build the
-color palette for.</p></td>
+      <td><p>RasterStack or integer describing the number of layers for which
+colors need to be generated.</p></td>
+    </tr>
+    <tr>
+      <th>start_hue</th>
+      <td><p>integer between -360 and 360 representing the starting hue
+in the color wheel. For further details, consult the documentation for
+<a href='http://colorspace.R-Forge.R-project.org//reference/rainbow_hcl.html'>colorspace::rainbow_hcl</a>. The default value of 240 will start the palette
+at blue.</p></td>
+    </tr>
+    <tr>
+      <th>clockwise</th>
+      <td><p>logical indicating which direction to move through HCL
+space. For example, with the default <code>start_hue = 240</code>, <code>clockwise = TRUE</code>
+will yield a blue-pink-yellow-green-blue palette, while <code>clockwise = FALSE</code>
+will yield a blue-green-yellow-pink-blue palette.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame with the following columns:</p><ul>
-<li><p><code>specificity</code>: amount of variation between layers; mapped to chroma.</p></li>
-<li><p><code>layer</code>: layer with the maximum cell value; mapped to hue.</p></li>
-<li><p><code>color</code>: color associated with the given specificity and peak layer.</p></li>
+    <p>A data frame with three columns:</p><ul>
+<li><p><code>layer</code>: the layer containing the maximum intensity value; mapped to hue.</p></li>
+<li><p><code>specificity</code>: the degree to which intensity values are unevenly
+distributed across layers; mapped to chroma.</p></li>
+<li><p><code>color</code>: the hexadecimal color associated with the given layer and
+specificity values.</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>

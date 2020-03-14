@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Distill a raster stack into a set of metrics for each cells — metrics_distill • colorist</title>
+<title>Distill a raster stack into a set of distribution metrics — metrics_distill • colorist</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,11 @@
 
 
 
-<meta property="og:title" content="Distill a raster stack into a set of metrics for each cells — metrics_distill" />
-<meta property="og:description" content="Distill a raster stack into a set of metrics for each cells" />
+<meta property="og:title" content="Distill a raster stack into a set of distribution metrics — metrics_distill" />
+<meta property="og:description" content="This function is used to summarize several distributional
+features of interest across a series of distributions. Distributional
+information in the original raster stack is &quot;distilled&quot; for subsequent
+visualization." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -105,13 +108,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Distill a raster stack into a set of metrics for each cells</h1>
+    <h1>Distill a raster stack into a set of distribution metrics</h1>
     <small class="dont-index">Source: <a href='https://github.com/mstrimas/colorist/blob/master/R/metrics.R'><code>R/metrics.R</code></a></small>
     <div class="hidden name"><code>metrics_distill.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Distill a raster stack into a set of metrics for each cells</p>
+    <p>This function is used to summarize several distributional
+features of interest across a series of distributions. Distributional
+information in the original raster stack is "distilled" for subsequent
+visualization.</p>
     </div>
 
     <pre class="usage"><span class='fu'>metrics_distill</span>(<span class='no'>x</span>)</pre>
@@ -121,26 +127,44 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>RasterStack with each layer typically corresponding to the
-distribution of an individual or species at a given time interval.</p></td>
+      <td><p>RasterStack of distributions. Layers typically contain information
+about the distribution of a single individual or species at multiple points
+in time. Alternatively, layers may contain information about the
+distributions of multiple individuals or species within a single time
+period. Other conceptualizations are possible.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A RasterStack with four layers:</p><ul>
-<li><p><code>intensity</code>: the maximum pixel intensity across all layers</p></li>
-<li><p><code>intensity_mean</code>: the mean pixel intensity across all layers</p></li>
-<li><p><code>layer</code>: the layer number associated with the maximum intensity.</p></li>
-<li><p><code>specificity</code>: the amount of variation between layers for each cell, this
-is a measure of seasonality if the layers represents different times of
-year.</p></li>
-<li><p><code>n_layers</code>: the number of intervals with a non-NA pixel value</p></li>
+<li><p><code>intensity</code>: the maximum intensity value across all layers.</p></li>
+<li><p><code>layer</code>: the layer containing the maximum intensity value.</p></li>
+<li><p><code>specificity</code>: the degree to which intensity values are unevenly
+distributed across layers (see Details).</p></li>
+<li><p><code>n_layers</code>: the number of layers with non-NA values (see Details).</p></li>
 </ul>
 
-<p>Here intensity is the result of dividing all cell values by the maximum
-cell value across all layers. This maximum value is stored as the
-<code>"maximum"</code> attribute.</p>
+<p>The maximum cell value in the stack is stored as the <code>"maximum"</code> attribute.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Specificity values range from 0 to 100. Values of 0 indicate
+intensity values are identical in all layers. Values of 100 indicate
+intensity values are restricted to a single layer. Interpretation of
+specificity values depends on the layers provided. If layers describe the
+distribution of a species at different times of the year, specificity can
+be interpreted as a measure of seasonality (i.e., 0 = stable year-round
+occurrence in a cell, 100 = highly seasonal occurrence). If layers describe
+space use by multiple individuals, specificity can be interpreted as a
+measure of exclusivity (i.e., 0 = equal use of a cell by all individuals,
+100 = exclusive use by one individual).</p>
+<p>The number of layers with non-NA values is recorded to aid interpretation
+of distributions. Ideally, n_layers values are identical in every cell,
+indicating that users have knowledge of distributions over the same area in
+every layer of their raster stack. When n_layers values are unequal, it
+indicates that users have unequal knowledge of distributions in their
+raster stack. Distributions are more likely to be misrepresented and
+misinterpreted if cells do not contain intensity values in every layer.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other metrics: 
@@ -151,13 +175,13 @@ cell value across all layers. This maximum value is stored as the
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"elephant_ud"</span>)
 <span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>metrics_distill</span>(<span class='no'>elephant_ud</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>r</span>)</div><div class='output co'>#&gt; class      : RasterStack 
-#&gt; dimensions : 218, 220, 47960, 5  (nrow, ncol, ncell, nlayers)
+#&gt; dimensions : 218, 220, 47960, 4  (nrow, ncol, ncell, nlayers)
 #&gt; resolution : 500, 500  (x, y)
 #&gt; extent     : 1472441, 1582441, -2379329, -2270329  (xmin, xmax, ymin, ymax)
 #&gt; crs        : +proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs 
-#&gt; names      :   intensity, intensity_mean,       layer, specificity,    n_layers 
-#&gt; min values :           0,              0,           1,           5,           4 
-#&gt; max values :   1.0000000,      0.6260617,   4.0000000, 100.0000000,   4.0000000 
+#&gt; names      : intensity, layer, specificity, n_layers 
+#&gt; min values :         0,     1,           5,        4 
+#&gt; max values :         1,     4,         100,        4 
 #&gt; </div><div class='input'><span class='co'># maximum value across all layers stored as an attribute</span>
 <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>r</span>, <span class='st'>"maximum"</span>)</div><div class='output co'>#&gt; [1] 0.004792186</div></pre>
   </div>
@@ -166,6 +190,7 @@ cell value across all layers. This maximum value is stored as the
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>

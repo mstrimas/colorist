@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Make HCL palette for the distributions of distinct groups — palette_groups • colorist</title>
+<title>Make an HCL palette for visualizing the distributions of distinct groups — palette_groups • colorist</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,11 @@
 
 
 
-<meta property="og:title" content="Make HCL palette for the distributions of distinct groups — palette_groups" />
-<meta property="og:description" content="Make HCL palette for the distributions of distinct groups" />
+<meta property="og:title" content="Make an HCL palette for visualizing the distributions of distinct groups — palette_groups" />
+<meta property="og:description" content="This function generates an HCL palette for visualizing
+a small set of distributions (e.g., utilization
+distributions describing space use by five individuals or
+species distributions for five separate species)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -105,13 +108,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Make HCL palette for the distributions of distinct groups</h1>
+    <h1>Make an HCL palette for visualizing the distributions of distinct groups</h1>
     <small class="dont-index">Source: <a href='https://github.com/mstrimas/colorist/blob/master/R/palette.R'><code>R/palette.R</code></a></small>
     <div class="hidden name"><code>palette_groups.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Make HCL palette for the distributions of distinct groups</p>
+    <p>This function generates an HCL palette for visualizing
+a small set of distributions (e.g., utilization
+distributions describing space use by five individuals or
+species distributions for five separate species).</p>
     </div>
 
     <pre class="usage"><span class='fu'>palette_groups</span>(<span class='no'>x</span>)</pre>
@@ -121,17 +127,19 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>RasterStack or integer giving the number of layers to build the
-color palette for.</p></td>
+      <td><p>RasterStack or integer describing the number of layers for which
+colors need to be generated.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame with the following columns:</p><ul>
-<li><p><code>specificity</code>: seasonality; mapped to chroma.</p></li>
-<li><p><code>layer</code>: layer number for each group; mapped to hue.</p></li>
-<li><p><code>color</code>: color associated with the given specificity and peak layer.</p></li>
+    <p>A data frame with three columns:</p><ul>
+<li><p><code>layer</code>: the layer containing the maximum intensity value; mapped to hue.</p></li>
+<li><p><code>specificity</code>: the degree to which intensity values are unevenly
+distributed across layers; mapped to chroma.</p></li>
+<li><p><code>color</code>: the hexadecimal color associated with the given layer and
+specificity values.</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>

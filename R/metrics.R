@@ -1,19 +1,20 @@
 #' Transform raster stack values to intensity values
 #'
 #' @description This function transforms raster stack values that describe
-#'   individual distributions or species distributions into standardized intensity values.
-#'   All the distributional information in the original raster stack is preserved for visualization.
+#'   individual distributions or species distributions into standardized
+#'   intensity values. All the distributional information in the original raster
+#'   stack is preserved for visualization.
 #'
-#' @param x RasterStack of distributions. Layers typically contain information about the distribution of
-#'   a single individual or species at multiple points in time.
-#'   Alternatively, layers may contain information about the distributions of
-#'   multiple individuals or species within a single time period. Other
-#'   conceptualizations are possible.
+#' @param x RasterStack of distributions. Layers typically contain information
+#'   about the distribution of a single individual or species at multiple points
+#'   in time. Alternatively, layers may contain information about the
+#'   distributions of multiple individuals or species within a single time
+#'   period. Other conceptualizations are possible.
 #'
-#' @return A RasterStack containing intensity values.
-#'   Intensity values are calculated by dividing cell values in every layer
-#'   by the maximum cell value in the entire stack, thus ensuring intensities
-#'   are comparable across layers.
+#' @return A RasterStack containing intensity values. Intensity values are
+#'   calculated by dividing cell values in every layer by the maximum cell value
+#'   in the entire stack, thus ensuring intensities are comparable across
+#'   layers.
 #'
 #'   The maximum cell value in the stack is stored as the `"maximum"` attribute.
 #'
@@ -47,40 +48,42 @@ metrics_pull <- function(x) {
 #'
 #' @description This function is used to summarize several distributional
 #'   features of interest across a series of distributions. Distributional
-#'   information in the original raster stack is "distilled" for subsequent visualization.
+#'   information in the original raster stack is "distilled" for subsequent
+#'   visualization.
 #'
-#' #' @param x RasterStack of distributions. Layers typically contain information about the distribution of
-#'   a single individual or species at multiple points in time.
-#'   Alternatively, layers may contain information about the distributions of
-#'   multiple individuals or species within a single time period. Other
-#'   conceptualizations are possible.
+#' @param x RasterStack of distributions. Layers typically contain information
+#'   about the distribution of a single individual or species at multiple points
+#'   in time. Alternatively, layers may contain information about the
+#'   distributions of multiple individuals or species within a single time
+#'   period. Other conceptualizations are possible.
+#'
+#' @details Specificity values range from 0 to 100. Values of 0 indicate
+#'   intensity values are identical in all layers. Values of 100 indicate
+#'   intensity values are restricted to a single layer. Interpretation of
+#'   specificity values depends on the layers provided. If layers describe the
+#'   distribution of a species at different times of the year, specificity can
+#'   be interpreted as a measure of seasonality (i.e., 0 = stable year-round
+#'   occurrence in a cell, 100 = highly seasonal occurrence). If layers describe
+#'   space use by multiple individuals, specificity can be interpreted as a
+#'   measure of exclusivity (i.e., 0 = equal use of a cell by all individuals,
+#'   100 = exclusive use by one individual).
+#'
+#'   The number of layers with non-NA values is recorded to aid interpretation
+#'   of distributions. Ideally, n_layers values are identical in every cell,
+#'   indicating that users have knowledge of distributions over the same area in
+#'   every layer of their raster stack. When n_layers values are unequal, it
+#'   indicates that users have unequal knowledge of distributions in their
+#'   raster stack. Distributions are more likely to be misrepresented and
+#'   misinterpreted if cells do not contain intensity values in every layer.
 #'
 #' @return A RasterStack with four layers:
 #'   - `intensity`: the maximum intensity value across all layers.
 #'   - `layer`: the layer containing the maximum intensity value.
-#'   - `specificity`: the degree to which intensity values are unevenly distributed across layers (see Details).
+#'   - `specificity`: the degree to which intensity values are unevenly
+#'   distributed across layers (see Details).
 #'   - `n_layers`: the number of layers with non-NA values (see Details).
 #'
 #'   The maximum cell value in the stack is stored as the `"maximum"` attribute.
-#'
-#' @details Specificity values range from 0 to 100. Values of 0 indicate
-#'   intensity values are identical in all layers. Values of 100 indicate
-#'   intensity values are restricted to a single layer. Interpretation of specificity values depends on the layers provided.
-#'   If layers describe the distribution of a species at different times of
-#'   the year, specificity can be interpreted as a measure of seasonality
-#'   (i.e., 0 = stable year-round occurrence in a cell, 100 = highly seasonal occurrence).
-#'   If layers describe space use by multiple individuals, specificity
-#'   can be interpreted as a measure of exclusivity (i.e., 0 = equal use of a cell
-#'   by all individuals, 100 = exclusive use by one individual).
-#'
-#'   The number of layers with non-NA values is recorded to aid interpretation of
-#'   distributions. Ideally, n_layers values are identical in every cell,
-#'   indicating that users have knowledge of distributions over the same area
-#'   in every layer of their raster stack. When n_layers values are unequal,
-#'   it indicates that users have unequal knowledge of distributions in their
-#'   raster stack. Distributions are more likely to be misrepresented and
-#'   misinterpreted if cells do not contain intensity values in every layer.
-#'
 #'
 #' @family metrics
 #' @export

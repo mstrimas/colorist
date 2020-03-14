@@ -8,12 +8,23 @@
 #'   cycle or utilization distributions describing space use throughout
 #'   a 24-hour daily cycle)
 #'
-#' @param x RasterStack or integer describing the number of layers for which colors need to be generated.
+#' @param x RasterStack or integer describing the number of layers for which
+#'   colors need to be generated.
+#' @param start_hue integer between -360 and 360 representing the starting hue
+#'   in the color wheel. For further details, consult the documentation for
+#'   [colorspace::rainbow_hcl]. The default value of 240 will start the palette
+#'   at blue.
+#' @param clockwise logical indicating which direction to move through HCL
+#'   space. For example, with the default `start_hue = 240`, `clockwise = TRUE`
+#'   will yield a blue-pink-yellow-green-blue palette, while `clockwise = FALSE`
+#'   will yield a blue-green-yellow-pink-blue palette.
 #'
 #' @return A data frame with three columns:
 #'   - `layer`: the layer containing the maximum intensity value; mapped to hue.
-#'   - `specificity`: the degree to which intensity values are unevenly distributed across layers; mapped to chroma.
-#'   - `color`: the hexadecimal color associated with the given layer and specificity values.
+#'   - `specificity`: the degree to which intensity values are unevenly
+#'   distributed across layers; mapped to chroma.
+#'   - `color`: the hexadecimal color associated with the given layer and
+#'   specificity values.
 #'
 #' @family palette
 #' @seealso [palette_timeline] for linear sequences of distributions and
@@ -30,20 +41,27 @@
 #' # visualize the palette in HCL space with colorspace::hclplot
 #' library(colorspace)
 #' hclplot(pal[pal$specificity == 100, ]$color)
-palette_timecycle <- function(x) {
+palette_timecycle <- function(x, start_hue = 240, clockwise = FALSE) {
   UseMethod("palette_timecycle")
 }
 
 #' @export
-palette_timecycle.integer <- function(x) {
+palette_timecycle.integer <- function(x, start_hue = 240, clockwise = FALSE) {
   if (x < 2) {
     stop("At least two intervals are required to generate a palette.")
   }
-  # start the palette at blue
-  start <- round(0.67 * x, 0)
-  layer <- c(start:1, x:(start + 1))
+  stopifnot(is.numeric(start_hue), length(start_hue) == 1,
+            start_hue >= -360, start_hue <= 360)
+  stopifnot(is.logical(clockwise), length(clockwise) == 1)
+  if (isTRUE(clockwise)) {
+    end_hue <- start_hue - 360 * ((x - 1)  / x)
+  } else {
+    end_hue <- start_hue + 360 * ((x - 1)  / x)
+  }
+
+  # set up color wheel
   wheel <- data.frame(specificity = rep(0:100, each = x),
-                      layer = rep(layer, times = 101),
+                      layer = rep(seq_len(x), times = 101),
                       color = NA_character_,
                       stringsAsFactors = FALSE)
   # generate palettes for each chroma value
@@ -52,8 +70,8 @@ palette_timecycle.integer <- function(x) {
     wheel[["color"]][idx] <- colorspace::rainbow_hcl(x,
                                                      c = i,
                                                      l = 45,
-                                                     start = 0,
-                                                     end = 360 * ((x - 1)  / x),
+                                                     start = start_hue,
+                                                     end = end_hue,
                                                      fixup = TRUE)
   }
   wheel <- wheel[order(wheel[["specificity"]], wheel[["layer"]]), ]
@@ -63,13 +81,13 @@ palette_timecycle.integer <- function(x) {
 }
 
 #' @export
-palette_timecycle.numeric <- function(x) {
-  palette_timecycle(as.integer(x))
+palette_timecycle.numeric <- function(x, start_hue = 240, clockwise = FALSE) {
+  palette_timecycle(as.integer(x), start_hue, clockwise)
 }
 
 #' @export
-palette_timecycle.Raster<- function(x) {
-  palette_timecycle(raster::nlayers(x))
+palette_timecycle.Raster<- function(x, start_hue = 240, clockwise = FALSE) {
+  palette_timecycle(raster::nlayers(x), start_hue, clockwise)
 }
 
 
@@ -83,18 +101,25 @@ palette_timecycle.Raster<- function(x) {
 #'   species distributions projected across an evenly spaced sequence of
 #'   changes to mean annual temperature).
 #'
-#' @param x RasterStack or integer describing the number of layers for which colors
-#'   need to be generated.
+#' @param x RasterStack or integer describing the number of layers for which
+#'   colors need to be generated.
 #' @param start_hue integer between -360 and 360 representing the starting hue
-#'   in the color wheel. The ending hue will be `start_hue` + 180. For
-#'   further details, consult the documentation for [colorspace::rainbow_hcl].
-#'   Recommended values are -130 (blue-pink-yellow palette) and 50
-#'   (yellow-green-blue palette).
+#'   in the color wheel. For further details, consult the documentation for
+#'   [colorspace::rainbow_hcl]. Recommended values are -130 (blue-pink-yellow
+#'   palette) and 50 (yellow-green-blue palette).
+#' @param clockwise logical indicating which direction to move through HCL
+#'   space. The ending hue will be `start_hue + 180` when `clockwise = FALSE`
+#'   and `start_hue - 180` when `clockwise = FALSE`. For example, with
+#'   the default `start_hue = -130`, `clockwise = FALSE` will yield a
+#'   blue-pink-yellow palette palette, while `clockwise = TRUE` will yield a
+#'   blue-green-yellow palette.
 #'
 #' @return A data frame with three columns:
 #'   - `layer`: the layer containing the maximum intensity value; mapped to hue.
-#'   - `specificity`: the degree to which intensity values are unevenly distributed across layers; mapped to chroma.
-#'   - `color`: the hexadecimal color associated with the given layer and specificity values.
+#'   - `specificity`: the degree to which intensity values are unevenly
+#'   distributed across layers; mapped to chroma.
+#'   - `color`: the hexadecimal color associated with the given layer and
+#'   specificity values.
 #' @family palette
 #' @seealso [palette_timecycle] for cyclical sequences of distributions and
 #'   [palette_groups] for distributions of distinct groups.
@@ -107,23 +132,34 @@ palette_timecycle.Raster<- function(x) {
 #' pal_a <- palette_timeline(elephant_ud)
 #' head(pal_a)
 #'
+#' # use a clockwise palette
+#' pal_b <- palette_timeline(elephant_ud, clockwise = TRUE)
+#'
 #' # try a different starting hue
-#' pal_b <- palette_timeline(elephant_ud, start = 50)
+#' pal_c <- palette_timeline(elephant_ud, start = 50)
 #'
 #' # visualize the palette in HCL space  with colorspace::hclplot
 #' library(colorspace)
 #' hclplot(pal_a[pal_a$specificity == 100, ]$color)
 #' hclplot(pal_b[pal_b$specificity == 100, ]$color)
-palette_timeline <- function(x, start_hue = -130) {
+#' hclplot(pal_c[pal_b$specificity == 100, ]$color)
+palette_timeline <- function(x, start_hue = -130, clockwise = FALSE) {
   UseMethod("palette_timeline")
 }
 
 #' @export
-palette_timeline.integer <- function(x, start_hue = -130) {
+palette_timeline.integer <- function(x, start_hue = -130, clockwise = FALSE) {
   if (x < 2) {
     stop("At least two intervals are required to generate a palette.")
   }
-  stopifnot(length(start_hue) == 1, start_hue >= -360, start_hue <= 360)
+  stopifnot(is.numeric(start_hue), length(start_hue) == 1,
+            start_hue >= -360, start_hue <= 360)
+  stopifnot(is.logical(clockwise), length(clockwise) == 1)
+  if (isTRUE(clockwise)) {
+    end_hue <- start_hue - 180
+  } else {
+    end_hue <- start_hue + 180
+  }
 
   # set up color wheel
   wheel <- expand.grid(specificity = 0:100,
@@ -140,7 +176,7 @@ palette_timeline.integer <- function(x, start_hue = -130) {
                                                      c = i,
                                                      l = 45,
                                                      start = start_hue,
-                                                     end = start_hue + 180,
+                                                     end = end_hue,
                                                      fixup = TRUE)
   }
   class(wheel) <- c("palette_timecycle", "data.frame")
@@ -148,13 +184,13 @@ palette_timeline.integer <- function(x, start_hue = -130) {
 }
 
 #' @export
-palette_timeline.numeric <- function(x, start_hue = -130) {
-  palette_timeline(as.integer(x), start_hue)
+palette_timeline.numeric <- function(x, start_hue = -130, clockwise = FALSE) {
+  palette_timeline(as.integer(x), start_hue, clockwise)
 }
 
 #' @export
-palette_timeline.Raster<- function(x, start_hue = -130) {
-  palette_timeline(raster::nlayers(x), start_hue)
+palette_timeline.Raster<- function(x, start_hue = -130, clockwise = FALSE) {
+  palette_timeline(raster::nlayers(x), start_hue, clockwise)
 }
 
 
@@ -167,13 +203,15 @@ palette_timeline.Raster<- function(x, start_hue = -130) {
 #'   distributions describing space use by five individuals or
 #'   species distributions for five separate species).
 #'
-#' @param x RasterStack or integer describing the number of layers for which colors
-#'   need to be generated.
+#' @param x RasterStack or integer describing the number of layers for which
+#'   colors need to be generated.
 #'
 #' @return A data frame with three columns:
 #'   - `layer`: the layer containing the maximum intensity value; mapped to hue.
-#'   - `specificity`: the degree to which intensity values are unevenly distributed across layers; mapped to chroma.
-#'   - `color`: the hexadecimal color associated with the given layer and specificity values.
+#'   - `specificity`: the degree to which intensity values are unevenly
+#'   distributed across layers; mapped to chroma.
+#'   - `color`: the hexadecimal color associated with the given layer and
+#'   specificity values.
 #'
 #' @family palette
 #' @seealso [palette_timecycle] for cyclical sequences of distributions and

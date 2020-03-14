@@ -2,30 +2,42 @@
 % Please edit documentation in R/palette.R
 \name{palette_timeline}
 \alias{palette_timeline}
-\title{Make HCL palette for a linear sequence of distributions}
+\title{Make an HCL palette for visualizing a linear sequence of distributions}
 \usage{
-palette_timeline(x, start_hue = -130)
+palette_timeline(x, start_hue = -130, clockwise = FALSE)
 }
 \arguments{
-\item{x}{RasterStack or integer giving the number of layers to build the
-color palette for.}
+\item{x}{RasterStack or integer describing the number of layers for which
+colors need to be generated.}
 
 \item{start_hue}{integer between -360 and 360 representing the starting hue
-in the color wheel. The ending hue will be \code{start_hue} + 180. For
-further details, consult the documentation for \link[colorspace:rainbow_hcl]{colorspace::rainbow_hcl}.
-Recommended values are -130, giving a blue-pink-yellow palette, and 50,
-giving a yellow-green-blue palette.}
+in the color wheel. For further details, consult the documentation for
+\link[colorspace:rainbow_hcl]{colorspace::rainbow_hcl}. Recommended values are -130 (blue-pink-yellow
+palette) and 50 (yellow-green-blue palette).}
+
+\item{clockwise}{logical indicating which direction to move through HCL
+space. The ending hue will be \code{start_hue + 180} when \code{clockwise = FALSE}
+and \code{start_hue - 180} when \code{clockwise = FALSE}. For example, with
+the default \code{start_hue = -130}, \code{clockwise = FALSE} will yield a
+blue-pink-yellow palette palette, while \code{clockwise = TRUE} will yield a
+blue-green-yellow palette.}
 }
 \value{
-A data frame with the following columns:
+A data frame with three columns:
 \itemize{
-\item \code{specificity}: amount of variation between layers; mapped to chroma.
-\item \code{layer}: layer with the maximum cell value; mapped to hue.
-\item \code{color}: color associated with the given specificity and peak layer.
+\item \code{layer}: the layer containing the maximum intensity value; mapped to hue.
+\item \code{specificity}: the degree to which intensity values are unevenly
+distributed across layers; mapped to chroma.
+\item \code{color}: the hexadecimal color associated with the given layer and
+specificity values.
 }
 }
 \description{
-Make HCL palette for a linear sequence of distributions
+This function generates an HCL palette for visualizing
+a linear sequence of distributions (e.g., a series of utilization
+distributions describing space use across multiple years or a series of
+species distributions projected across an evenly spaced sequence of
+changes to mean annual temperature).
 }
 \examples{
 # load elephant data
@@ -35,13 +47,17 @@ data(elephant_ud)
 pal_a <- palette_timeline(elephant_ud)
 head(pal_a)
 
+# use a clockwise palette
+pal_b <- palette_timeline(elephant_ud, clockwise = TRUE)
+
 # try a different starting hue
-pal_b <- palette_timeline(elephant_ud, start = 50)
+pal_c <- palette_timeline(elephant_ud, start = 50)
 
 # visualize the palette in HCL space  with colorspace::hclplot
 library(colorspace)
 hclplot(pal_a[pal_a$specificity == 100, ]$color)
 hclplot(pal_b[pal_b$specificity == 100, ]$color)
+hclplot(pal_c[pal_b$specificity == 100, ]$color)
 }
 \seealso{
 \link{palette_timecycle} for cyclical sequences of distributions and

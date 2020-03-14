@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Visualize distributions as a single map — map_single • colorist</title>
+<title>Visualize distributions in a single map — map_single • colorist</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,10 @@
 
 
 
-<meta property="og:title" content="Visualize distributions as a single map — map_single" />
-<meta property="og:description" content="Visualize distributions as a single map" />
+<meta property="og:title" content="Visualize distributions in a single map — map_single" />
+<meta property="og:description" content="This function enables visualization of distributional
+information in a single map by combining distribution metrics and an HCL
+color palette." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -105,13 +107,15 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Visualize distributions as a single map</h1>
+    <h1>Visualize distributions in a single map</h1>
     <small class="dont-index">Source: <a href='https://github.com/mstrimas/colorist/blob/master/R/map.R'><code>R/map.R</code></a></small>
     <div class="hidden name"><code>map_single.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Visualize distributions as a single map</p>
+    <p>This function enables visualization of distributional
+information in a single map by combining distribution metrics and an HCL
+color palette.</p>
     </div>
 
     <pre class="usage"><span class='fu'>map_single</span>(<span class='no'>x</span>, <span class='no'>palette</span>, <span class='no'>layer</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>return_df</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
@@ -126,19 +130,21 @@
     </tr>
     <tr>
       <th>palette</th>
-      <td><p>data frame containing an HCL color palette.</p></td>
+      <td><p>data frame containing an HCL color palette generated using
+<code><a href='palette_timecycle.html'>palette_timecycle()</a></code>, <code><a href='palette_timeline.html'>palette_timeline()</a></code>, or <code><a href='palette_groups.html'>palette_groups()</a></code>.</p></td>
     </tr>
     <tr>
       <th>layer</th>
-      <td><p>integer or character corresponding to the index or name of the
+      <td><p>integer (or character) corresponding to the index (or name) of a
 single layer to map. This argument is ignored if <code><a href='metrics_distill.html'>metrics_distill()</a></code> was
-used.</p></td>
+used to generate x.</p></td>
     </tr>
     <tr>
       <th>lambda</th>
-      <td><p>integer controlling the offset in the Box-Cox transformation of
-intensities to alpha levels via the <code><a href='https://scales.r-lib.org//reference/boxcox_trans.html'>scales::modulus_trans()</a></code> function. Use
-0 for Box-Cox type 1 or any non-negative number for Box-Cox type 2.</p></td>
+      <td><p>number that allows visual tuning of intensity values via the
+<code><a href='https://scales.r-lib.org//reference/boxcox_trans.html'>scales::modulus_trans()</a></code> function (see Details). Negative numbers decrease
+apparent skew of intensity values. Positive numbers increase apparent skew
+of intensity values.</p></td>
     </tr>
     <tr>
       <th>return_df</th>
@@ -162,6 +168,16 @@ value across all layers and cells; mapped to alpha level.</p></li>
 <li><p><code>color</code>: color associated with the given specificity and peak layer.</p></li>
 </ul>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The lambda parameter allows for visual tuning of highly skewed
+distribution data. It is not uncommon for distributions to contain highly
+skewed intensity values because individuals spend a vast majority of their
+time within a relatively small area or because populations are relatively
+dense during some seasons and relatively dispersed during others. This can
+make visualizing distributions a challenge. The lambda parameter transforms
+intensity values via the <code><a href='https://scales.r-lib.org//reference/boxcox_trans.html'>scales::modulus_trans()</a></code> function, allowing users
+to adjust the relative visual weight of high and low intensity values.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other map: 
@@ -185,6 +201,7 @@ value across all layers and cells; mapped to alpha level.</p></li>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>

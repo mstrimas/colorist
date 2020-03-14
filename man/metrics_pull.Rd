@@ -2,28 +2,37 @@
 % Please edit documentation in R/metrics.R
 \name{metrics_pull}
 \alias{metrics_pull}
-\title{Transform a raster stack to intensity values}
+\title{Transform raster stack values to intensity values}
 \usage{
 metrics_pull(x)
 }
 \arguments{
-\item{x}{RasterStack with each layer typically corresponding to the
-distribution of an individual or species at a given time interval.}
+\item{x}{RasterStack of distributions. Layers typically contain information
+about the distribution of a single individual or species at multiple points
+in time. Alternatively, layers may contain information about the
+distributions of multiple individuals or species within a single time
+period. Other conceptualizations are possible.}
 }
 \value{
-A RasterStack resulting from converting the input stack to intensity
-values by dividing each layer by the maximum pixel value in that layer.
-These layer maxima are stored as the \code{"maximum"} attribute.
+A RasterStack containing intensity values. Intensity values are
+calculated by dividing cell values in every layer by the maximum cell value
+in the entire stack, thus ensuring intensities are comparable across
+layers.
+
+The maximum cell value in the stack is stored as the \code{"maximum"} attribute.
 }
 \description{
-Transform a raster stack to intensity values
+This function transforms raster stack values that describe
+individual distributions or species distributions into standardized
+intensity values. All the distributional information in the original raster
+stack is preserved for visualization.
 }
 \examples{
 # load elephant data
 data("elephant_ud")
 r <- metrics_pull(elephant_ud)
 print(r)
-# maximum values for each layer stored as an attribute
+# maximum value for the stack stored as an attribute
 attr(r, "maximum")
 }
 \seealso{

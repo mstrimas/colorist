@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Visualize distributions as a single map — map_multiples • colorist</title>
+<title>Visualize multiple distributions in a series of maps — map_multiples • colorist</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,10 @@
 
 
 
-<meta property="og:title" content="Visualize distributions as a single map — map_multiples" />
-<meta property="og:description" content="Visualize distributions as a single map" />
+<meta property="og:title" content="Visualize multiple distributions in a series of maps — map_multiples" />
+<meta property="og:description" content="This function enables visualization of distributional
+information in a series of small multiples by combining distribution
+metrics and an HCL color palette." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -105,13 +107,15 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Visualize distributions as a single map</h1>
+    <h1>Visualize multiple distributions in a series of maps</h1>
     <small class="dont-index">Source: <a href='https://github.com/mstrimas/colorist/blob/master/R/map.R'><code>R/map.R</code></a></small>
     <div class="hidden name"><code>map_multiples.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Visualize distributions as a single map</p>
+    <p>This function enables visualization of distributional
+information in a series of small multiples by combining distribution
+metrics and an HCL color palette.</p>
     </div>
 
     <pre class="usage"><span class='fu'>map_multiples</span>(<span class='no'>x</span>, <span class='no'>palette</span>, <span class='no'>ncol</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>return_df</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
@@ -125,7 +129,8 @@
     </tr>
     <tr>
       <th>palette</th>
-      <td><p>data frame containing an HCL color palette.</p></td>
+      <td><p>data frame containing an HCL color palette generated using
+<code><a href='palette_timecycle.html'>palette_timecycle()</a></code>, <code><a href='palette_timeline.html'>palette_timeline()</a></code>, or <code><a href='palette_groups.html'>palette_groups()</a></code>.</p></td>
     </tr>
     <tr>
       <th>ncol</th>
@@ -133,9 +138,10 @@
     </tr>
     <tr>
       <th>lambda</th>
-      <td><p>integer controlling the offset in the Box-Cox transformation of
-intensities to alpha levels via the <code><a href='https://scales.r-lib.org//reference/boxcox_trans.html'>scales::modulus_trans()</a></code> function. Use
-0 for Box-Cox type 1 or any non-negative number for Box-Cox type 2.</p></td>
+      <td><p>number that allows visual tuning of intensity values via the
+<code><a href='https://scales.r-lib.org//reference/boxcox_trans.html'>scales::modulus_trans()</a></code> function (see Details). Negative numbers decrease
+apparent skew of intensity values. Positive numbers increase apparent skew
+of intensity values.</p></td>
     </tr>
     <tr>
       <th>labels</th>
@@ -150,9 +156,17 @@ associated cell colors.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>A ggplot2 plot object of the map. Alternatively, <code>return_df = TRUE</code>
+    <p>The lambda parameter allows for visual tuning of highly skewed
+distribution data. It is not uncommon for distributions to contain highly
+skewed intensity values because individuals spend a vast majority of their
+time within a relatively small area or because populations are relatively
+dense during some seasons and relatively dispersed during others. This can
+make visualizing distributions a challenge. The lambda parameter transforms
+intensity values via the <code><a href='https://scales.r-lib.org//reference/boxcox_trans.html'>scales::modulus_trans()</a></code> function, allowing users
+to adjust the relative visual weight of high and low intensity values.</p>
+<p>#' @return A ggplot2 plot object of the map. Alternatively, <code>return_df = TRUE</code>
 will return a data frame containing the raster data in data frame format
 along with the associated cell colors. The data frame columns are:</p><ul>
 <li><p><code>x</code>,<code>y</code>: coordinates of raster cell centers.</p></li>
@@ -188,7 +202,7 @@ alpha level.</p></li>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>

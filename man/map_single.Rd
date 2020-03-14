@@ -2,7 +2,7 @@
 % Please edit documentation in R/map.R
 \name{map_single}
 \alias{map_single}
-\title{Visualize distributions as a single map}
+\title{Visualize distributions in a single map}
 \usage{
 map_single(x, palette, layer, lambda = 0, return_df = FALSE)
 }
@@ -10,15 +10,17 @@ map_single(x, palette, layer, lambda = 0, return_df = FALSE)
 \item{x}{RasterStack of distributions processed by \code{\link[=metrics_pull]{metrics_pull()}} or
 \code{\link[=metrics_distill]{metrics_distill()}}.}
 
-\item{palette}{data frame containing an HCL color palette.}
+\item{palette}{data frame containing an HCL color palette generated using
+\code{\link[=palette_timecycle]{palette_timecycle()}}, \code{\link[=palette_timeline]{palette_timeline()}}, or \code{\link[=palette_groups]{palette_groups()}}.}
 
-\item{layer}{integer or character corresponding to the index or name of the
+\item{layer}{integer (or character) corresponding to the index (or name) of a
 single layer to map. This argument is ignored if \code{\link[=metrics_distill]{metrics_distill()}} was
-used.}
+used to generate x.}
 
-\item{lambda}{integer controlling the offset in the Box-Cox transformation of
-intensities to alpha levels via the \code{\link[scales:modulus_trans]{scales::modulus_trans()}} function. Use
-0 for Box-Cox type 1 or any non-negative number for Box-Cox type 2.}
+\item{lambda}{number that allows visual tuning of intensity values via the
+\code{\link[scales:modulus_trans]{scales::modulus_trans()}} function (see Details). Negative numbers decrease
+apparent skew of intensity values. Positive numbers increase apparent skew
+of intensity values.}
 
 \item{return_df}{logical specifying whether the function should return a
 ggplot2 plot object (FALSE) or a data frame containing the raster data and
@@ -39,7 +41,19 @@ value across all layers and cells; mapped to alpha level.
 }
 }
 \description{
-Visualize distributions as a single map
+This function enables visualization of distributional
+information in a single map by combining distribution metrics and an HCL
+color palette.
+}
+\details{
+The lambda parameter allows for visual tuning of highly skewed
+distribution data. It is not uncommon for distributions to contain highly
+skewed intensity values because individuals spend a vast majority of their
+time within a relatively small area or because populations are relatively
+dense during some seasons and relatively dispersed during others. This can
+make visualizing distributions a challenge. The lambda parameter transforms
+intensity values via the \code{\link[scales:modulus_trans]{scales::modulus_trans()}} function, allowing users
+to adjust the relative visual weight of high and low intensity values.
 }
 \examples{
 # load elephant data

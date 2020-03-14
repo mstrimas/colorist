@@ -2,24 +2,40 @@
 % Please edit documentation in R/palette.R
 \name{palette_timecycle}
 \alias{palette_timecycle}
-\title{Make HCL palette for a cyclical sequence of distributions}
+\title{Make an HCL palette for visualizing a cyclical sequence of distributions}
 \usage{
-palette_timecycle(x)
+palette_timecycle(x, start_hue = 240, clockwise = FALSE)
 }
 \arguments{
-\item{x}{RasterStack or integer giving the number of layers to build the
-color palette for.}
+\item{x}{RasterStack or integer describing the number of layers for which
+colors need to be generated.}
+
+\item{start_hue}{integer between -360 and 360 representing the starting hue
+in the color wheel. For further details, consult the documentation for
+\link[colorspace:rainbow_hcl]{colorspace::rainbow_hcl}. The default value of 240 will start the palette
+at blue.}
+
+\item{clockwise}{logical indicating which direction to move through HCL
+space. For example, with the default \code{start_hue = 240}, \code{clockwise = TRUE}
+will yield a blue-pink-yellow-green-blue palette, while \code{clockwise = FALSE}
+will yield a blue-green-yellow-pink-blue palette.}
 }
 \value{
-A data frame with the following columns:
+A data frame with three columns:
 \itemize{
-\item \code{specificity}: amount of variation between layers; mapped to chroma.
-\item \code{layer}: layer with the maximum cell value; mapped to hue.
-\item \code{color}: color associated with the given specificity and peak layer.
+\item \code{layer}: the layer containing the maximum intensity value; mapped to hue.
+\item \code{specificity}: the degree to which intensity values are unevenly
+distributed across layers; mapped to chroma.
+\item \code{color}: the hexadecimal color associated with the given layer and
+specificity values.
 }
 }
 \description{
-Make HCL palette for a cyclical sequence of distributions
+This function generates an HCL palette for visualizing
+a cyclical sequence of distributions (e.g., a series of species
+distributions describing occurrence throughout a 52-week annual
+cycle or utilization distributions describing space use throughout
+a 24-hour daily cycle)
 }
 \examples{
 # load field sparrow data

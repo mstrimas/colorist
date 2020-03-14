@@ -2,20 +2,22 @@
 % Please edit documentation in R/map.R
 \name{map_multiples}
 \alias{map_multiples}
-\title{Visualize distributions as a single map}
+\title{Visualize multiple distributions in a series of maps}
 \usage{
 map_multiples(x, palette, ncol, lambda = 0, labels = NULL, return_df = FALSE)
 }
 \arguments{
 \item{x}{RasterStack of distributions processed by \code{\link[=metrics_pull]{metrics_pull()}}.}
 
-\item{palette}{data frame containing an HCL color palette.}
+\item{palette}{data frame containing an HCL color palette generated using
+\code{\link[=palette_timecycle]{palette_timecycle()}}, \code{\link[=palette_timeline]{palette_timeline()}}, or \code{\link[=palette_groups]{palette_groups()}}.}
 
 \item{ncol}{integer specifying the number of columns in the grid of plots.}
 
-\item{lambda}{integer controlling the offset in the Box-Cox transformation of
-intensities to alpha levels via the \code{\link[scales:modulus_trans]{scales::modulus_trans()}} function. Use
-0 for Box-Cox type 1 or any non-negative number for Box-Cox type 2.}
+\item{lambda}{number that allows visual tuning of intensity values via the
+\code{\link[scales:modulus_trans]{scales::modulus_trans()}} function (see Details). Negative numbers decrease
+apparent skew of intensity values. Positive numbers increase apparent skew
+of intensity values.}
 
 \item{labels}{character vector of layer labels for each plot. The default is
 to not show labels.}
@@ -24,8 +26,22 @@ to not show labels.}
 ggplot2 plot object (FALSE) or a data frame containing the raster data and
 associated cell colors.}
 }
-\value{
-A ggplot2 plot object of the map. Alternatively, \code{return_df = TRUE}
+\description{
+This function enables visualization of distributional
+information in a series of small multiples by combining distribution
+metrics and an HCL color palette.
+}
+\details{
+The lambda parameter allows for visual tuning of highly skewed
+distribution data. It is not uncommon for distributions to contain highly
+skewed intensity values because individuals spend a vast majority of their
+time within a relatively small area or because populations are relatively
+dense during some seasons and relatively dispersed during others. This can
+make visualizing distributions a challenge. The lambda parameter transforms
+intensity values via the \code{\link[scales:modulus_trans]{scales::modulus_trans()}} function, allowing users
+to adjust the relative visual weight of high and low intensity values.
+
+#' @return A ggplot2 plot object of the map. Alternatively, \code{return_df = TRUE}
 will return a data frame containing the raster data in data frame format
 along with the associated cell colors. The data frame columns are:
 \itemize{
@@ -39,9 +55,6 @@ alpha level.
 \item \code{layer}: raster layer that this value came from; mapped to hue.
 \item \code{color}: color associated with the given specificity and peak layer.
 }
-}
-\description{
-Visualize distributions as a single map
 }
 \examples{
 # load elephant data
