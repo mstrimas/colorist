@@ -20,7 +20,8 @@
 #'   will yield a blue-green-yellow-pink-blue palette.
 #'
 #' @return A data frame with three columns:
-#'   - `layer`: the layer containing the maximum intensity value; mapped to hue.
+#'   - `layer_id`: integer identifying the layer containing the maximum
+#'   intensity value; mapped to hue.
 #'   - `specificity`: the degree to which intensity values are unevenly
 #'   distributed across layers; mapped to chroma.
 #'   - `color`: the hexadecimal color associated with the given layer and
@@ -61,7 +62,7 @@ palette_timecycle.integer <- function(x, start_hue = 240, clockwise = FALSE) {
 
   # set up color wheel
   wheel <- data.frame(specificity = rep(0:100, each = x),
-                      layer = rep(seq_len(x), times = 101),
+                      layer_id = rep(seq_len(x), times = 101),
                       color = NA_character_,
                       stringsAsFactors = FALSE)
   # generate palettes for each chroma value
@@ -74,7 +75,7 @@ palette_timecycle.integer <- function(x, start_hue = 240, clockwise = FALSE) {
                                                      end = end_hue,
                                                      fixup = TRUE)
   }
-  wheel <- wheel[order(wheel[["specificity"]], wheel[["layer"]]), ]
+  wheel <- wheel[order(wheel[["specificity"]], wheel[["layer_id"]]), ]
   row.names(wheel) <- NULL
   class(wheel) <- c("palette_timecycle", "data.frame")
   return(wheel)
@@ -115,7 +116,8 @@ palette_timecycle.Raster<- function(x, start_hue = 240, clockwise = FALSE) {
 #'   blue-green-yellow palette.
 #'
 #' @return A data frame with three columns:
-#'   - `layer`: the layer containing the maximum intensity value; mapped to hue.
+#'   - `layer_id`: integer identifying the layer containing the maximum
+#'   intensity value; mapped to hue.
 #'   - `specificity`: the degree to which intensity values are unevenly
 #'   distributed across layers; mapped to chroma.
 #'   - `color`: the hexadecimal color associated with the given layer and
@@ -163,10 +165,10 @@ palette_timeline.integer <- function(x, start_hue = -130, clockwise = FALSE) {
 
   # set up color wheel
   wheel <- expand.grid(specificity = 0:100,
-                       layer = seq_len(x),
+                       layer_id = seq_len(x),
                        color = NA_character_,
                        stringsAsFactors = FALSE)
-  wheel <- wheel[order(wheel[["specificity"]], wheel[["layer"]]), ]
+  wheel <- wheel[order(wheel[["specificity"]], wheel[["layer_id"]]), ]
   row.names(wheel) <- NULL
 
   # generate palettes for each chroma value
@@ -207,7 +209,8 @@ palette_timeline.Raster<- function(x, start_hue = -130, clockwise = FALSE) {
 #'   colors need to be generated.
 #'
 #' @return A data frame with three columns:
-#'   - `layer`: the layer containing the maximum intensity value; mapped to hue.
+#'   - `layer_id`: integer identifying the layer containing the maximum
+#'   intensity value; mapped to hue.
 #'   - `specificity`: the degree to which intensity values are unevenly
 #'   distributed across layers; mapped to chroma.
 #'   - `color`: the hexadecimal color associated with the given layer and
@@ -246,7 +249,7 @@ palette_groups.integer <- function(x) {
   layer <- c(6, 1, 3, 8, 5, 2, 7, 4)
   n <- length(layer)
   wheel <- data.frame(specificity = rep(0:100, each = n),
-                      layer = rep(layer, times = 101),
+                      layer_id = rep(layer, times = 101),
                       color = NA_character_,
                       stringsAsFactors = FALSE)
 
@@ -262,8 +265,8 @@ palette_groups.integer <- function(x) {
   }
 
   # drop irrelevant layers
-  wheel <- wheel[wheel$layer %in% seq.int(x), ]
-  wheel <- wheel[order(wheel[["specificity"]], wheel[["layer"]]), ]
+  wheel <- wheel[wheel$layer_id %in% seq.int(x), ]
+  wheel <- wheel[order(wheel[["specificity"]], wheel[["layer_id"]]), ]
   row.names(wheel) <- NULL
   class(wheel) <- c("palette_groups", "data.frame")
   return(wheel)

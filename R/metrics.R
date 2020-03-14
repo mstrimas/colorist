@@ -78,12 +78,15 @@ metrics_pull <- function(x) {
 #'
 #' @return A RasterStack with four layers:
 #'   - `intensity`: the maximum intensity value across all layers.
-#'   - `layer`: the layer containing the maximum intensity value.
+#'   - `layer_id`: an integer identifying layer containing the maximum intensity
+#'   value.
 #'   - `specificity`: the degree to which intensity values are unevenly
 #'   distributed across layers (see Details).
 #'   - `n_layers`: the number of layers with non-NA values (see Details).
 #'
 #'   The maximum cell value in the stack is stored as the `"maximum"` attribute.
+#'   The link between the `layer_id` and the layer names from the underlying
+#'   raster is stored as a data frame in the `layer_names` attribute.
 #'
 #' @family metrics
 #' @export
@@ -94,6 +97,8 @@ metrics_pull <- function(x) {
 #' print(r)
 #' # maximum value across all layers stored as an attribute
 #' attr(r, "maximum")
+#' # link between layer id and name stored as an attribute
+#' attr(r, "layer_names")
 metrics_distill <- function(x) {
   stopifnot(class(x) %in% c("RasterStack", "RasterBrick"))
 
@@ -119,12 +124,15 @@ metrics_distill <- function(x) {
     r_specificity <- raster::calc(intensity, specificity)
   })
   r <- raster::stack(r_max, r_peak, r_specificity, r_n)
-  names(r) <- c("intensity", "layer", "specificity", "n_layers")
+  names(r) <- c("intensity", "layer_id", "specificity", "n_layers")
 
   # set attributes
   attr(r, "metric") <- "distill"
   attr(r, "maximum") <- maximum
-
+  print(x)
+  attr(r, "layer_names") <- data.frame(layer_id = seq_len(raster::nlayers(x)),
+                                       layer_name = names(x),
+                                       stringsAsFactors = FALSE)
   return(r)
 }
 

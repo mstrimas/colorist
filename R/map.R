@@ -8,9 +8,9 @@
 #'   [metrics_distill()].
 #' @param palette data frame containing an HCL color palette generated using
 #'   [palette_timecycle()], [palette_timeline()], or [palette_groups()].
-#' @param layer integer (or character) corresponding to the index (or name) of a
-#'   single layer to map. This argument is ignored if [metrics_distill()] was
-#'   used to generate x.
+#' @param layer integer (or character) corresponding to the layer ID (or name)
+#'   of a single layer to map. This argument is ignored if [metrics_distill()]
+#'   was used to generate x.
 #' @param lambda number that allows visual tuning of intensity values via the
 #'   [scales::modulus_trans()] function (see Details). Negative numbers decrease
 #'   apparent skew of intensity values. Positive numbers increase apparent skew
@@ -18,17 +18,6 @@
 #' @param return_df logical specifying whether the function should return a
 #'   ggplot2 plot object (FALSE) or a data frame containing the raster data and
 #'   associated cell colors.
-#'
-#' @return A ggplot2 plot object of the map. Alternatively, `return_df = TRUE`
-#'   will return a data frame containing the raster data in data frame format
-#'   along with the associated cell colors. The data frame columns are:
-#'   - `x`,`y`: coordinates of raster cell centers.
-#'   - `cell_number`: integer indicating the cell number.
-#'   - `intensity`: maximum cell value across layers divided by the maximum
-#'   value across all layers and cells; mapped to alpha level.
-#'   - `specificity`: amount of variation between layers; mapped to chroma.
-#'   - `layer`: layer with the maximum cell value; mapped to hue.
-#'   - `color`: color associated with the given specificity and peak layer.
 #'
 #' @details The lambda parameter allows for visual tuning of highly skewed
 #'   distribution data. It is not uncommon for distributions to contain highly
@@ -39,6 +28,19 @@
 #'   intensity values via the [scales::modulus_trans()] function, allowing users
 #'   to adjust the relative visual weight of high and low intensity values.
 #'
+#' @return A ggplot2 plot object of the map. Alternatively, with `return_df =
+#'   TRUE` this function will return a data frame containing the raster data in
+#'   data frame format along with the associated cell colors. The data frame
+#'   columns are:
+#'   - `x`,`y`: coordinates of raster cell centers.
+#'   - `cell_number`: integer indicating the cell number.
+#'   - `intensity`: maximum cell value across layers divided by the maximum
+#'   value across all layers and cells; mapped to alpha level.
+#'   - `specificity`: amount of variation between layers; mapped to chroma.
+#'   - `layer_id`: integer identifying the layer containing the maximum
+#'   intensity value; mapped to hue.
+#'   - `color`: color associated with the given specificity and peak layer.
+#'
 #' @family map
 #' @export
 #' @examples
@@ -46,7 +48,7 @@
 #' data("elephant_ud")
 #'
 #' # prepare metrics
-#' r <- metrics_distill(elephant_ud)
+#' r <- metrics_distll(elephant_ud)
 #'
 #' # generate palette
 #' pal <- palette_timeline(elephant_ud)
@@ -59,7 +61,7 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
             inherits(palette, c("palette_timeline",
                                 "palette_timecycle",
                                 "palette_groups")),
-            c("specificity", "layer", "color") %in% names(palette))
+            c("specificity", "layer_id", "color") %in% names(palette))
   stopifnot(length(lambda) == 1, is.numeric(lambda))
 
   # convert raster to data frame, pull vs. distill
@@ -69,11 +71,11 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
       if (layer <= 0 || layer >= raster::nlayers(x)) {
         good_layer <- FALSE
       }
-    } else if (!layer %in% names(x)) {
-      if (layer <= 0 || layer >= raster::nlayers(x)) {
-        good_layer <- FALSE
-      } else {
+    } else if (is.character(layer)) {
+      if (layer %in% names(x)) {
         layer <- which(layer == names(x))
+      } else {
+        good_layer <- FALSE
       }
     } else {
       good_layer <- FALSE
@@ -84,10 +86,10 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
     r <- raster::as.data.frame(x[[layer]], xy = TRUE)
     names(r)[3] <- "intensity"
     r$specificity <- 100
-    r$layer <- layer
+    r$layer_id <- layer
     r$cell_number <- seq.int(nrow(r))
   } else if (isTRUE(attr(x, "metric") == "distill")) {
-    l <- c("intensity", "specificity", "layer")
+    l <- c("intensity", "specificity", "layer_id")
     if (!all(l %in% names(x))) {
       stop(paste("Input raster missing layers:", setdiff(l, names(x))))
     }
@@ -100,10 +102,10 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
   r <- r[stats::complete.cases(r), ]
 
   # join palette
-  r_pal <- merge(r, palette, by = c("specificity", "layer"), sort = FALSE)
+  r_pal <- merge(r, palette, by = c("specificity", "layer_id"), sort = FALSE)
   # order rows
   r_pal <- r_pal[, c("x", "y", "cell_number",
-                     "intensity", "specificity", "layer",
+                     "intensity", "specificity", "layer_id",
                      "color")]
   # remove zeros
   r_pal <- r_pal[r_pal$intensity > 0, ]
@@ -165,17 +167,7 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
 #'   ggplot2 plot object (FALSE) or a data frame containing the raster data and
 #'   associated cell colors.
 #'
-#' @details The lambda parameter allows for visual tuning of highly skewed
-#'   distribution data. It is not uncommon for distributions to contain highly
-#'   skewed intensity values because individuals spend a vast majority of their
-#'   time within a relatively small area or because populations are relatively
-#'   dense during some seasons and relatively dispersed during others. This can
-#'   make visualizing distributions a challenge. The lambda parameter transforms
-#'   intensity values via the [scales::modulus_trans()] function, allowing users
-#'   to adjust the relative visual weight of high and low intensity values.
-#'
-#'
-#'#' @return A ggplot2 plot object of the map. Alternatively, `return_df = TRUE`
+#' @return A ggplot2 plot object of the map. Alternatively, `return_df = TRUE`
 #'   will return a data frame containing the raster data in data frame format
 #'   along with the associated cell colors. The data frame columns are:
 #'   - `x`,`y`: coordinates of raster cell centers.
@@ -185,8 +177,17 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
 #'   - `intensity`: cell value divided by the maximum in the layer; mapped to
 #'   alpha level.
 #'   - `specificity`: amount of variation between layers; mapped to chroma.
-#'   - `layer`: raster layer that this value came from; mapped to hue.
+#'   - `layer_id`: raster layer that this value came from; mapped to hue.
 #'   - `color`: color associated with the given specificity and peak layer.
+#'
+#' @details The lambda parameter allows for visual tuning of highly skewed
+#'   distribution data. It is not uncommon for distributions to contain highly
+#'   skewed intensity values because individuals spend a vast majority of their
+#'   time within a relatively small area or because populations are relatively
+#'   dense during some seasons and relatively dispersed during others. This can
+#'   make visualizing distributions a challenge. The lambda parameter transforms
+#'   intensity values via the [scales::modulus_trans()] function, allowing users
+#'   to adjust the relative visual weight of high and low intensity values.
 #'
 #' @family map
 #' @export
@@ -209,7 +210,7 @@ map_multiples <- function(x, palette, ncol, lambda = 0, labels = NULL,
             inherits(palette, c("palette_timeline",
                                 "palette_timecycle",
                                 "palette_groups")),
-            c("specificity", "layer", "color") %in% names(palette))
+            c("specificity", "layer_id", "color") %in% names(palette))
   stopifnot(length(lambda) == 1, is.numeric(lambda))
   if (missing(ncol)) {
     ncol <- round(sqrt(raster::nlayers(x)))
@@ -229,18 +230,18 @@ map_multiples <- function(x, palette, ncol, lambda = 0, labels = NULL,
   r <- raster::as.data.frame(x, xy = TRUE)
   names(r) <- c("x", "y", seq.int(raster::nlayers(x)))
   r <- tidyr::pivot_longer(r, cols = seq(3, raster::nlayers(x) + 2),
-                           names_to = "layer",
+                           names_to = "layer_id",
                            values_to = "intensity")
   r$specificity <- 100
   r$cell_number <- seq.int(nrow(r))
   r <- r[stats::complete.cases(r), ]
-  r$layer_cell <- paste(r$layer, r$cell_number, sep = "-")
+  r$layer_cell <- paste(r$layer_id, r$cell_number, sep = "-")
 
   # join palette
-  r_pal <- merge(r, palette, by = c("specificity", "layer"), sort = FALSE)
+  r_pal <- merge(r, palette, by = c("specificity", "layer_id"), sort = FALSE)
   # order rows
   r_pal <- r_pal[, c("x", "y", "cell_number", "layer_cell",
-                     "intensity", "specificity", "layer",
+                     "intensity", "specificity", "layer_id",
                      "color")]
   # remove zeros
   r_pal <- r_pal[r_pal$intensity > 0, ]
@@ -275,8 +276,8 @@ map_multiples <- function(x, palette, ncol, lambda = 0, labels = NULL,
     #ggplot2::scale_color_manual(values = map_colors) +
     ggplot2::scale_alpha_continuous(trans = scales::modulus_trans(lambda + 1),
                                     range = c(0, 1)) +
-    ggplot2::facet_wrap(~ layer, ncol = ncol,
-                        labeller = ggplot2::labeller(layer = labels)) +
+    ggplot2::facet_wrap(~ layer_id, ncol = ncol,
+                        labeller = ggplot2::labeller(layer_id = labels)) +
     ggplot2::guides(fill = FALSE, alpha = FALSE) +
     ggplot2::theme(strip.background = ggplot2::element_rect(fill = "white"),
                    plot.background = ggplot2::element_rect(fill = "white"),
