@@ -13,9 +13,9 @@ map_single(x, palette, layer, lambda = 0, return_df = FALSE)
 \item{palette}{data frame containing an HCL color palette generated using
 \code{\link[=palette_timecycle]{palette_timecycle()}}, \code{\link[=palette_timeline]{palette_timeline()}}, or \code{\link[=palette_groups]{palette_groups()}}.}
 
-\item{layer}{integer (or character) corresponding to the index (or name) of a
-single layer to map. This argument is ignored if \code{\link[=metrics_distill]{metrics_distill()}} was
-used to generate x.}
+\item{layer}{integer (or character) corresponding to the layer ID (or name)
+of a single layer to map. This argument is ignored if \code{\link[=metrics_distill]{metrics_distill()}}
+was used to generate x.}
 
 \item{lambda}{number that allows visual tuning of intensity values via the
 \code{\link[scales:modulus_trans]{scales::modulus_trans()}} function (see Details). Negative numbers decrease
@@ -27,16 +27,17 @@ ggplot2 plot object (FALSE) or a data frame containing the raster data and
 associated cell colors.}
 }
 \value{
-A ggplot2 plot object of the map. Alternatively, \code{return_df = TRUE}
-will return a data frame containing the raster data in data frame format
-along with the associated cell colors. The data frame columns are:
+A ggplot2 plot object of the map. Alternatively, with \code{return_df = TRUE} this function will return a data frame containing the raster data in
+data frame format along with the associated cell colors. The data frame
+columns are:
 \itemize{
 \item \code{x},\code{y}: coordinates of raster cell centers.
 \item \code{cell_number}: integer indicating the cell number.
 \item \code{intensity}: maximum cell value across layers divided by the maximum
 value across all layers and cells; mapped to alpha level.
 \item \code{specificity}: amount of variation between layers; mapped to chroma.
-\item \code{layer}: layer with the maximum cell value; mapped to hue.
+\item \code{layer_id}: integer identifying the layer containing the maximum
+intensity value; mapped to hue.
 \item \code{color}: color associated with the given specificity and peak layer.
 }
 }

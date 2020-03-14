@@ -17,13 +17,16 @@ period. Other conceptualizations are possible.}
 A RasterStack with four layers:
 \itemize{
 \item \code{intensity}: the maximum intensity value across all layers.
-\item \code{layer}: the layer containing the maximum intensity value.
+\item \code{layer_id}: an integer identifying layer containing the maximum intensity
+value.
 \item \code{specificity}: the degree to which intensity values are unevenly
 distributed across layers (see Details).
 \item \code{n_layers}: the number of layers with non-NA values (see Details).
 }
 
 The maximum cell value in the stack is stored as the \code{"maximum"} attribute.
+The link between the \code{layer_id} and the layer names from the underlying
+raster is stored as a data frame in the \code{layer_names} attribute.
 }
 \description{
 This function is used to summarize several distributional
@@ -58,6 +61,8 @@ r <- metrics_distill(elephant_ud)
 print(r)
 # maximum value across all layers stored as an attribute
 attr(r, "maximum")
+# link between layer id and name stored as an attribute
+attr(r, "layer_names")
 }
 \seealso{
 Other metrics: 

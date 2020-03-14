@@ -135,9 +135,9 @@ color palette.</p>
     </tr>
     <tr>
       <th>layer</th>
-      <td><p>integer (or character) corresponding to the index (or name) of a
-single layer to map. This argument is ignored if <code><a href='metrics_distill.html'>metrics_distill()</a></code> was
-used to generate x.</p></td>
+      <td><p>integer (or character) corresponding to the layer ID (or name)
+of a single layer to map. This argument is ignored if <code><a href='metrics_distill.html'>metrics_distill()</a></code>
+was used to generate x.</p></td>
     </tr>
     <tr>
       <th>lambda</th>
@@ -156,15 +156,16 @@ associated cell colors.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A ggplot2 plot object of the map. Alternatively, <code>return_df = TRUE</code>
-will return a data frame containing the raster data in data frame format
-along with the associated cell colors. The data frame columns are:</p><ul>
+    <p>A ggplot2 plot object of the map. Alternatively, with <code>return_df = TRUE</code> this function will return a data frame containing the raster data in
+data frame format along with the associated cell colors. The data frame
+columns are:</p><ul>
 <li><p><code>x</code>,<code>y</code>: coordinates of raster cell centers.</p></li>
 <li><p><code>cell_number</code>: integer indicating the cell number.</p></li>
 <li><p><code>intensity</code>: maximum cell value across layers divided by the maximum
 value across all layers and cells; mapped to alpha level.</p></li>
 <li><p><code>specificity</code>: amount of variation between layers; mapped to chroma.</p></li>
-<li><p><code>layer</code>: layer with the maximum cell value; mapped to hue.</p></li>
+<li><p><code>layer_id</code>: integer identifying the layer containing the maximum
+intensity value; mapped to hue.</p></li>
 <li><p><code>color</code>: color associated with the given specificity and peak layer.</p></li>
 </ul>
 
@@ -188,8 +189,15 @@ to adjust the relative visual weight of high and low intensity values.</p>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"elephant_ud"</span>)
 
 <span class='co'># prepare metrics</span>
-<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='metrics_distill.html'>metrics_distill</a></span>(<span class='no'>elephant_ud</span>)
-
+<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='metrics_distill.html'>metrics_distill</a></span>(<span class='no'>elephant_ud</span>)</div><div class='output co'>#&gt; class      : RasterStack 
+#&gt; dimensions : 218, 220, 47960, 4  (nrow, ncol, ncell, nlayers)
+#&gt; resolution : 500, 500  (x, y)
+#&gt; extent     : 1472441, 1582441, -2379329, -2270329  (xmin, xmax, ymin, ymax)
+#&gt; crs        : +proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs 
+#&gt; names      :       year1,       year2,       year3,       year4 
+#&gt; min values :           0,           0,           0,           0 
+#&gt; max values : 0.003741765, 0.004792186, 0.004750540, 0.003533928 
+#&gt; </div><div class='input'>
 <span class='co'># generate palette</span>
 <span class='no'>pal</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='palette_timeline.html'>palette_timeline</a></span>(<span class='no'>elephant_ud</span>)
 

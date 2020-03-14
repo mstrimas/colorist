@@ -66,5 +66,5 @@ pal <- palette_timecycle(fiespa_occ)
 map_single(r, pal)
 
 # legend
-legend_timecycle(fiespa_occ)
+legend_timecycle(pal)
 ```

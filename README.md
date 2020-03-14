@@ -73,6 +73,12 @@ data("fiespa_occ")
 
 # calculate distribution metrics
 r <- metrics_distill(fiespa_occ)
+#> class      : RasterStack 
+#> dimensions : 107, 177, 18939, 52  (nrow, ncol, ncell, nlayers)
+#> resolution : 26665.26, 26665.28  (x, y)
+#> extent     : -2682551, 2037200, -1447355, 1405830  (xmin, xmax, ymin, ymax)
+#> crs        : +proj=laea +lat_0=38.7476367322638 +lon_0=-90.2379515912106 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0 
+#> names      : X2018.01.04, X2018.01.11, X2018.01.18, X2018.01.25, X2018.02.01, X2018.02.08, X2018.02.15, X2018.02.22, X2018.03.01, X2018.03.08, X2018.03.15, X2018.03.22, X2018.03.29, X2018.04.05, X2018.04.12, ...
 
 # generate hcl color palette
 pal <- palette_timecycle(fiespa_occ)
@@ -86,7 +92,7 @@ map_single(r, pal)
 ``` r
 
 # legend
-legend_timecycle(fiespa_occ)
+legend_timecycle(pal)
 ```
 
 <img src="man/figures/README-elephant-2.png" width="100%" />

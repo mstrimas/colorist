@@ -153,7 +153,8 @@ blue-green-yellow palette.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame with three columns:</p><ul>
-<li><p><code>layer</code>: the layer containing the maximum intensity value; mapped to hue.</p></li>
+<li><p><code>layer_id</code>: integer identifying the layer containing the maximum
+intensity value; mapped to hue.</p></li>
 <li><p><code>specificity</code>: the degree to which intensity values are unevenly
 distributed across layers; mapped to chroma.</p></li>
 <li><p><code>color</code>: the hexadecimal color associated with the given layer and
@@ -174,13 +175,13 @@ specificity values.</p></li>
 
 <span class='co'># generate hcl color palette</span>
 <span class='no'>pal_a</span> <span class='kw'>&lt;-</span> <span class='fu'>palette_timeline</span>(<span class='no'>elephant_ud</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>pal_a</span>)</div><div class='output co'>#&gt;   specificity layer   color
-#&gt; 1           0     1 #6A6A6A
-#&gt; 2           0     2 #6A6A6A
-#&gt; 3           0     3 #6A6A6A
-#&gt; 4           0     4 #6A6A6A
-#&gt; 5           1     1 #6A6B6B
-#&gt; 6           1     2 #6B6A6C</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>pal_a</span>)</div><div class='output co'>#&gt;   specificity layer_id   color
+#&gt; 1           0        1 #6A6A6A
+#&gt; 2           0        2 #6A6A6A
+#&gt; 3           0        3 #6A6A6A
+#&gt; 4           0        4 #6A6A6A
+#&gt; 5           1        1 #6A6B6B
+#&gt; 6           1        2 #6B6A6C</div><div class='input'>
 <span class='co'># use a clockwise palette</span>
 <span class='no'>pal_b</span> <span class='kw'>&lt;-</span> <span class='fu'>palette_timeline</span>(<span class='no'>elephant_ud</span>, <span class='kw'>clockwise</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 

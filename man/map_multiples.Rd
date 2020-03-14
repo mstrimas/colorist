@@ -26,6 +26,22 @@ to not show labels.}
 ggplot2 plot object (FALSE) or a data frame containing the raster data and
 associated cell colors.}
 }
+\value{
+A ggplot2 plot object of the map. Alternatively, \code{return_df = TRUE}
+will return a data frame containing the raster data in data frame format
+along with the associated cell colors. The data frame columns are:
+\itemize{
+\item \code{x},\code{y}: coordinates of raster cell centers.
+\item \code{cell_number}: integer indicating the cell number.
+\item \code{layer_cell}: a unique ID for the cell within the layer in the format:
+\code{"layer-cell_number"}.
+\item \code{intensity}: cell value divided by the maximum in the layer; mapped to
+alpha level.
+\item \code{specificity}: amount of variation between layers; mapped to chroma.
+\item \code{layer_id}: raster layer that this value came from; mapped to hue.
+\item \code{color}: color associated with the given specificity and peak layer.
+}
+}
 \description{
 This function enables visualization of distributional
 information in a series of small multiples by combining distribution
@@ -40,21 +56,6 @@ dense during some seasons and relatively dispersed during others. This can
 make visualizing distributions a challenge. The lambda parameter transforms
 intensity values via the \code{\link[scales:modulus_trans]{scales::modulus_trans()}} function, allowing users
 to adjust the relative visual weight of high and low intensity values.
-
-#' @return A ggplot2 plot object of the map. Alternatively, \code{return_df = TRUE}
-will return a data frame containing the raster data in data frame format
-along with the associated cell colors. The data frame columns are:
-\itemize{
-\item \code{x},\code{y}: coordinates of raster cell centers.
-\item \code{cell_number}: integer indicating the cell number.
-\item \code{layer_cell}: a unique ID for the cell within the layer in the format:
-\code{"layer-cell_number"}.
-\item \code{intensity}: cell value divided by the maximum in the layer; mapped to
-alpha level.
-\item \code{specificity}: amount of variation between layers; mapped to chroma.
-\item \code{layer}: raster layer that this value came from; mapped to hue.
-\item \code{color}: color associated with the given specificity and peak layer.
-}
 }
 \examples{
 # load elephant data

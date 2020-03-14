@@ -48,7 +48,7 @@
 #' data("elephant_ud")
 #'
 #' # prepare metrics
-#' r <- metrics_distll(elephant_ud)
+#' r <- metrics_distill(elephant_ud)
 #'
 #' # generate palette
 #' pal <- palette_timeline(elephant_ud)

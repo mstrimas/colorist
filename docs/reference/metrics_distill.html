@@ -139,13 +139,16 @@ period. Other conceptualizations are possible.</p></td>
 
     <p>A RasterStack with four layers:</p><ul>
 <li><p><code>intensity</code>: the maximum intensity value across all layers.</p></li>
-<li><p><code>layer</code>: the layer containing the maximum intensity value.</p></li>
+<li><p><code>layer_id</code>: an integer identifying layer containing the maximum intensity
+value.</p></li>
 <li><p><code>specificity</code>: the degree to which intensity values are unevenly
 distributed across layers (see Details).</p></li>
 <li><p><code>n_layers</code>: the number of layers with non-NA values (see Details).</p></li>
 </ul>
 
-<p>The maximum cell value in the stack is stored as the <code>"maximum"</code> attribute.</p>
+<p>The maximum cell value in the stack is stored as the <code>"maximum"</code> attribute.
+The link between the <code>layer_id</code> and the layer names from the underlying
+raster is stored as a data frame in the <code>layer_names</code> attribute.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Specificity values range from 0 to 100. Values of 0 indicate
@@ -173,17 +176,29 @@ misinterpreted if cells do not contain intensity values in every layer.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># load elephant data</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"elephant_ud"</span>)
-<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>metrics_distill</span>(<span class='no'>elephant_ud</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>r</span>)</div><div class='output co'>#&gt; class      : RasterStack 
+<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>metrics_distill</span>(<span class='no'>elephant_ud</span>)</div><div class='output co'>#&gt; class      : RasterStack 
 #&gt; dimensions : 218, 220, 47960, 4  (nrow, ncol, ncell, nlayers)
 #&gt; resolution : 500, 500  (x, y)
 #&gt; extent     : 1472441, 1582441, -2379329, -2270329  (xmin, xmax, ymin, ymax)
 #&gt; crs        : +proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs 
-#&gt; names      : intensity, layer, specificity, n_layers 
-#&gt; min values :         0,     1,           5,        4 
-#&gt; max values :         1,     4,         100,        4 
+#&gt; names      :       year1,       year2,       year3,       year4 
+#&gt; min values :           0,           0,           0,           0 
+#&gt; max values : 0.003741765, 0.004792186, 0.004750540, 0.003533928 
+#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>r</span>)</div><div class='output co'>#&gt; class      : RasterStack 
+#&gt; dimensions : 218, 220, 47960, 4  (nrow, ncol, ncell, nlayers)
+#&gt; resolution : 500, 500  (x, y)
+#&gt; extent     : 1472441, 1582441, -2379329, -2270329  (xmin, xmax, ymin, ymax)
+#&gt; crs        : +proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs 
+#&gt; names      : intensity, layer_id, specificity, n_layers 
+#&gt; min values :         0,        1,           5,        4 
+#&gt; max values :         1,        4,         100,        4 
 #&gt; </div><div class='input'><span class='co'># maximum value across all layers stored as an attribute</span>
-<span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>r</span>, <span class='st'>"maximum"</span>)</div><div class='output co'>#&gt; [1] 0.004792186</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>r</span>, <span class='st'>"maximum"</span>)</div><div class='output co'>#&gt; [1] 0.004792186</div><div class='input'><span class='co'># link between layer id and name stored as an attribute</span>
+<span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>r</span>, <span class='st'>"layer_names"</span>)</div><div class='output co'>#&gt;   layer_id layer_name
+#&gt; 1        1      year1
+#&gt; 2        2      year2
+#&gt; 3        3      year3
+#&gt; 4        4      year4</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

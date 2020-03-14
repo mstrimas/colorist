@@ -23,7 +23,8 @@ will yield a blue-green-yellow-pink-blue palette.}
 \value{
 A data frame with three columns:
 \itemize{
-\item \code{layer}: the layer containing the maximum intensity value; mapped to hue.
+\item \code{layer_id}: integer identifying the layer containing the maximum
+intensity value; mapped to hue.
 \item \code{specificity}: the degree to which intensity values are unevenly
 distributed across layers; mapped to chroma.
 \item \code{color}: the hexadecimal color associated with the given layer and

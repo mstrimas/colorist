@@ -181,7 +181,7 @@ palette_timeline.integer <- function(x, start_hue = -130, clockwise = FALSE) {
                                                      end = end_hue,
                                                      fixup = TRUE)
   }
-  class(wheel) <- c("palette_timecycle", "data.frame")
+  class(wheel) <- c("palette_timeline", "data.frame")
   return(wheel)
 }
 
