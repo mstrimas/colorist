@@ -119,7 +119,7 @@ metrics_distill <- function(x) {
   suppressWarnings({
     r_n <- raster::calc(intensity, length_nona)
     r_max <- raster::calc(intensity, max, na.rm = TRUE)
-    r_mean <- raster::calc(intensity, mean, na.rm = TRUE)
+    #r_mean <- raster::calc(intensity, mean, na.rm = TRUE)
     r_peak <- raster::calc(intensity, which_max)
     r_specificity <- raster::calc(intensity, specificity)
   })
