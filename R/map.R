@@ -9,8 +9,9 @@
 #' @param palette data frame containing an HCL color palette generated using
 #'   [palette_timecycle()], [palette_timeline()], or [palette_groups()].
 #' @param layer integer (or character) corresponding to the layer ID (or name)
-#'   of a single layer to map. This argument is ignored if [metrics_distill()]
-#'   was used to generate x.
+#'   of layer. A single distribution from within `x` is mapped when the `layer`
+#'   argument is specified. The `layer` argument is ignored if [metrics_distill()]
+#'   was used to generate `x`.
 #' @param lambda number that allows visual tuning of intensity values via the
 #'   [scales::modulus_trans()] function (see Details). Negative numbers decrease
 #'   apparent skew of intensity values. Positive numbers increase apparent skew
@@ -29,17 +30,19 @@
 #'   to adjust the relative visual weight of high and low intensity values.
 #'
 #' @return A ggplot2 plot object of the map. Alternatively, with `return_df =
-#'   TRUE` this function will return a data frame containing the raster data in
+#'   TRUE` the function returns a data frame containing the raster data in
 #'   data frame format along with the associated cell colors. The data frame
 #'   columns are:
 #'   - `x`,`y`: coordinates of raster cell centers.
-#'   - `cell_number`: integer indicating the cell number.
+#'   - `cell_number`: integer indicating the cell number within the raster.
 #'   - `intensity`: maximum cell value across layers divided by the maximum
 #'   value across all layers and cells; mapped to alpha level.
-#'   - `specificity`: amount of variation between layers; mapped to chroma.
+#'   - `specificity`: the degree to which intensity values are unevenly
+#'   distributed across layers; mapped to chroma.
 #'   - `layer_id`: integer identifying the layer containing the maximum
 #'   intensity value; mapped to hue.
-#'   - `color`: color associated with the given specificity and peak layer.
+#'   - `color`: the hexadecimal color associated with the given layer and
+#'   specificity values.
 #'
 #' @family map
 #' @export
@@ -174,11 +177,13 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
 #'   - `cell_number`: integer indicating the cell number.
 #'   - `layer_cell`: a unique ID for the cell within the layer in the format:
 #'   `"layer-cell_number"`.
-#'   - `intensity`: cell value divided by the maximum in the layer; mapped to
-#'   alpha level.
-#'   - `specificity`: amount of variation between layers; mapped to chroma.
-#'   - `layer_id`: raster layer that this value came from; mapped to hue.
-#'   - `color`: color associated with the given specificity and peak layer.
+#'   - `intensity`: maximum cell value across layers divided by the maximum
+#'   value across all layers and cells; mapped to alpha level.
+#'   - `specificity`: the degree to which intensity values are unevenly
+#'   distributed across layers; mapped to chroma.
+#'   - `layer_id`: the identity of the raster layer from which an intensity value was pulled; mapped to hue.
+#'   - `color`: the hexadecimal color associated with the given layer and
+#'   specificity values.
 #'
 #' @details The lambda parameter allows for visual tuning of highly skewed
 #'   distribution data. It is not uncommon for distributions to contain highly
