@@ -41,12 +41,12 @@ The proliferation of tracking data and observations of wildlife populations have
 
 ## Usage
 
-`colorist` works on raster data stored as `RasterStack` objects representing the distribution of either an individual animal or a species. Each layer of the stack will typically represent the distribution for a given point in time (e.g., layers may represent years or seasons) or the distribution for different individuals. The basic workflow for `colorist` is as follows:
+`colorist` works on raster data stored as `RasterStack` objects. Individual raster layers might represent an ordered temporal sequence of species distributions or utilization distributions. Alternatively, raster layers might represent an unordered set of distributions for multiple species, or individuals, within a single time period. Whatever temporal or identity relationships exist within the stack, all raster layers should contain values in the same units (e.g., abundance, occurrence, or probability density) to ensure that they can be meaningfully compared. The basic workflow for `colorist` is as follows:
 
-1. **Metrics:** 
-2. **Color palette:**
-3. **Map:**
-4. **Legend:**
+1. **Metrics:** Users calculate metrics to describe their distributions.
+2. **Color palette:** Users choose colors to describe distributions.
+3. **Map:** Users map distributions in a series of small multiples or in a single map.
+4. **Legend:** Users generate a legend to accompany their map.
 
 We can demonstrate this workflow using an example dataset of weekly Field Sparrow occurrence probability estimates from [eBird Status & Trends](https://ebird.org/science/status-and-trends).
 
