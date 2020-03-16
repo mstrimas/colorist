@@ -237,6 +237,7 @@ map_multiples <- function(x, palette, ncol, lambda = 0, labels = NULL,
   r <- tidyr::pivot_longer(r, cols = seq(3, raster::nlayers(x) + 2),
                            names_to = "layer_id",
                            values_to = "intensity")
+  r$layer_id <- as.integer(r$layer_id)
   r$specificity <- 100
   r$cell_number <- seq.int(nrow(r))
   r <- r[stats::complete.cases(r), ]
