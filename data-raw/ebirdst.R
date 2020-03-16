@@ -35,6 +35,7 @@ fiespa_occ <- gdal_aggregate(occ[[1]]@file@name, f,
                              crs = map_pars$custom_projection,
                              ext = map_pars$fa_extent)
 names(fiespa_occ) <- names(occ)
+fiespa_occ <- readAll(fiespa_occ)
 
 # save package data
 usethis::use_data(fiespa_occ, overwrite = TRUE)
