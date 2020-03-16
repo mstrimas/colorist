@@ -107,7 +107,7 @@
 <li>
 <strong>Legend:</strong> Users generate a legend to accompany their map.</li>
 </ol>
-<p>We can demonstrate this workflow using an example dataset of weekly Field Sparrow occurrence probability estimates from <a href="https://ebird.org/science/status-and-trends">eBird Status &amp; Trends</a>.</p>
+<p>We can demonstrate this workflow using an example dataset of monthly Field Sparrow occurrence probability estimates from <a href="https://ebird.org/science/status-and-trends">eBird Status &amp; Trends</a>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(colorist)</span>
 <span id="cb2-2"><a href="#cb2-2"></a></span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="co"># load example data, field sparrow occurrence probability</span></span>
@@ -116,17 +116,19 @@
 <span id="cb2-6"><a href="#cb2-6"></a><span class="co"># calculate distribution metrics</span></span>
 <span id="cb2-7"><a href="#cb2-7"></a>r &lt;-<span class="st"> </span><span class="kw"><a href="reference/metrics_distill.html">metrics_distill</a></span>(fiespa_occ)</span>
 <span id="cb2-8"><a href="#cb2-8"></a><span class="co">#&gt; class      : RasterStack </span></span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="co">#&gt; dimensions : 107, 177, 18939, 52  (nrow, ncol, ncell, nlayers)</span></span>
-<span id="cb2-10"><a href="#cb2-10"></a><span class="co">#&gt; resolution : 26665.26, 26665.28  (x, y)</span></span>
-<span id="cb2-11"><a href="#cb2-11"></a><span class="co">#&gt; extent     : -2682551, 2037200, -1447355, 1405830  (xmin, xmax, ymin, ymax)</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="co">#&gt; dimensions : 193, 225, 43425, 12  (nrow, ncol, ncell, nlayers)</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="co">#&gt; resolution : 14814.03, 14814.04  (x, y)</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="co">#&gt; extent     : -1482551, 1850606, -1453281, 1405830  (xmin, xmax, ymin, ymax)</span></span>
 <span id="cb2-12"><a href="#cb2-12"></a><span class="co">#&gt; crs        : +proj=laea +lat_0=38.7476367322638 +lon_0=-90.2379515912106 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0 </span></span>
-<span id="cb2-13"><a href="#cb2-13"></a><span class="co">#&gt; names      : X2018.01.04, X2018.01.11, X2018.01.18, X2018.01.25, X2018.02.01, X2018.02.08, X2018.02.15, X2018.02.22, X2018.03.01, X2018.03.08, X2018.03.15, X2018.03.22, X2018.03.29, X2018.04.05, X2018.04.12, ...</span></span>
-<span id="cb2-14"><a href="#cb2-14"></a></span>
-<span id="cb2-15"><a href="#cb2-15"></a><span class="co"># generate hcl color palette</span></span>
-<span id="cb2-16"><a href="#cb2-16"></a>pal &lt;-<span class="st"> </span><span class="kw"><a href="reference/palette_timecycle.html">palette_timecycle</a></span>(fiespa_occ)</span>
-<span id="cb2-17"><a href="#cb2-17"></a></span>
-<span id="cb2-18"><a href="#cb2-18"></a><span class="co"># map</span></span>
-<span id="cb2-19"><a href="#cb2-19"></a><span class="kw"><a href="reference/map_single.html">map_single</a></span>(r, pal)</span></code></pre></div>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="co">#&gt; names      :       jan,       feb,       mar,       apr,       may,       jun,       jul,       aug,       sep,       oct,       nov,       dec </span></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="co">#&gt; min values :         0,         0,         0,         0,         0,         0,         0,         0,         0,         0,         0,         0 </span></span>
+<span id="cb2-15"><a href="#cb2-15"></a><span class="co">#&gt; max values : 0.8538026, 0.8272926, 0.7993843, 0.7805922, 0.7799550, 0.7745437, 0.7626938, 0.7867995, 0.7790458, 0.7896419, 0.8158410, 0.8681034</span></span>
+<span id="cb2-16"><a href="#cb2-16"></a></span>
+<span id="cb2-17"><a href="#cb2-17"></a><span class="co"># generate hcl color palette</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a>pal &lt;-<span class="st"> </span><span class="kw"><a href="reference/palette_timecycle.html">palette_timecycle</a></span>(fiespa_occ)</span>
+<span id="cb2-19"><a href="#cb2-19"></a></span>
+<span id="cb2-20"><a href="#cb2-20"></a><span class="co"># map</span></span>
+<span id="cb2-21"><a href="#cb2-21"></a><span class="kw"><a href="reference/map_single.html">map_single</a></span>(r, pal)</span></code></pre></div>
 <p><img src="reference/figures/README-elephant-1.png" width="100%"></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a></span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="co"># legend</span></span>

@@ -5,7 +5,7 @@
 \alias{fiespa_occ}
 \title{eBird Status & Trends Field Sparrow occurrence probability}
 \format{
-An object of class \code{RasterStack} of dimension 107 x 177 x 52.
+An object of class \code{RasterStack} of dimension 193 x 225 x 12.
 }
 \source{
 \url{https://ebird.org/science/status-and-trends}
@@ -15,11 +15,11 @@ fiespa_occ
 }
 \description{
 A \link[raster:RasterStack-class]{RasterStack} of the expected probability of
-occurrence of Field Sparrow from the \href{https://ebird.org/science/status-and-trends}{eBird Status & Trends} project. Each of the 52
-layers in the stack represent the estimated occurrence for a given week of
+occurrence of Field Sparrow from the \href{https://ebird.org/science/status-and-trends}{eBird Status & Trends} project. Each of the 12
+layers in the stack represent the estimated occurrence for a given month of
 the year over a regular grid of points covering the full range of the
-species. These data have been aggregated from the native 2.96 km resolution
-to 26.7 km resolution to reduce file size.
+species. To reduce file size, these data have been aggregated from the native 2.96 km spatial
+resolution and weekly temporal resolution to monthly, 14.8 km resolution.
 }
 \details{
 For further details on these data, and to access the data for more species,

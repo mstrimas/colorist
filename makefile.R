@@ -15,7 +15,6 @@ devtools::check(run_dont_test = TRUE)
 devtools::build_vignettes()
 rmarkdown::render("README.Rmd")
 pkgdown::build_site()
-file.copy(list.files(".", "README.*png$", full.names = TRUE), "docs/")
 
 # checks
 devtools::check_win_devel()

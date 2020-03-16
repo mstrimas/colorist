@@ -48,7 +48,7 @@ The proliferation of tracking data and observations of wildlife populations have
 3. **Map:** Users map distributions in a series of small multiples or in a single map.
 4. **Legend:** Users generate a legend to accompany their map.
 
-We can demonstrate this workflow using an example dataset of weekly Field Sparrow occurrence probability estimates from [eBird Status & Trends](https://ebird.org/science/status-and-trends).
+We can demonstrate this workflow using an example dataset of monthly Field Sparrow occurrence probability estimates from [eBird Status & Trends](https://ebird.org/science/status-and-trends).
 
 ```{r elephant}
 library(colorist)

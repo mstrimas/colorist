@@ -79,7 +79,7 @@ meaningfully compared. The basic workflow for `colorist` is as follows:
     in a single map.
 4.  **Legend:** Users generate a legend to accompany their map.
 
-We can demonstrate this workflow using an example dataset of weekly
+We can demonstrate this workflow using an example dataset of monthly
 Field Sparrow occurrence probability estimates from [eBird Status &
 Trends](https://ebird.org/science/status-and-trends).
 
@@ -92,11 +92,13 @@ data("fiespa_occ")
 # calculate distribution metrics
 r <- metrics_distill(fiespa_occ)
 #> class      : RasterStack 
-#> dimensions : 107, 177, 18939, 52  (nrow, ncol, ncell, nlayers)
-#> resolution : 26665.26, 26665.28  (x, y)
-#> extent     : -2682551, 2037200, -1447355, 1405830  (xmin, xmax, ymin, ymax)
+#> dimensions : 193, 225, 43425, 12  (nrow, ncol, ncell, nlayers)
+#> resolution : 14814.03, 14814.04  (x, y)
+#> extent     : -1482551, 1850606, -1453281, 1405830  (xmin, xmax, ymin, ymax)
 #> crs        : +proj=laea +lat_0=38.7476367322638 +lon_0=-90.2379515912106 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0 
-#> names      : X2018.01.04, X2018.01.11, X2018.01.18, X2018.01.25, X2018.02.01, X2018.02.08, X2018.02.15, X2018.02.22, X2018.03.01, X2018.03.08, X2018.03.15, X2018.03.22, X2018.03.29, X2018.04.05, X2018.04.12, ...
+#> names      :       jan,       feb,       mar,       apr,       may,       jun,       jul,       aug,       sep,       oct,       nov,       dec 
+#> min values :         0,         0,         0,         0,         0,         0,         0,         0,         0,         0,         0,         0 
+#> max values : 0.8538026, 0.8272926, 0.7993843, 0.7805922, 0.7799550, 0.7745437, 0.7626938, 0.7867995, 0.7790458, 0.7896419, 0.8158410, 0.8681034
 
 # generate hcl color palette
 pal <- palette_timecycle(fiespa_occ)
