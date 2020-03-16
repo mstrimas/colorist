@@ -35,11 +35,13 @@ along with the associated cell colors. The data frame columns are:
 \item \code{cell_number}: integer indicating the cell number.
 \item \code{layer_cell}: a unique ID for the cell within the layer in the format:
 \code{"layer-cell_number"}.
-\item \code{intensity}: cell value divided by the maximum in the layer; mapped to
-alpha level.
-\item \code{specificity}: amount of variation between layers; mapped to chroma.
-\item \code{layer_id}: raster layer that this value came from; mapped to hue.
-\item \code{color}: color associated with the given specificity and peak layer.
+\item \code{intensity}: maximum cell value across layers divided by the maximum
+value across all layers and cells; mapped to alpha level.
+\item \code{specificity}: the degree to which intensity values are unevenly
+distributed across layers; mapped to chroma.
+\item \code{layer_id}: the identity of the raster layer from which an intensity value was pulled; mapped to hue.
+\item \code{color}: the hexadecimal color associated with the given layer and
+specificity values.
 }
 }
 \description{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/palette.R
 \name{palette_groups}
 \alias{palette_groups}
-\title{Make an HCL palette for visualizing the distributions of distinct groups}
+\title{Make an HCL palette for visualizing an unordered set of distributions}
 \usage{
 palette_groups(x)
 }
@@ -23,9 +23,10 @@ specificity values.
 }
 \description{
 This function generates an HCL palette for visualizing
-a small set of distributions (e.g., utilization
-distributions describing space use by five individuals or
-species distributions for five separate species).
+a small set of distributions (i.e., eight or fewer) that are not
+ordered in a linear or cyclical sequence (e.g., a set of utilization
+distributions describing space use by five separate individuals in the same population or
+a set of four species distributions that depend on similar food resources).
 }
 \examples{
 # load elephant data

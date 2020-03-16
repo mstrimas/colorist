@@ -12,15 +12,15 @@ colors need to be generated.}
 
 \item{start_hue}{integer between -360 and 360 representing the starting hue
 in the color wheel. For further details, consult the documentation for
-\link[colorspace:rainbow_hcl]{colorspace::rainbow_hcl}. Recommended values are -130 (blue-pink-yellow
-palette) and 50 (yellow-green-blue palette).}
+\link[colorspace:rainbow_hcl]{colorspace::rainbow_hcl}. Recommended values are -130 ("blue-pink-yellow"
+palette) and 50 ("yellow-green-blue" palette).}
 
-\item{clockwise}{logical indicating which direction to move through HCL
-space. The ending hue will be \code{start_hue + 180} when \code{clockwise = FALSE}
-and \code{start_hue - 180} when \code{clockwise = FALSE}. For example, with
-the default \code{start_hue = -130}, \code{clockwise = FALSE} will yield a
-blue-pink-yellow palette palette, while \code{clockwise = TRUE} will yield a
-blue-green-yellow palette.}
+\item{clockwise}{logical indicating which direction to move around an HCL color wheel.
+When \code{clockwise = FALSE} the ending hue will be \code{start_hue + 180}.
+When \code{clockwise = TRUE} the ending hue will be \code{start_hue - 180}.
+The default value \code{clockwise = FALSE} will yield a
+"blue-pink-yellow" palette when \code{start_hue = -130}, while \code{clockwise = TRUE} will yield a
+"blue-green-yellow" palette.}
 }
 \value{
 A data frame with three columns:
@@ -36,9 +36,8 @@ specificity values.
 \description{
 This function generates an HCL palette for visualizing
 a linear sequence of distributions (e.g., a series of utilization
-distributions describing space use across multiple years or a series of
-species distributions projected across an evenly spaced sequence of
-changes to mean annual temperature).
+distributions describing space use by an individual animal across each of 20 consecutive days or a series of
+species distributions describing projected responses to global warming in 0.5 C increments).
 }
 \examples{
 # load elephant data
@@ -62,7 +61,7 @@ hclplot(pal_c[pal_b$specificity == 100, ]$color)
 }
 \seealso{
 \link{palette_timecycle} for cyclical sequences of distributions and
-\link{palette_groups} for distributions of distinct groups.
+\link{palette_groups} for unordered sets of distributions.
 
 Other palette: 
 \code{\link{palette_groups}()},

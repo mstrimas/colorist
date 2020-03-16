@@ -136,8 +136,9 @@ color palette.</p>
     <tr>
       <th>layer</th>
       <td><p>integer (or character) corresponding to the layer ID (or name)
-of a single layer to map. This argument is ignored if <code><a href='metrics_distill.html'>metrics_distill()</a></code>
-was used to generate x.</p></td>
+of layer. A single distribution from within <code>x</code> is mapped when the <code>layer</code>
+argument is specified. The <code>layer</code> argument is ignored if <code><a href='metrics_distill.html'>metrics_distill()</a></code>
+was used to generate <code>x</code>.</p></td>
     </tr>
     <tr>
       <th>lambda</th>
@@ -156,17 +157,19 @@ associated cell colors.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A ggplot2 plot object of the map. Alternatively, with <code>return_df = TRUE</code> this function will return a data frame containing the raster data in
+    <p>A ggplot2 plot object of the map. Alternatively, with <code>return_df = TRUE</code> the function returns a data frame containing the raster data in
 data frame format along with the associated cell colors. The data frame
 columns are:</p><ul>
 <li><p><code>x</code>,<code>y</code>: coordinates of raster cell centers.</p></li>
-<li><p><code>cell_number</code>: integer indicating the cell number.</p></li>
+<li><p><code>cell_number</code>: integer indicating the cell number within the raster.</p></li>
 <li><p><code>intensity</code>: maximum cell value across layers divided by the maximum
 value across all layers and cells; mapped to alpha level.</p></li>
-<li><p><code>specificity</code>: amount of variation between layers; mapped to chroma.</p></li>
+<li><p><code>specificity</code>: the degree to which intensity values are unevenly
+distributed across layers; mapped to chroma.</p></li>
 <li><p><code>layer_id</code>: integer identifying the layer containing the maximum
 intensity value; mapped to hue.</p></li>
-<li><p><code>color</code>: color associated with the given specificity and peak layer.</p></li>
+<li><p><code>color</code>: the hexadecimal color associated with the given layer and
+specificity values.</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>

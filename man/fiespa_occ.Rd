@@ -4,7 +4,9 @@
 \name{fiespa_occ}
 \alias{fiespa_occ}
 \title{eBird Status & Trends Field Sparrow occurrence probability}
-\format{An object of class \code{RasterStack} of dimension 107 x 177 x 52.}
+\format{
+An object of class \code{RasterStack} of dimension 107 x 177 x 52.
+}
 \source{
 \url{https://ebird.org/science/status-and-trends}
 }

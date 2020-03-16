@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Make HCL legend for a linear sequence of distributions — legend_timeline • colorist</title>
+<title>Make an HCL legend for a map containing a linear sequence of distributions — legend_timeline • colorist</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,9 @@
 
 
 
-<meta property="og:title" content="Make HCL legend for a linear sequence of distributions — legend_timeline" />
-<meta property="og:description" content="Make HCL legend for a linear sequence of distributions" />
+<meta property="og:title" content="Make an HCL legend for a map containing a linear sequence of distributions — legend_timeline" />
+<meta property="og:description" content="This function creates a legend to accompany a map describing
+a linear sequence of distributions." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -105,13 +106,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Make HCL legend for a linear sequence of distributions</h1>
+    <h1>Make an HCL legend for a map containing a linear sequence of distributions</h1>
     <small class="dont-index">Source: <a href='https://github.com/mstrimas/colorist/blob/master/R/legend.R'><code>R/legend.R</code></a></small>
     <div class="hidden name"><code>legend_timeline.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Make HCL legend for a linear sequence of distributions</p>
+    <p>This function creates a legend to accompany a map describing
+a linear sequence of distributions.</p>
     </div>
 
     <pre class="usage"><span class='fu'>legend_timeline</span>(
@@ -131,9 +133,10 @@
     </tr>
     <tr>
       <th>specificity</th>
-      <td><p>logical indicating whether to show a single legend or
-three legend demonstrating the palette for specificity values of 0, 50, and
-100.</p></td>
+      <td><p>logical indicating whether to visualize intensity
+and layer information for three specificity values (i.e., 0, 50, 100) or
+for a single specificity value (i.e., 100). Typically, a single specificity
+value is appropriate for <a href='map_multiples.html'>map_multiples</a> visualizations.</p></td>
     </tr>
     <tr>
       <th>time_labels</th>
@@ -153,10 +156,12 @@ build the legend.</p></td>
     <p>A ggplot2 plot object of the legend. Alternatively,
 <code>return_df = TRUE</code> will return a data frame containing a data frame
 containing the data needed to build the legend. The data frame columns are:</p><ul>
-<li><p><code>specificity</code>: amount of variation between layers; mapped to chroma.</p></li>
+<li><p><code>specificity</code>: the degree to which intensity values are unevenly
+distributed across layers; mapped to chroma.</p></li>
 <li><p><code>layer_id</code>: integer identifying the layer containing the maximum
 intensity value; mapped to hue.</p></li>
-<li><p><code>color</code>: color associated with the given specificity and peak layer.</p></li>
+<li><p><code>color</code>: the hexadecimal color associated with the given layer and
+specificity values.</p></li>
 <li><p><code>intensity</code>: maximum cell value across layers divided by the maximum
 value across all layers and cells; mapped to alpha level.</p></li>
 </ul>

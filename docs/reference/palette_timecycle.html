@@ -37,10 +37,10 @@
 
 <meta property="og:title" content="Make an HCL palette for visualizing a cyclical sequence of distributions — palette_timecycle" />
 <meta property="og:description" content="This function generates an HCL palette for visualizing
-a cyclical sequence of distributions (e.g., a series of species
-distributions describing occurrence throughout a 52-week annual
-cycle or utilization distributions describing space use throughout
-a 24-hour daily cycle)" />
+a cyclical sequence of distributions (e.g., a series of distributions
+describing species occurrence in each of 52 weeks of the annual
+cycle or a series of utilization distributions describing typical
+space use by an individual animal in each hour of a 24-hour daily cycle)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -116,10 +116,10 @@ a 24-hour daily cycle)" />
 
     <div class="ref-description">
     <p>This function generates an HCL palette for visualizing
-a cyclical sequence of distributions (e.g., a series of species
-distributions describing occurrence throughout a 52-week annual
-cycle or utilization distributions describing space use throughout
-a 24-hour daily cycle)</p>
+a cyclical sequence of distributions (e.g., a series of distributions
+describing species occurrence in each of 52 weeks of the annual
+cycle or a series of utilization distributions describing typical
+space use by an individual animal in each hour of a 24-hour daily cycle).</p>
     </div>
 
     <pre class="usage"><span class='fu'>palette_timecycle</span>(<span class='no'>x</span>, <span class='kw'>start_hue</span> <span class='kw'>=</span> <span class='fl'>240</span>, <span class='kw'>clockwise</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
@@ -135,16 +135,16 @@ colors need to be generated.</p></td>
     <tr>
       <th>start_hue</th>
       <td><p>integer between -360 and 360 representing the starting hue
-in the color wheel. For further details, consult the documentation for
+in an HCL color wheel. For further details, consult the documentation for
 <a href='http://colorspace.R-Forge.R-project.org//reference/rainbow_hcl.html'>colorspace::rainbow_hcl</a>. The default value of 240 will start the palette
-at blue.</p></td>
+at "blue".</p></td>
     </tr>
     <tr>
       <th>clockwise</th>
-      <td><p>logical indicating which direction to move through HCL
-space. For example, with the default <code>start_hue = 240</code>, <code>clockwise = TRUE</code>
-will yield a blue-pink-yellow-green-blue palette, while <code>clockwise = FALSE</code>
-will yield a blue-green-yellow-pink-blue palette.</p></td>
+      <td><p>logical indicating which direction to move around color wheel.
+The default <code>clockwise = FALSE</code>
+will yield a "blue-pink-yellow-green-blue" palette when <code>start_hue = 240</code>, while <code>clockwise = TRUE</code>
+will yield a "blue-green-yellow-pink-blue" palette.</p></td>
     </tr>
     </table>
 
@@ -162,7 +162,7 @@ specificity values.</p></li>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='palette_timeline.html'>palette_timeline</a> for linear sequences of distributions and
-<a href='palette_groups.html'>palette_groups</a> for distributions of distinct groups.</p>
+<a href='palette_groups.html'>palette_groups</a> for unordered sets of distributions.</p>
 <p>Other palette: 
 <code><a href='palette_groups.html'>palette_groups</a>()</code>,
 <code><a href='palette_timeline.html'>palette_timeline</a>()</code></p></div>

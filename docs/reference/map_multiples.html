@@ -165,11 +165,13 @@ along with the associated cell colors. The data frame columns are:</p><ul>
 <li><p><code>cell_number</code>: integer indicating the cell number.</p></li>
 <li><p><code>layer_cell</code>: a unique ID for the cell within the layer in the format:
 <code>"layer-cell_number"</code>.</p></li>
-<li><p><code>intensity</code>: cell value divided by the maximum in the layer; mapped to
-alpha level.</p></li>
-<li><p><code>specificity</code>: amount of variation between layers; mapped to chroma.</p></li>
-<li><p><code>layer_id</code>: raster layer that this value came from; mapped to hue.</p></li>
-<li><p><code>color</code>: color associated with the given specificity and peak layer.</p></li>
+<li><p><code>intensity</code>: maximum cell value across layers divided by the maximum
+value across all layers and cells; mapped to alpha level.</p></li>
+<li><p><code>specificity</code>: the degree to which intensity values are unevenly
+distributed across layers; mapped to chroma.</p></li>
+<li><p><code>layer_id</code>: the identity of the raster layer from which an intensity value was pulled; mapped to hue.</p></li>
+<li><p><code>color</code>: the hexadecimal color associated with the given layer and
+specificity values.</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>

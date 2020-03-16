@@ -4,7 +4,9 @@
 \name{elephant_ud}
 \alias{elephant_ud}
 \title{African Elephant utilization distribution}
-\format{An object of class \code{RasterStack} of dimension 218 x 220 x 4.}
+\format{
+An object of class \code{RasterStack} of dimension 218 x 220 x 4.
+}
 \source{
 \url{https://www.datarepository.movebank.org/handle/10255/move.812}
 }

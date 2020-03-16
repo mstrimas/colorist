@@ -11,14 +11,14 @@ palette_timecycle(x, start_hue = 240, clockwise = FALSE)
 colors need to be generated.}
 
 \item{start_hue}{integer between -360 and 360 representing the starting hue
-in the color wheel. For further details, consult the documentation for
+in an HCL color wheel. For further details, consult the documentation for
 \link[colorspace:rainbow_hcl]{colorspace::rainbow_hcl}. The default value of 240 will start the palette
-at blue.}
+at "blue".}
 
-\item{clockwise}{logical indicating which direction to move through HCL
-space. For example, with the default \code{start_hue = 240}, \code{clockwise = TRUE}
-will yield a blue-pink-yellow-green-blue palette, while \code{clockwise = FALSE}
-will yield a blue-green-yellow-pink-blue palette.}
+\item{clockwise}{logical indicating which direction to move around color wheel.
+The default \code{clockwise = FALSE}
+will yield a "blue-pink-yellow-green-blue" palette when \code{start_hue = 240}, while \code{clockwise = TRUE}
+will yield a "blue-green-yellow-pink-blue" palette.}
 }
 \value{
 A data frame with three columns:
@@ -33,10 +33,10 @@ specificity values.
 }
 \description{
 This function generates an HCL palette for visualizing
-a cyclical sequence of distributions (e.g., a series of species
-distributions describing occurrence throughout a 52-week annual
-cycle or utilization distributions describing space use throughout
-a 24-hour daily cycle)
+a cyclical sequence of distributions (e.g., a series of distributions
+describing species occurrence in each of 52 weeks of the annual
+cycle or a series of utilization distributions describing typical
+space use by an individual animal in each hour of a 24-hour daily cycle).
 }
 \examples{
 # load field sparrow data
@@ -52,7 +52,7 @@ hclplot(pal[pal$specificity == 100, ]$color)
 }
 \seealso{
 \link{palette_timeline} for linear sequences of distributions and
-\link{palette_groups} for distributions of distinct groups.
+\link{palette_groups} for unordered sets of distributions.
 
 Other palette: 
 \code{\link{palette_groups}()},
