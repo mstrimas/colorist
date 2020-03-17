@@ -15,8 +15,8 @@ map_single(x, palette, layer, lambda = 0, return_df = FALSE)
 
 \item{layer}{integer (or character) corresponding to the layer ID (or name)
 of layer. A single distribution from within \code{x} is mapped when the \code{layer}
-argument is specified. The \code{layer} argument is ignored if \code{\link[=metrics_distill]{metrics_distill()}}
-was used to generate \code{x}.}
+argument is specified. The \code{layer} argument is ignored if
+\code{\link[=metrics_distill]{metrics_distill()}} was used to generate \code{x}.}
 
 \item{lambda}{number that allows visual tuning of intensity values via the
 \code{\link[scales:modulus_trans]{scales::modulus_trans()}} function (see Details). Negative numbers decrease
@@ -67,7 +67,7 @@ data("elephant_ud")
 r <- metrics_distill(elephant_ud)
 
 # generate palette
-pal <- palette_timeline(elephant_ud)
+pal <- palette_groups(elephant_ud)
 
 # produce map
 map_single(r, pal)

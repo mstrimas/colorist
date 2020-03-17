@@ -13,7 +13,8 @@ devtools::check(run_dont_test = TRUE)
 
 # vignettes, readme, site
 devtools::build_vignettes()
-rmarkdown::render("README.Rmd")
+rmarkdown::render("README.Rmd", output_format = "github_document")
+unlink("README.html")
 pkgdown::build_site()
 
 # checks

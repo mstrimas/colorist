@@ -14,10 +14,10 @@
 #'   in an HCL color wheel. For further details, consult the documentation for
 #'   [colorspace::rainbow_hcl]. The default value of 240 will start the palette
 #'   at "blue".
-#' @param clockwise logical indicating which direction to move around color wheel.
-#'   The default `clockwise = TRUE`
-#'   will yield a "blue-green-yellow-pink-blue" palette when `start_hue = 240`, while `clockwise = FALSE`
-#'   will yield a "blue-pink-yellow-green-blue" palette.
+#' @param clockwise logical indicating which direction to move around color
+#'   wheel. The default `clockwise = TRUE` will yield a
+#'   "blue-green-yellow-pink-blue" palette when `start_hue = 240`, while
+#'   `clockwise = FALSE` will yield a "blue-pink-yellow-green-blue" palette.
 #'
 #' @return A data frame with three columns:
 #'   - `layer_id`: integer identifying the layer containing the maximum
@@ -96,10 +96,11 @@ palette_timecycle.Raster<- function(x, start_hue = 240, clockwise = TRUE) {
 
 #' Make an HCL palette for visualizing a linear sequence of distributions
 #'
-#' @description This function generates an HCL palette for visualizing
-#'   a linear sequence of distributions (e.g., a series of utilization
-#'   distributions describing space use by an individual animal across each of 20 consecutive days or a series of
-#'   species distributions describing projected responses to global warming in 0.5 C increments).
+#' @description This function generates an HCL palette for visualizing a linear
+#'   sequence of distributions. For example, a series of utilization
+#'   distributions describing space use by an individual animal across each of
+#'   20 consecutive days or a series of species distributions describing
+#'   projected responses to global warming in 0.5 C increments.
 #'
 #' @param x RasterStack or integer describing the number of layers for which
 #'   colors need to be generated.
@@ -107,11 +108,11 @@ palette_timecycle.Raster<- function(x, start_hue = 240, clockwise = TRUE) {
 #'   in the color wheel. For further details, consult the documentation for
 #'   [colorspace::rainbow_hcl]. Recommended values are -130 ("blue-pink-yellow"
 #'   palette) and 50 ("yellow-green-blue" palette).
-#' @param clockwise logical indicating which direction to move around an HCL color wheel.
-#'   When `clockwise = FALSE` the ending hue will be `start_hue + 180`.
-#'   When `clockwise = TRUE` the ending hue will be `start_hue - 180`.
-#'   The default value `clockwise = FALSE` will yield a
-#'   "blue-pink-yellow" palette when `start_hue = -130`, while `clockwise = TRUE` will yield a
+#' @param clockwise logical indicating which direction to move around an HCL
+#'   color wheel. When `clockwise = FALSE` the ending hue will be `start_hue +
+#'   180`. When `clockwise = TRUE` the ending hue will be `start_hue - 180`. The
+#'   default value `clockwise = FALSE` will yield a "blue-pink-yellow" palette
+#'   when `start_hue = -130`, while `clockwise = TRUE` will yield a
 #'   "blue-green-yellow" palette.
 #'
 #' @return A data frame with three columns:
@@ -199,10 +200,10 @@ palette_timeline.Raster<- function(x, start_hue = -130, clockwise = FALSE) {
 
 #' Make an HCL palette for visualizing an unordered set of distributions
 #'
-#' @description This function generates an HCL palette for visualizing
-#'   a small set of distributions (i.e., eight or fewer) that are not
-#'   ordered in a linear or cyclical sequence (e.g., a set of utilization
-#'   distributions describing space use by five separate individuals in the same population or
+#' @description This function generates an HCL palette for visualizing a small
+#'   set of distributions (i.e., eight or fewer) that are not ordered in a
+#'   linear or cyclical sequence (e.g., a set of utilization distributions
+#'   describing space use by five separate individuals in the same population or
 #'   a set of four species distributions that depend on similar food resources).
 #'
 #' @param x RasterStack or integer describing the number of layers for which

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>African Elephant utilization distribution — elephant_ud • colorist</title>
+<title>African Elephant utilization distributions — elephant_ud • colorist</title>
 
 
 <!-- jquery -->
@@ -35,13 +35,15 @@
 
 
 
-<meta property="og:title" content="African Elephant utilization distribution — elephant_ud" />
-<meta property="og:description" content="A RasterStack of the utilization distribution for a
-single African Elephant in Etosha National Park. Cell values represent the
-probability density that the individual elephant was found at a given
-location and the four layers represent four successive years of data. This
-distribution was derived from tracking data using the adehabitatHR package.
-derived from tracking data." />
+<meta property="og:title" content="African Elephant utilization distributions — elephant_ud" />
+<meta property="og:description" content="A RasterStack of the utilization distribution for two
+individual African Elephants in Etosha National Park in 2011. Cell values
+represent the probability density that an elephant was found at a given
+location within the year and the two layers contain data for the two
+individual elephants. Utilization distributions were generated using the
+adehabitatHR package from GPS tracking data. W. Kilian, W.M. Getz, R.
+Zidon, and M. Tsalyuk graciously provided permission to use their data for
+visualization purposes." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -110,18 +112,20 @@ derived from tracking data." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>African Elephant utilization distribution</h1>
+    <h1>African Elephant utilization distributions</h1>
     <small class="dont-index">Source: <a href='https://github.com/mstrimas/colorist/blob/master/R/data.R'><code>R/data.R</code></a></small>
     <div class="hidden name"><code>elephant_ud.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A <a href='https://rdrr.io/pkg/raster/man/Raster-classes.html'>RasterStack</a> of the <a href='https://en.wikipedia.org/wiki/Utilization_distribution'>utilization distribution</a> for a
-single African Elephant in Etosha National Park. Cell values represent the
-probability density that the individual elephant was found at a given
-location and the four layers represent four successive years of data. This
-distribution was derived from tracking data using the <code>adehabitatHR</code> package.
-derived from tracking data.</p>
+    <p>A <a href='https://rdrr.io/pkg/raster/man/Raster-classes.html'>RasterStack</a> of the <a href='https://en.wikipedia.org/wiki/Utilization_distribution'>utilization distribution</a> for two
+individual African Elephants in Etosha National Park in 2011. Cell values
+represent the probability density that an elephant was found at a given
+location within the year and the two layers contain data for the two
+individual elephants. Utilization distributions were generated using the
+<code>adehabitatHR</code> package from GPS tracking data. W. Kilian, W.M. Getz, R.
+Zidon, and M. Tsalyuk graciously provided permission to use their data for
+visualization purposes.</p>
     </div>
 
     <pre class="usage"><span class='no'>elephant_ud</span></pre>
@@ -129,17 +133,17 @@ derived from tracking data.</p>
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>An object of class <code>RasterStack</code> of dimension 218 x 220 x 4.</p>
+    <p>An object of class <code>RasterStack</code> of dimension 208 x 193 x 2.</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     <p><a href='https://www.datarepository.movebank.org/handle/10255/move.812'>https://www.datarepository.movebank.org/handle/10255/move.812</a></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Tsalyuk M., W. Kilian, B. Reineking, W. Marcus. 2018. Temporal variation in
+    <p>Tsalyuk, M., W. Kilian, B. Reineking, W. Marcus. 2018. Temporal variation in
 resource selection of African elephants follows long term variability in
 resource availability. Ecological Monographs.
 <a href='https://doi.org/10.1002/ecm.1348'>https://doi.org/10.1002/ecm.1348</a></p>
-<p>W. Kilian, W.M. Getz, R. Zidon, M. Tsalyuk. 2018. Data from: Temporal
+<p>Kilian, W., W.M. Getz, R. Zidon, M. Tsalyuk. 2018. Data from: Temporal
 variation in resource selection of African elephants follows long term
 variability in resource availability. Movebank Data Repository.
 <a href='https://doi.org/10.5441/001/1.3nj3qj45'>https://doi.org/10.5441/001/1.3nj3qj45</a></p>

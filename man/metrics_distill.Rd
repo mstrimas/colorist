@@ -57,8 +57,11 @@ misinterpreted if cells do not contain intensity values in every layer.
 \examples{
 # load elephant data
 data("elephant_ud")
+
+# distill
 r <- metrics_distill(elephant_ud)
 print(r)
+
 # maximum value across all layers stored as an attribute
 attr(r, "maximum")
 # link between layer id and name stored as an attribute

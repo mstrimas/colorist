@@ -3,9 +3,9 @@
 \docType{data}
 \name{elephant_ud}
 \alias{elephant_ud}
-\title{African Elephant utilization distribution}
+\title{African Elephant utilization distributions}
 \format{
-An object of class \code{RasterStack} of dimension 218 x 220 x 4.
+An object of class \code{RasterStack} of dimension 208 x 193 x 2.
 }
 \source{
 \url{https://www.datarepository.movebank.org/handle/10255/move.812}
@@ -14,20 +14,22 @@ An object of class \code{RasterStack} of dimension 218 x 220 x 4.
 elephant_ud
 }
 \description{
-A \link[raster:RasterStack-class]{RasterStack} of the \href{https://en.wikipedia.org/wiki/Utilization_distribution}{utilization distribution} for a
-single African Elephant in Etosha National Park. Cell values represent the
-probability density that the individual elephant was found at a given
-location and the four layers represent four successive years of data. This
-distribution was derived from tracking data using the \code{adehabitatHR} package.
-derived from tracking data.
+A \link[raster:RasterStack-class]{RasterStack} of the \href{https://en.wikipedia.org/wiki/Utilization_distribution}{utilization distribution} for two
+individual African Elephants in Etosha National Park in 2011. Cell values
+represent the probability density that an elephant was found at a given
+location within the year and the two layers contain data for the two
+individual elephants. Utilization distributions were generated using the
+\code{adehabitatHR} package from GPS tracking data. W. Kilian, W.M. Getz, R.
+Zidon, and M. Tsalyuk graciously provided permission to use their data for
+visualization purposes.
 }
 \references{
-Tsalyuk M., W. Kilian, B. Reineking, W. Marcus. 2018. Temporal variation in
+Tsalyuk, M., W. Kilian, B. Reineking, W. Marcus. 2018. Temporal variation in
 resource selection of African elephants follows long term variability in
 resource availability. Ecological Monographs.
 \url{https://doi.org/10.1002/ecm.1348}
 
-W. Kilian, W.M. Getz, R. Zidon, M. Tsalyuk. 2018. Data from: Temporal
+Kilian, W., W.M. Getz, R. Zidon, M. Tsalyuk. 2018. Data from: Temporal
 variation in resource selection of African elephants follows long term
 variability in resource availability. Movebank Data Repository.
 \url{https://doi.org/10.5441/001/1.3nj3qj45}

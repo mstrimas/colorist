@@ -18,8 +18,9 @@ A \link[raster:RasterStack-class]{RasterStack} of the expected probability of
 occurrence of Field Sparrow from the \href{https://ebird.org/science/status-and-trends}{eBird Status & Trends} project. Each of the 12
 layers in the stack represent the estimated occurrence for a given month of
 the year over a regular grid of points covering the full range of the
-species. To reduce file size, these data have been aggregated from the native 2.96 km spatial
-resolution and weekly temporal resolution to monthly, 14.8 km resolution.
+species. To reduce file size, these data have been aggregated from the native
+2.96 km spatial resolution and weekly temporal resolution to monthly, 14.8 km
+resolution.
 }
 \details{
 For further details on these data, and to access the data for more species,

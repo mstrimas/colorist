@@ -98,7 +98,7 @@ r <- metrics_distill(fiespa_occ)
 #> crs        : +proj=laea +lat_0=38.7476367322638 +lon_0=-90.2379515912106 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0 
 #> names      :       jan,       feb,       mar,       apr,       may,       jun,       jul,       aug,       sep,       oct,       nov,       dec 
 #> min values :         0,         0,         0,         0,         0,         0,         0,         0,         0,         0,         0,         0 
-#> max values : 0.8538026, 0.8272926, 0.7993843, 0.7805922, 0.7799550, 0.7745437, 0.7626938, 0.7867995, 0.7790458, 0.7896419, 0.8158410, 0.8681034
+#> max values : 0.8538026, 0.8272926, 0.7993844, 0.7805922, 0.7799550, 0.7745436, 0.7626938, 0.7867995, 0.7790458, 0.7896419, 0.8158410, 0.8681034
 
 # generate hcl color palette
 pal <- palette_timecycle(fiespa_occ)

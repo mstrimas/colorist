@@ -137,8 +137,8 @@ color palette.</p>
       <th>layer</th>
       <td><p>integer (or character) corresponding to the layer ID (or name)
 of layer. A single distribution from within <code>x</code> is mapped when the <code>layer</code>
-argument is specified. The <code>layer</code> argument is ignored if <code><a href='metrics_distill.html'>metrics_distill()</a></code>
-was used to generate <code>x</code>.</p></td>
+argument is specified. The <code>layer</code> argument is ignored if
+<code><a href='metrics_distill.html'>metrics_distill()</a></code> was used to generate <code>x</code>.</p></td>
     </tr>
     <tr>
       <th>lambda</th>
@@ -193,16 +193,16 @@ to adjust the relative visual weight of high and low intensity values.</p>
 
 <span class='co'># prepare metrics</span>
 <span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='metrics_distill.html'>metrics_distill</a></span>(<span class='no'>elephant_ud</span>)</div><div class='output co'>#&gt; class      : RasterStack 
-#&gt; dimensions : 218, 220, 47960, 4  (nrow, ncol, ncell, nlayers)
+#&gt; dimensions : 208, 193, 40144, 2  (nrow, ncol, ncell, nlayers)
 #&gt; resolution : 500, 500  (x, y)
-#&gt; extent     : 1472441, 1582441, -2379329, -2270329  (xmin, xmax, ymin, ymax)
-#&gt; crs        : +proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs 
-#&gt; names      :       year1,       year2,       year3,       year4 
-#&gt; min values :           0,           0,           0,           0 
-#&gt; max values : 0.003741765, 0.004792186, 0.004750540, 0.003533928 
+#&gt; extent     : -58642.18, 37857.82, -2376938, -2272938  (xmin, xmax, ymin, ymax)
+#&gt; crs        : +proj=moll +lon_0=15.8231920275931 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs 
+#&gt; names      :        LA11,        LA14 
+#&gt; min values :           0,           0 
+#&gt; max values : 0.002054668, 0.002409927 
 #&gt; </div><div class='input'>
 <span class='co'># generate palette</span>
-<span class='no'>pal</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='palette_timeline.html'>palette_timeline</a></span>(<span class='no'>elephant_ud</span>)
+<span class='no'>pal</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='palette_groups.html'>palette_groups</a></span>(<span class='no'>elephant_ud</span>)
 
 <span class='co'># produce map</span>
 <span class='fu'>map_single</span>(<span class='no'>r</span>, <span class='no'>pal</span>)</div><div class='img'><img src='map_single-1.png' alt='' width='700' height='433' /></div></pre>

@@ -2,4 +2,4 @@
 .Rhistory
 .RData
 supplementary/
-data-raw/
+data-raw/*gpkg

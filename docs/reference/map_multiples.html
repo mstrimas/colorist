@@ -163,13 +163,14 @@ will return a data frame containing the raster data in data frame format
 along with the associated cell colors. The data frame columns are:</p><ul>
 <li><p><code>x</code>,<code>y</code>: coordinates of raster cell centers.</p></li>
 <li><p><code>cell_number</code>: integer indicating the cell number.</p></li>
-<li><p><code>layer_cell</code>: a unique ID for the cell within the layer in the format:
+<li><p><code>layer_cell</code>: a unique ID for the cell within the layer in the format
 <code>"layer-cell_number"</code>.</p></li>
 <li><p><code>intensity</code>: maximum cell value across layers divided by the maximum
 value across all layers and cells; mapped to alpha level.</p></li>
 <li><p><code>specificity</code>: the degree to which intensity values are unevenly
 distributed across layers; mapped to chroma.</p></li>
-<li><p><code>layer_id</code>: the identity of the raster layer from which an intensity value was pulled; mapped to hue.</p></li>
+<li><p><code>layer_id</code>: the identity of the raster layer from which an intensity
+value was pulled; mapped to hue.</p></li>
 <li><p><code>color</code>: the hexadecimal color associated with the given layer and
 specificity values.</p></li>
 </ul>
@@ -190,14 +191,14 @@ to adjust the relative visual weight of high and low intensity values.</p>
 <code><a href='map_single.html'>map_single</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># load elephant data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"elephant_ud"</span>)
+    <pre class="examples"><div class='input'><span class='co'># load fisher data</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"fisher_ud"</span>)
 
 <span class='co'># prepare data</span>
-<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='metrics_pull.html'>metrics_pull</a></span>(<span class='no'>elephant_ud</span>)
+<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='metrics_pull.html'>metrics_pull</a></span>(<span class='no'>fisher_ud</span>)
 
 <span class='co'># generate palette</span>
-<span class='no'>pal</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='palette_timeline.html'>palette_timeline</a></span>(<span class='no'>elephant_ud</span>)
+<span class='no'>pal</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='palette_timeline.html'>palette_timeline</a></span>(<span class='no'>fisher_ud</span>)
 
 <span class='co'># produce map</span>
 <span class='fu'>map_multiples</span>(<span class='no'>r</span>, <span class='no'>pal</span>)</div><div class='img'><img src='map_multiples-1.png' alt='' width='700' height='433' /></div></pre>

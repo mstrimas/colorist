@@ -15,11 +15,10 @@ in the color wheel. For further details, consult the documentation for
 \link[colorspace:rainbow_hcl]{colorspace::rainbow_hcl}. Recommended values are -130 ("blue-pink-yellow"
 palette) and 50 ("yellow-green-blue" palette).}
 
-\item{clockwise}{logical indicating which direction to move around an HCL color wheel.
-When \code{clockwise = FALSE} the ending hue will be \code{start_hue + 180}.
-When \code{clockwise = TRUE} the ending hue will be \code{start_hue - 180}.
-The default value \code{clockwise = FALSE} will yield a
-"blue-pink-yellow" palette when \code{start_hue = -130}, while \code{clockwise = TRUE} will yield a
+\item{clockwise}{logical indicating which direction to move around an HCL
+color wheel. When \code{clockwise = FALSE} the ending hue will be \code{start_hue + 180}. When \code{clockwise = TRUE} the ending hue will be \code{start_hue - 180}. The
+default value \code{clockwise = FALSE} will yield a "blue-pink-yellow" palette
+when \code{start_hue = -130}, while \code{clockwise = TRUE} will yield a
 "blue-green-yellow" palette.}
 }
 \value{
@@ -34,24 +33,25 @@ specificity values.
 }
 }
 \description{
-This function generates an HCL palette for visualizing
-a linear sequence of distributions (e.g., a series of utilization
-distributions describing space use by an individual animal across each of 20 consecutive days or a series of
-species distributions describing projected responses to global warming in 0.5 C increments).
+This function generates an HCL palette for visualizing a linear
+sequence of distributions. For example, a series of utilization
+distributions describing space use by an individual animal across each of
+20 consecutive days or a series of species distributions describing
+projected responses to global warming in 0.5 C increments.
 }
 \examples{
-# load elephant data
-data(elephant_ud)
+# load fisher data
+data(fisher_ud)
 
 # generate hcl color palette
-pal_a <- palette_timeline(elephant_ud)
+pal_a <- palette_timeline(fisher_ud)
 head(pal_a)
 
 # use a clockwise palette
-pal_b <- palette_timeline(elephant_ud, clockwise = TRUE)
+pal_b <- palette_timeline(fisher_ud, clockwise = TRUE)
 
 # try a different starting hue
-pal_c <- palette_timeline(elephant_ud, start = 50)
+pal_c <- palette_timeline(fisher_ud, start = 50)
 
 # visualize the palette in HCL space  with colorspace::hclplot
 library(colorspace)

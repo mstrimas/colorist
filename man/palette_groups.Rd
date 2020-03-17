@@ -22,10 +22,10 @@ specificity values.
 }
 }
 \description{
-This function generates an HCL palette for visualizing
-a small set of distributions (i.e., eight or fewer) that are not
-ordered in a linear or cyclical sequence (e.g., a set of utilization
-distributions describing space use by five separate individuals in the same population or
+This function generates an HCL palette for visualizing a small
+set of distributions (i.e., eight or fewer) that are not ordered in a
+linear or cyclical sequence (e.g., a set of utilization distributions
+describing space use by five separate individuals in the same population or
 a set of four species distributions that depend on similar food resources).
 }
 \examples{

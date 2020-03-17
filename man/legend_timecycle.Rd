@@ -2,7 +2,7 @@
 % Please edit documentation in R/legend.R
 \name{legend_timecycle}
 \alias{legend_timecycle}
-\title{Make an HCL legend for a map containing a cyclical sequence of distributions}
+\title{Make an HCL legend for a cyclical sequence of distributions}
 \usage{
 legend_timecycle(
   palette,
@@ -28,7 +28,7 @@ label at the 12 o'clock position of the legend wheel.}
 build the legend.}
 }
 \value{
-A ggplot2 plot object of the legend. Alternatively,
+A \code{ggplot2} plot object of the legend. Alternatively,
 \code{return_df = TRUE} will return a data frame containing the data needed
 to build the legend. The data frame columns are:
 \itemize{

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Make an HCL legend for a map containing an unordered set of distributions — legend_groups • colorist</title>
+<title>Make an HCL legend for an unordered set of distributions — legend_groups • colorist</title>
 
 
 <!-- jquery -->
@@ -35,7 +35,7 @@
 
 
 
-<meta property="og:title" content="Make an HCL legend for a map containing an unordered set of distributions — legend_groups" />
+<meta property="og:title" content="Make an HCL legend for an unordered set of distributions — legend_groups" />
 <meta property="og:description" content="This function creates a legend to accompany a map describing
 an unordered set of distributions." />
 <meta name="twitter:card" content="summary" />
@@ -106,7 +106,7 @@ an unordered set of distributions." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Make an HCL legend for a map containing an unordered set of distributions</h1>
+    <h1>Make an HCL legend for an unordered set of distributions</h1>
     <small class="dont-index">Source: <a href='https://github.com/mstrimas/colorist/blob/master/R/legend.R'><code>R/legend.R</code></a></small>
     <div class="hidden name"><code>legend_groups.Rd</code></div>
     </div>
@@ -133,10 +133,10 @@ an unordered set of distributions.</p>
     </tr>
     <tr>
       <th>specificity</th>
-      <td><p>logical indicating whether to visualize intensity
-and layer information for the full range of potential specificity values (i.e., 0-100) or
-for a single specificity value (i.e., 100). Typically, a single specificity
-value is appropriate for <a href='map_multiples.html'>map_multiples</a> visualizations.</p></td>
+      <td><p>logical indicating whether to visualize intensity and
+layer information for the full range of potential specificity values (i.e.,
+0-100) or for a single specificity value (i.e., 100). Typically, a single
+specificity value is appropriate for <a href='map_multiples.html'>map_multiples</a> visualizations.</p></td>
     </tr>
     <tr>
       <th>group_labels</th>
@@ -152,14 +152,14 @@ build the legend.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A ggplot2 plot object of the legend. Alternatively,
+    <p>A <code>ggplot2</code> plot object of the legend. Alternatively,
 <code>return_df = TRUE</code> will return a data frame containing a data frame
 containing the data needed to build the legend. The data frame columns are:</p><ul>
 <li><p><code>specificity</code>: the degree to which intensity values are unevenly
 distributed across layers; mapped to chroma.</p></li>
 <li><p><code>layer_id</code>: integer identifying the layer containing the maximum
 intensity value; mapped to hue.</p></li>
-<li><p><code>color</code>: - <code>color</code>: the hexadecimal color associated with the given layer and
+<li><p><code>color</code>: the hexadecimal color associated with the given layer and
 specificity values.</p></li>
 <li><p><code>intensity</code>: maximum cell value across layers divided by the maximum
 value across all layers and cells; mapped to alpha level.</p></li>
@@ -176,8 +176,6 @@ value across all layers and cells; mapped to alpha level.</p></li>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># load elephant data</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>elephant_ud</span>)
-<span class='co'># treat layers as groups of elephants, not years for a single elephant</span>
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>elephant_ud</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"group"</span>, <span class='fl'>1</span>:<span class='fl'>4</span>)
 
 <span class='co'># generate hcl palette</span>
 <span class='no'>pal</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='palette_groups.html'>palette_groups</a></span>(<span class='no'>elephant_ud</span>)

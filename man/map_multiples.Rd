@@ -33,13 +33,14 @@ along with the associated cell colors. The data frame columns are:
 \itemize{
 \item \code{x},\code{y}: coordinates of raster cell centers.
 \item \code{cell_number}: integer indicating the cell number.
-\item \code{layer_cell}: a unique ID for the cell within the layer in the format:
+\item \code{layer_cell}: a unique ID for the cell within the layer in the format
 \code{"layer-cell_number"}.
 \item \code{intensity}: maximum cell value across layers divided by the maximum
 value across all layers and cells; mapped to alpha level.
 \item \code{specificity}: the degree to which intensity values are unevenly
 distributed across layers; mapped to chroma.
-\item \code{layer_id}: the identity of the raster layer from which an intensity value was pulled; mapped to hue.
+\item \code{layer_id}: the identity of the raster layer from which an intensity
+value was pulled; mapped to hue.
 \item \code{color}: the hexadecimal color associated with the given layer and
 specificity values.
 }
@@ -60,14 +61,14 @@ intensity values via the \code{\link[scales:modulus_trans]{scales::modulus_trans
 to adjust the relative visual weight of high and low intensity values.
 }
 \examples{
-# load elephant data
-data("elephant_ud")
+# load fisher data
+data("fisher_ud")
 
 # prepare data
-r <- metrics_pull(elephant_ud)
+r <- metrics_pull(fisher_ud)
 
 # generate palette
-pal <- palette_timeline(elephant_ud)
+pal <- palette_timeline(fisher_ud)
 
 # produce map
 map_multiples(r, pal)

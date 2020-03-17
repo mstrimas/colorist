@@ -36,10 +36,11 @@
 
 
 <meta property="og:title" content="Make an HCL palette for visualizing a linear sequence of distributions — palette_timeline" />
-<meta property="og:description" content="This function generates an HCL palette for visualizing
-a linear sequence of distributions (e.g., a series of utilization
-distributions describing space use by an individual animal across each of 20 consecutive days or a series of
-species distributions describing projected responses to global warming in 0.5 C increments)." />
+<meta property="og:description" content="This function generates an HCL palette for visualizing a linear
+sequence of distributions. For example, a series of utilization
+distributions describing space use by an individual animal across each of
+20 consecutive days or a series of species distributions describing
+projected responses to global warming in 0.5 C increments." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -114,10 +115,11 @@ species distributions describing projected responses to global warming in 0.5 C 
     </div>
 
     <div class="ref-description">
-    <p>This function generates an HCL palette for visualizing
-a linear sequence of distributions (e.g., a series of utilization
-distributions describing space use by an individual animal across each of 20 consecutive days or a series of
-species distributions describing projected responses to global warming in 0.5 C increments).</p>
+    <p>This function generates an HCL palette for visualizing a linear
+sequence of distributions. For example, a series of utilization
+distributions describing space use by an individual animal across each of
+20 consecutive days or a series of species distributions describing
+projected responses to global warming in 0.5 C increments.</p>
     </div>
 
     <pre class="usage"><span class='fu'>palette_timeline</span>(<span class='no'>x</span>, <span class='kw'>start_hue</span> <span class='kw'>=</span> -<span class='fl'>130</span>, <span class='kw'>clockwise</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
@@ -139,11 +141,10 @@ palette) and 50 ("yellow-green-blue" palette).</p></td>
     </tr>
     <tr>
       <th>clockwise</th>
-      <td><p>logical indicating which direction to move around an HCL color wheel.
-When <code>clockwise = FALSE</code> the ending hue will be <code>start_hue + 180</code>.
-When <code>clockwise = TRUE</code> the ending hue will be <code>start_hue - 180</code>.
-The default value <code>clockwise = FALSE</code> will yield a
-"blue-pink-yellow" palette when <code>start_hue = -130</code>, while <code>clockwise = TRUE</code> will yield a
+      <td><p>logical indicating which direction to move around an HCL
+color wheel. When <code>clockwise = FALSE</code> the ending hue will be <code>start_hue + 180</code>. When <code>clockwise = TRUE</code> the ending hue will be <code>start_hue - 180</code>. The
+default value <code>clockwise = FALSE</code> will yield a "blue-pink-yellow" palette
+when <code>start_hue = -130</code>, while <code>clockwise = TRUE</code> will yield a
 "blue-green-yellow" palette.</p></td>
     </tr>
     </table>
@@ -168,23 +169,23 @@ specificity values.</p></li>
 <code><a href='palette_timecycle.html'>palette_timecycle</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># load elephant data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>elephant_ud</span>)
+    <pre class="examples"><div class='input'><span class='co'># load fisher data</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>fisher_ud</span>)
 
 <span class='co'># generate hcl color palette</span>
-<span class='no'>pal_a</span> <span class='kw'>&lt;-</span> <span class='fu'>palette_timeline</span>(<span class='no'>elephant_ud</span>)
+<span class='no'>pal_a</span> <span class='kw'>&lt;-</span> <span class='fu'>palette_timeline</span>(<span class='no'>fisher_ud</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>pal_a</span>)</div><div class='output co'>#&gt;   specificity layer_id   color
 #&gt; 1           0        1 #6A6A6A
 #&gt; 2           0        2 #6A6A6A
 #&gt; 3           0        3 #6A6A6A
 #&gt; 4           0        4 #6A6A6A
-#&gt; 5           1        1 #6A6B6B
-#&gt; 6           1        2 #6B6A6C</div><div class='input'>
+#&gt; 5           0        5 #6A6A6A
+#&gt; 6           0        6 #6A6A6A</div><div class='input'>
 <span class='co'># use a clockwise palette</span>
-<span class='no'>pal_b</span> <span class='kw'>&lt;-</span> <span class='fu'>palette_timeline</span>(<span class='no'>elephant_ud</span>, <span class='kw'>clockwise</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>pal_b</span> <span class='kw'>&lt;-</span> <span class='fu'>palette_timeline</span>(<span class='no'>fisher_ud</span>, <span class='kw'>clockwise</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># try a different starting hue</span>
-<span class='no'>pal_c</span> <span class='kw'>&lt;-</span> <span class='fu'>palette_timeline</span>(<span class='no'>elephant_ud</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>50</span>)
+<span class='no'>pal_c</span> <span class='kw'>&lt;-</span> <span class='fu'>palette_timeline</span>(<span class='no'>fisher_ud</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>50</span>)
 
 <span class='co'># visualize the palette in HCL space  with colorspace::hclplot</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>colorspace</span>)

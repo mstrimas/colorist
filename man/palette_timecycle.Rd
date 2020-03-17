@@ -4,7 +4,7 @@
 \alias{palette_timecycle}
 \title{Make an HCL palette for visualizing a cyclical sequence of distributions}
 \usage{
-palette_timecycle(x, start_hue = 240, clockwise = FALSE)
+palette_timecycle(x, start_hue = 240, clockwise = TRUE)
 }
 \arguments{
 \item{x}{RasterStack or integer describing the number of layers for which
@@ -15,10 +15,10 @@ in an HCL color wheel. For further details, consult the documentation for
 \link[colorspace:rainbow_hcl]{colorspace::rainbow_hcl}. The default value of 240 will start the palette
 at "blue".}
 
-\item{clockwise}{logical indicating which direction to move around color wheel.
-The default \code{clockwise = FALSE}
-will yield a "blue-pink-yellow-green-blue" palette when \code{start_hue = 240}, while \code{clockwise = TRUE}
-will yield a "blue-green-yellow-pink-blue" palette.}
+\item{clockwise}{logical indicating which direction to move around color
+wheel. The default \code{clockwise = TRUE} will yield a
+"blue-green-yellow-pink-blue" palette when \code{start_hue = 240}, while
+\code{clockwise = FALSE} will yield a "blue-pink-yellow-green-blue" palette.}
 }
 \value{
 A data frame with three columns:

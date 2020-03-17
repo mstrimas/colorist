@@ -2,7 +2,7 @@
 % Please edit documentation in R/legend.R
 \name{legend_timeline}
 \alias{legend_timeline}
-\title{Make an HCL legend for a map containing a linear sequence of distributions}
+\title{Make an HCL legend for a linear sequence of distributions}
 \usage{
 legend_timeline(
   palette,
@@ -28,7 +28,7 @@ for the start and end points of the time axis (i.e. x-axis) in the legend.}
 build the legend.}
 }
 \value{
-A ggplot2 plot object of the legend. Alternatively,
+A \code{ggplot2} plot object of the legend. Alternatively,
 \code{return_df = TRUE} will return a data frame containing a data frame
 containing the data needed to build the legend. The data frame columns are:
 \itemize{
@@ -47,11 +47,11 @@ This function creates a legend to accompany a map describing
 a linear sequence of distributions.
 }
 \examples{
-# load elephant data
-data(elephant_ud)
+# load fisher data
+data(fisher_ud)
 
 # generate hcl palette
-pal <- palette_timeline(elephant_ud)
+pal <- palette_timeline(fisher_ud)
 
 # create legend for palette
 legend_timeline(pal)
