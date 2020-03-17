@@ -54,7 +54,7 @@
 #' r <- metrics_distill(elephant_ud)
 #'
 #' # generate palette
-#' pal <- palette_timeline(elephant_ud)
+#' pal <- palette_groups(elephant_ud)
 #'
 #' # produce map
 #' map_single(r, pal)
@@ -197,14 +197,14 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
 #' @family map
 #' @export
 #' @examples
-#' # load elephant data
-#' data("elephant_ud")
+#' # load fisher data
+#' data("fisher_ud")
 #'
 #' # prepare data
-#' r <- metrics_pull(elephant_ud)
+#' r <- metrics_pull(fisher_ud)
 #'
 #' # generate palette
-#' pal <- palette_timeline(elephant_ud)
+#' pal <- palette_timeline(fisher_ud)
 #'
 #' # produce map
 #' map_multiples(r, pal)
