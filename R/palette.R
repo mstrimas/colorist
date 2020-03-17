@@ -15,9 +15,9 @@
 #'   [colorspace::rainbow_hcl]. The default value of 240 will start the palette
 #'   at "blue".
 #' @param clockwise logical indicating which direction to move around color wheel.
-#'   The default `clockwise = FALSE`
-#'   will yield a "blue-pink-yellow-green-blue" palette when `start_hue = 240`, while `clockwise = TRUE`
-#'   will yield a "blue-green-yellow-pink-blue" palette.
+#'   The default `clockwise = TRUE`
+#'   will yield a "blue-green-yellow-pink-blue" palette when `start_hue = 240`, while `clockwise = FALSE`
+#'   will yield a "blue-pink-yellow-green-blue" palette.
 #'
 #' @return A data frame with three columns:
 #'   - `layer_id`: integer identifying the layer containing the maximum
@@ -42,12 +42,12 @@
 #' # visualize the palette in HCL space with colorspace::hclplot
 #' library(colorspace)
 #' hclplot(pal[pal$specificity == 100, ]$color)
-palette_timecycle <- function(x, start_hue = 240, clockwise = FALSE) {
+palette_timecycle <- function(x, start_hue = 240, clockwise = TRUE) {
   UseMethod("palette_timecycle")
 }
 
 #' @export
-palette_timecycle.integer <- function(x, start_hue = 240, clockwise = FALSE) {
+palette_timecycle.integer <- function(x, start_hue = 240, clockwise = TRUE) {
   if (x < 2) {
     stop("At least two intervals are required to generate a palette.")
   }
@@ -82,12 +82,12 @@ palette_timecycle.integer <- function(x, start_hue = 240, clockwise = FALSE) {
 }
 
 #' @export
-palette_timecycle.numeric <- function(x, start_hue = 240, clockwise = FALSE) {
+palette_timecycle.numeric <- function(x, start_hue = 240, clockwise = TRUE) {
   palette_timecycle(as.integer(x), start_hue, clockwise)
 }
 
 #' @export
-palette_timecycle.Raster<- function(x, start_hue = 240, clockwise = FALSE) {
+palette_timecycle.Raster<- function(x, start_hue = 240, clockwise = TRUE) {
   palette_timecycle(raster::nlayers(x), start_hue, clockwise)
 }
 
@@ -126,18 +126,18 @@ palette_timecycle.Raster<- function(x, start_hue = 240, clockwise = FALSE) {
 #'   [palette_groups] for unordered sets of distributions.
 #' @export
 #' @examples
-#' # load elephant data
-#' data(elephant_ud)
+#' # load fisher data
+#' data(fisher_ud)
 #'
 #' # generate hcl color palette
-#' pal_a <- palette_timeline(elephant_ud)
+#' pal_a <- palette_timeline(fisher_ud)
 #' head(pal_a)
 #'
 #' # use a clockwise palette
-#' pal_b <- palette_timeline(elephant_ud, clockwise = TRUE)
+#' pal_b <- palette_timeline(fisher_ud, clockwise = TRUE)
 #'
 #' # try a different starting hue
-#' pal_c <- palette_timeline(elephant_ud, start = 50)
+#' pal_c <- palette_timeline(fisher_ud, start = 50)
 #'
 #' # visualize the palette in HCL space  with colorspace::hclplot
 #' library(colorspace)
