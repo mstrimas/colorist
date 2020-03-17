@@ -20,15 +20,15 @@
 #'   <https://doi.org/10.2173/ebirdst.2018>
 "fiespa_occ"
 
-#' African Elephant utilization distribution
+#' African Elephant utilization distributions
 #'
 #' A [RasterStack][raster::RasterStack-class] of the [utilization
-#' distribution](https://en.wikipedia.org/wiki/Utilization_distribution) for a
-#' single African Elephant in Etosha National Park. Cell values represent the
-#' probability density that the individual elephant was found at a given
-#' location and the four layers represent four successive years of data. This
-#' distribution was derived from tracking data using the `adehabitatHR` package.
-#' derived from tracking data.
+#' distribution](https://en.wikipedia.org/wiki/Utilization_distribution) for two
+#' individual African Elephants in Etosha National Park in 2011. Cell values represent the
+#' probability density that an elephant was found at a given
+#' location within the year and the two layers contain data for the two individual.
+#' Utilization distributions were generated in the `adehabitatHR` package using GPS tracking data.
+#' W. Kilian, W.M. Getz, R. Zidon, and M. Tsalyuk graciously provided permission to use their data for visualization purposes.
 #'
 #' @source <https://www.datarepository.movebank.org/handle/10255/move.812>
 #' @references
@@ -42,3 +42,23 @@
 #' variability in resource availability. Movebank Data Repository.
 #' <https://doi.org/10.5441/001/1.3nj3qj45>
 "elephant_ud"
+
+
+#' Fisher utilization distributions
+#'
+#' A [RasterStack][raster::RasterStack-class] of the [utilization
+#' distribution](https://en.wikipedia.org/wiki/Utilization_distribution) for a
+#' single fisher in New York state over the course of nine nights. Cell values represent the
+#' probability density that the individual was found at a given
+#' location between sunset and sunrise and the nine layers represent nine nights of data.
+#' Utilization distributions were generated in the `adehabitatHR` package using GPS tracking data.
+#'
+#' @source <https://www.datarepository.movebank.org/handle/10255/move.330>
+#' @references
+#' LaPoint, S, Gallery P, Wikelski M, Kays R (2013) Animal behavior, cost-based corridor
+#' models, and real corridors. Landscape Ecology 28(8): 1615–1630. <https://doi:10.1007/s10980-013-9910-0>
+#'
+#' LaPoint S, Gallery P, Wikelski M, Kays R (2013) Data from: Animal behavior,
+#' cost-based corridor models, and real corridors. Movebank Data Repository.
+#' <https://doi:10.5441/001/1.2tp2j43g>
+"fisher_ud"
