@@ -56,8 +56,10 @@
 #' # generate palette
 #' pal <- palette_groups(elephant_ud)
 #'
-#' # produce map
-#' map_single(r, pal)
+#' # produce map, adjusting lambda to make areas that were used less
+#' # intensively more conspicuous
+#' map_single(r, pal, lambda = -5)
+#'
 map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
   stopifnot(inherits(x, c("RasterStack", "RasterBrick")))
   stopifnot(inherits(palette, "data.frame"),
@@ -207,8 +209,9 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
 #' # generate palette
 #' pal <- palette_timeline(fisher_ud)
 #'
-#' # produce map
-#' map_multiples(r, pal)
+#' # produce maps, adjusting lambda to make areas that were used less
+#' # intensively more conspicuous
+#' map_multiples(r, pal, lambda = -5, labels = str_c("night ", 1:9))
 map_multiples <- function(x, palette, ncol, lambda = 0, labels = NULL,
                           return_df = FALSE) {
   stopifnot(inherits(x, c("RasterStack", "RasterBrick")))
@@ -221,7 +224,7 @@ map_multiples <- function(x, palette, ncol, lambda = 0, labels = NULL,
   if (missing(ncol)) {
     ncol <- round(sqrt(raster::nlayers(x)))
   } else {
-    stopifnot(length(ncol), is_integer(ncol), ncol > 0,
+    stopifnot(length(ncol) == 1, is_integer(ncol), ncol > 0,
               ncol <= raster::nlayers(x))
   }
   if (isTRUE(attr(x, "metric") == "distill")) {
@@ -268,7 +271,7 @@ map_multiples <- function(x, palette, ncol, lambda = 0, labels = NULL,
     names(labels) <- seq.int(raster::nlayers(x))
   } else {
     if (length(labels) != raster::nlayers(x)) {
-      stop("Length 0f labels must be equal to the number of layers in x.")
+      stop("Length of labels must be equal to the number of layers in x.")
     }
     names(labels) <- seq.int(raster::nlayers(x))
   }
