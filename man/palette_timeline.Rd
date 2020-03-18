@@ -61,10 +61,10 @@ hclplot(pal_c[pal_b$specificity == 100, ]$color)
 }
 \seealso{
 \link{palette_timecycle} for cyclical sequences of distributions and
-\link{palette_groups} for unordered sets of distributions.
+\link{palette_set} for unordered sets of distributions.
 
 Other palette: 
-\code{\link{palette_groups}()},
+\code{\link{palette_set}()},
 \code{\link{palette_timecycle}()}
 }
 \concept{palette}

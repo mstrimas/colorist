@@ -29,7 +29,7 @@
 #'
 #' @family palette
 #' @seealso [palette_timeline] for linear sequences of distributions and
-#'   [palette_groups] for unordered sets of distributions.
+#'   [palette_set] for unordered sets of distributions.
 #' @export
 #' @examples
 #' # load field sparrow data
@@ -124,7 +124,7 @@ palette_timecycle.Raster<- function(x, start_hue = 240, clockwise = TRUE) {
 #'   specificity values.
 #' @family palette
 #' @seealso [palette_timecycle] for cyclical sequences of distributions and
-#'   [palette_groups] for unordered sets of distributions.
+#'   [palette_set] for unordered sets of distributions.
 #' @export
 #' @examples
 #' # load fisher data
@@ -196,7 +196,7 @@ palette_timeline.Raster<- function(x, start_hue = -130, clockwise = FALSE) {
 }
 
 
-# palette_groups ----
+# palette_set ----
 
 #' Make an HCL palette for visualizing an unordered set of distributions
 #'
@@ -227,18 +227,18 @@ palette_timeline.Raster<- function(x, start_hue = -130, clockwise = FALSE) {
 #' data(elephant_ud)
 #'
 #' # generate hcl color palette
-#' pal <- palette_groups(elephant_ud)
+#' pal <- palette_set(elephant_ud)
 #' head(pal)
 #'
 #' # visualize the palette in HCL space  with colorspace::hclplot
 #' library(colorspace)
 #' hclplot(pal[pal$specificity == 100, ]$color)
-palette_groups <- function(x) {
-  UseMethod("palette_groups")
+palette_set <- function(x) {
+  UseMethod("palette_set")
 }
 
 #' @export
-palette_groups.integer <- function(x) {
+palette_set.integer <- function(x) {
   if (x < 2) {
     stop("At least two groups are required to generate a palette.")
   } else if (x > 8) {
@@ -269,16 +269,16 @@ palette_groups.integer <- function(x) {
   wheel <- wheel[wheel$layer_id %in% seq.int(x), ]
   wheel <- wheel[order(wheel[["specificity"]], wheel[["layer_id"]]), ]
   row.names(wheel) <- NULL
-  class(wheel) <- c("palette_groups", "data.frame")
+  class(wheel) <- c("palette_set", "data.frame")
   return(wheel)
 }
 
 #' @export
-palette_groups.numeric <- function(x) {
-  palette_groups(as.integer(x))
+palette_set.numeric <- function(x) {
+  palette_set(as.integer(x))
 }
 
 #' @export
-palette_groups.Raster<- function(x) {
-  palette_groups(raster::nlayers(x))
+palette_set.Raster<- function(x) {
+  palette_set(raster::nlayers(x))
 }

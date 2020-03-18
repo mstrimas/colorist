@@ -71,8 +71,7 @@ ud_ind <- locs_moll %>%
   nest() %>%
   mutate(trajectory = map(data, make_trajectory),
          ud = map(trajectory, make_ud, grid = template))
-elephant_ud <- stack(ud_ind$ud) %>%
-  setNames(ud_ind$ind_ident)
+elephant_ud <- stack(ud_ind$ud)
 
 # trim out very low values
 elephant_ud <- elephant_ud * (elephant_ud > 1e-6)
@@ -82,5 +81,6 @@ elephant_ud <- elephant_ud / cellStats(elephant_ud, sum)
 # save package data
 elephant_ud <- stack(elephant_ud)
 elephant_ud <- readAll(elephant_ud)
+names(elephant_ud) <- ud_ind$ind_ident
 writeRaster(elephant_ud, "data-raw/elephant-ud.tif", overwrite = TRUE)
 usethis::use_data(elephant_ud, overwrite = TRUE)

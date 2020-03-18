@@ -131,7 +131,7 @@ color palette.</p>
     <tr>
       <th>palette</th>
       <td><p>data frame containing an HCL color palette generated using
-<code><a href='palette_timecycle.html'>palette_timecycle()</a></code>, <code><a href='palette_timeline.html'>palette_timeline()</a></code>, or <code><a href='palette_groups.html'>palette_groups()</a></code>.</p></td>
+<code><a href='palette_timecycle.html'>palette_timecycle()</a></code>, <code><a href='palette_timeline.html'>palette_timeline()</a></code>, or <code><a href='palette_set.html'>palette_set()</a></code>.</p></td>
     </tr>
     <tr>
       <th>layer</th>
@@ -202,10 +202,12 @@ to adjust the relative visual weight of high and low intensity values.</p>
 #&gt; max values : 0.002054668, 0.002409927 
 #&gt; </div><div class='input'>
 <span class='co'># generate palette</span>
-<span class='no'>pal</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='palette_groups.html'>palette_groups</a></span>(<span class='no'>elephant_ud</span>)
+<span class='no'>pal</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='palette_set.html'>palette_set</a></span>(<span class='no'>elephant_ud</span>)
 
 <span class='co'># produce map</span>
-<span class='fu'>map_single</span>(<span class='no'>r</span>, <span class='no'>pal</span>)</div><div class='img'><img src='map_single-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='co'># set lambda to make areas that were used less intensively more conspicuous</span>
+<span class='fu'>map_single</span>(<span class='no'>r</span>, <span class='no'>pal</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> -<span class='fl'>5</span>)</div><div class='img'><img src='map_single-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -7,7 +7,7 @@
 #' @param x RasterStack of distributions processed by [metrics_pull()] or
 #'   [metrics_distill()].
 #' @param palette data frame containing an HCL color palette generated using
-#'   [palette_timecycle()], [palette_timeline()], or [palette_groups()].
+#'   [palette_timecycle()], [palette_timeline()], or [palette_set()].
 #' @param layer integer (or character) corresponding to the layer ID (or name)
 #'   of layer. A single distribution from within `x` is mapped when the `layer`
 #'   argument is specified. The `layer` argument is ignored if
@@ -54,10 +54,10 @@
 #' r <- metrics_distill(elephant_ud)
 #'
 #' # generate palette
-#' pal <- palette_groups(elephant_ud)
+#' pal <- palette_set(elephant_ud)
 #'
-#' # produce map, adjusting lambda to make areas that were used less
-#' # intensively more conspicuous
+#' # produce map
+#' # set lambda to make areas that were used less intensively more conspicuous
 #' map_single(r, pal, lambda = -5)
 #'
 map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
@@ -65,7 +65,7 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
   stopifnot(inherits(palette, "data.frame"),
             inherits(palette, c("palette_timeline",
                                 "palette_timecycle",
-                                "palette_groups")),
+                                "palette_set")),
             c("specificity", "layer_id", "color") %in% names(palette))
   stopifnot(length(lambda) == 1, is.numeric(lambda))
 
@@ -160,7 +160,7 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
 #'
 #' @param x RasterStack of distributions processed by [metrics_pull()].
 #' @param palette data frame containing an HCL color palette generated using
-#'   [palette_timecycle()], [palette_timeline()], or [palette_groups()].
+#'   [palette_timecycle()], [palette_timeline()], or [palette_set()].
 #' @param ncol integer specifying the number of columns in the grid of plots.
 #' @param lambda number that allows visual tuning of intensity values via the
 #'   [scales::modulus_trans()] function (see Details). Negative numbers decrease
@@ -209,16 +209,16 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
 #' # generate palette
 #' pal <- palette_timeline(fisher_ud)
 #'
-#' # produce maps, adjusting lambda to make areas that were used less
-#' # intensively more conspicuous
-#' map_multiples(r, pal, lambda = -5, labels = str_c("night ", 1:9))
+#' # produce maps
+#' # set lambda to make areas that were used less intensively more conspicuous
+#' map_multiples(r, pal, lambda = -5, labels = names(r))
 map_multiples <- function(x, palette, ncol, lambda = 0, labels = NULL,
                           return_df = FALSE) {
   stopifnot(inherits(x, c("RasterStack", "RasterBrick")))
   stopifnot(inherits(palette, "data.frame"),
             inherits(palette, c("palette_timeline",
                                 "palette_timecycle",
-                                "palette_groups")),
+                                "palette_set")),
             c("specificity", "layer_id", "color") %in% names(palette))
   stopifnot(length(lambda) == 1, is.numeric(lambda))
   if (missing(ncol)) {

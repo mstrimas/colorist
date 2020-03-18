@@ -1,6 +1,6 @@
 # clean up
 unlink(list.files("man", full.names = TRUE))
-devtools::clean_vignettes()
+#devtools::clean_vignettes()
 pkgdown::clean_site()
 
 # rebuild docs and install
@@ -8,11 +8,11 @@ devtools::document()
 devtools::install_local(force = TRUE)
 
 # local tests and checks
-devtools::test()
+#devtools::test()
 devtools::check(run_dont_test = TRUE)
 
 # vignettes, readme, site
-devtools::build_vignettes()
+#devtools::build_vignettes()
 rmarkdown::render("README.Rmd", output_format = "github_document")
 unlink("README.html")
 pkgdown::build_site()

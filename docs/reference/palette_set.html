@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Make an HCL palette for visualizing an unordered set of distributions — palette_groups • colorist</title>
+<title>Make an HCL palette for visualizing an unordered set of distributions — palette_set • colorist</title>
 
 
 <!-- jquery -->
@@ -35,7 +35,7 @@
 
 
 
-<meta property="og:title" content="Make an HCL palette for visualizing an unordered set of distributions — palette_groups" />
+<meta property="og:title" content="Make an HCL palette for visualizing an unordered set of distributions — palette_set" />
 <meta property="og:description" content="This function generates an HCL palette for visualizing a small
 set of distributions (i.e., eight or fewer) that are not ordered in a
 linear or cyclical sequence (e.g., a set of utilization distributions
@@ -111,7 +111,7 @@ a set of four species distributions that depend on similar food resources)." />
     <div class="page-header">
     <h1>Make an HCL palette for visualizing an unordered set of distributions</h1>
     <small class="dont-index">Source: <a href='https://github.com/mstrimas/colorist/blob/master/R/palette.R'><code>R/palette.R</code></a></small>
-    <div class="hidden name"><code>palette_groups.Rd</code></div>
+    <div class="hidden name"><code>palette_set.Rd</code></div>
     </div>
 
     <div class="ref-description">
@@ -122,7 +122,7 @@ describing space use by five separate individuals in the same population or
 a set of four species distributions that depend on similar food resources).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>palette_groups</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>palette_set</span>(<span class='no'>x</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -159,7 +159,7 @@ specificity values.</p></li>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>elephant_ud</span>)
 
 <span class='co'># generate hcl color palette</span>
-<span class='no'>pal</span> <span class='kw'>&lt;-</span> <span class='fu'>palette_groups</span>(<span class='no'>elephant_ud</span>)
+<span class='no'>pal</span> <span class='kw'>&lt;-</span> <span class='fu'>palette_set</span>(<span class='no'>elephant_ud</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>pal</span>)</div><div class='output co'>#&gt;   specificity layer_id   color
 #&gt; 1           0        1 #6A6A6A
 #&gt; 2           0        2 #6A6A6A
@@ -169,7 +169,7 @@ specificity values.</p></li>
 #&gt; 6           2        2 #6D6A6A</div><div class='input'>
 <span class='co'># visualize the palette in HCL space  with colorspace::hclplot</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>colorspace</span>)
-<span class='fu'><a href='http://colorspace.R-Forge.R-project.org//reference/hclplot.html'>hclplot</a></span>(<span class='no'>pal</span>[<span class='no'>pal</span>$<span class='no'>specificity</span> <span class='kw'>==</span> <span class='fl'>100</span>, ]$<span class='no'>color</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: the standard deviation is zero</span></div><div class='img'><img src='palette_groups-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='http://colorspace.R-Forge.R-project.org//reference/hclplot.html'>hclplot</a></span>(<span class='no'>pal</span>[<span class='no'>pal</span>$<span class='no'>specificity</span> <span class='kw'>==</span> <span class='fl'>100</span>, ]$<span class='no'>color</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: the standard deviation is zero</span></div><div class='img'><img src='palette_set-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

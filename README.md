@@ -104,7 +104,7 @@ r <- metrics_distill(fiespa_occ)
 pal <- palette_timecycle(fiespa_occ)
 
 # map
-map_single(r, pal)
+map_single(r, pal, lambda = -2)
 ```
 
 <img src="man/figures/README-elephant-1.png" width="100%" />
