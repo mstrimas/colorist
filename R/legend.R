@@ -52,9 +52,7 @@ legend_timecycle <- function(palette, specificity = TRUE, origin_label = NULL,
     stop("Improperly formatted color palette, try using palette_timecycle().")
   }
   stopifnot(is.logical(specificity), length(specificity) == 1)
-  if (is.null(origin_label)) {
-    origin_label <- NA_character_
-  } else {
+  if (!is.null(origin_label)) {
     stopifnot(is.character(origin_label), length(origin_label) == 1)
   }
   stopifnot(is.logical(return_df), length(return_df) == 1)
@@ -96,12 +94,11 @@ legend_timecycle <- function(palette, specificity = TRUE, origin_label = NULL,
     ggplot2::scale_fill_manual(values = tile_colors) +
     ggplot2::scale_alpha_continuous(range = c(0, 1)) +
     ggplot2::coord_polar(theta = "x", start = 0) +
-    ggplot2::geom_linerange(x = 0.5, ymin = 0, ymax = 1, size = 0.5, linetype = 3) +
-    ggplot2::geom_text(aes(x = 0.5, y = 1, label = origin_label), fontface = "plain", vjust = -1, color = "gray60") +
-    #ggplot2::geom_label(aes(x = 0.5, y = 1, label = origin_label), fill = "white", fontface = "plain", vjust = -0.5) + # slower but cleaner type alternative to geom_text
+    ggplot2::geom_linerange(x = 0.5, ymin = 0, ymax = 1, size = 0.5,
+                            linetype = 3) +
     ggplot2::theme(
       strip.background = ggplot2::element_blank(),
-      strip.text = element_text(size = 11),
+      strip.text = ggplot2::element_text(size = 11),
       plot.title = ggplot2::element_text(size = 11, hjust = 0.5),
       panel.grid = ggplot2::element_blank(),
       panel.background = ggplot2::element_blank(),
@@ -112,6 +109,13 @@ legend_timecycle <- function(palette, specificity = TRUE, origin_label = NULL,
     ggplot2::guides(fill = FALSE, alpha = FALSE) +
     ggplot2::xlab("Layer") +
     ggplot2::ylab("Maximum\nintensity")
+
+  # add origin label
+  if (!is.null(origin_label)) {
+    p <- p +
+      ggplot2::geom_text(ggplot2::aes(x = 0.5, y = 1, label = origin_label),
+                         fontface = "plain", vjust = -1, color = "gray60")
+  }
 
   return(p)
 }
