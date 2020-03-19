@@ -125,11 +125,10 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
   names(map_colors) <- r_pal$cell_number
 
   # generate plot
-  m <- ggplot2::ggplot(data = r_pal) +
-    ggplot2::aes_(x = ~ x, y = ~ y,
-                  fill = ~ factor(cell_number),
-                  alpha = ~ intensity) +
-    ggplot2::geom_tile() +
+  m <- ggplot2::ggplot() +
+    ggplot2::geom_tile(data = r_pal, aes(x = x, y = y,
+                            fill = factor(cell_number),
+                            alpha = intensity)) +
     ggplot2::scale_fill_manual(values = map_colors) +
     ggplot2::scale_color_manual(values = map_colors) +
     ggplot2::scale_alpha_continuous(trans = scales::modulus_trans(lambda + 1),
@@ -146,7 +145,7 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
                    axis.ticks = ggplot2::element_blank()) +
     ggplot2::xlab("Longitude") +
     ggplot2::ylab("Latitude") +
-    ggplot2::coord_equal()
+    ggplot2::coord_sf(crs = crs(x))
 
   return(m)
 }
@@ -277,11 +276,10 @@ map_multiples <- function(x, palette, ncol, lambda = 0, labels = NULL,
   }
 
   # generate multipanel plot
-  m <- ggplot2::ggplot(data = r_pal) +
-    ggplot2::aes_(x = ~ x, y = ~ y,
-                  fill = ~ factor(layer_cell),
-                  alpha = ~ intensity) +
-    ggplot2::geom_tile() +
+  m <- ggplot2::ggplot() +
+    ggplot2::geom_tile(data = r_pal, aes(x = x, y = y,
+                                         fill = factor(layer_cell),
+                                         alpha = intensity)) +
     ggplot2::scale_fill_manual(values = map_colors) +
     #ggplot2::scale_color_manual(values = map_colors) +
     ggplot2::scale_alpha_continuous(trans = scales::modulus_trans(lambda + 1),
@@ -300,7 +298,7 @@ map_multiples <- function(x, palette, ncol, lambda = 0, labels = NULL,
                    axis.ticks = ggplot2::element_blank()) +
     ggplot2::xlab("Longitude") +
     ggplot2::ylab("Latitude") +
-    ggplot2::coord_equal()
+    ggplot2::coord_sf(crs = crs(x))
 
   return(m)
 }
