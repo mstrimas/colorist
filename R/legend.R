@@ -83,7 +83,7 @@ legend_timecycle <- function(palette, specificity = TRUE, origin_label = NULL,
   names(tile_colors) <- tile_colors
 
   # make labels for legend
-  labs <- c("low", "moderate", "high")
+  labs <- c("Low specificity", "Moderate specificity", "High specificity")
   names(labs) <- c(0, 50, 100)
 
   # describe ggplot
@@ -96,21 +96,20 @@ legend_timecycle <- function(palette, specificity = TRUE, origin_label = NULL,
     ggplot2::scale_fill_manual(values = tile_colors) +
     ggplot2::scale_alpha_continuous(range = c(0, 1)) +
     ggplot2::coord_polar(theta = "x", start = 0) +
-    ggplot2::scale_x_continuous(breaks = 0.5, labels = origin_label) +
+    ggplot2::geom_linerange(x = 0.5, ymin = 0, ymax = 1, size = 0.5, linetype = 3) +
+    ggplot2::geom_text(aes(x = 0.5, y = 1, label = origin_label), fontface = "plain", vjust = -1, color = "gray60") +
+    #ggplot2::geom_label(aes(x = 0.5, y = 1, label = origin_label), fill = "white", fontface = "plain", vjust = -0.5) + # slower but cleaner type alternative to geom_text
     ggplot2::theme(
       strip.background = ggplot2::element_blank(),
+      strip.text = element_text(size = 11),
       plot.title = ggplot2::element_text(size = 11, hjust = 0.5),
       panel.grid = ggplot2::element_blank(),
-      panel.grid.major.x = ggplot2::element_line(color = "black", size = 0.5),
       panel.background = ggplot2::element_blank(),
       panel.spacing = ggplot2::unit(0, "lines"),
       plot.background = ggplot2::element_rect(fill = "white"),
-      axis.text.x = ggplot2::element_text(size = 11, hjust = 0.5),
-      axis.text.y = ggplot2::element_blank(),
-      axis.ticks.x = ggplot2::element_line(color = "black"),
-      axis.ticks.y = ggplot2::element_blank()) +
+      axis.text = ggplot2::element_blank(),
+      axis.ticks = ggplot2::element_blank()) +
     ggplot2::guides(fill = FALSE, alpha = FALSE) +
-    ggplot2::ggtitle("Specificity") +
     ggplot2::xlab("Layer") +
     ggplot2::ylab("Maximum\nintensity")
 
