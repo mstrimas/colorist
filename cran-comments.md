@@ -16,6 +16,8 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+0 errors | 0 warnings | 2 note
 
 - This is a new release.
+- Possibly mis-spelled words in DESCRIPTION. These words are correct: HCL, chroma, luminance
+- This package is 1.8 MB when build, larger than a typical package because it contains 3 example datasets exhibiting the three types of data that can be visualized. This package is designed to visualize spatial data with high spatial and temporal resolution and we feel having good example datasets is critical to users of this package being able to explore its capabilities. The included example datasets are the smallest we could make them while still being realistic.
