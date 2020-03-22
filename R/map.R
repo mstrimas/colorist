@@ -101,8 +101,8 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
     r <- raster::as.data.frame(x[[l]], xy = TRUE)
     r$cell_number <- seq.int(nrow(r))
   } else {
-    stop(paste0("No metric function called on the input raster.",
-                "Try using metric_pull() or metric_distill()."))
+    stop(paste0("No metrics function called on the input raster.",
+                "Try using metrics_pull() or metrics_distill()."))
   }
   r <- r[stats::complete.cases(r), ]
 
@@ -228,11 +228,11 @@ map_multiples <- function(x, palette, ncol, lambda = 0, labels = NULL,
               ncol <= raster::nlayers(x))
   }
   if (isTRUE(attr(x, "metric") == "distill")) {
-    stop(paste0("map_multiples() does not work with metric_distill().",
-                "Try using metric_pull()."))
+    stop(paste0("map_multiples() does not work with metrics_distill().",
+                "Try using metrics_pull()."))
   } else if (!isTRUE(attr(x, "metric") == "pull")) {
-    stop(paste0("No metric function called on the input raster.",
-                "Try using metric_pull()."))
+    stop(paste0("No metrics function called on the input raster.",
+                "Try using metrics_pull()."))
   }
 
   # convert raster to data frame

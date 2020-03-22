@@ -97,10 +97,10 @@ palette_timecycle.Raster<- function(x, start_hue = 240, clockwise = TRUE) {
 #' Make an HCL palette for visualizing a linear sequence of distributions
 #'
 #' @description This function generates an HCL palette for visualizing a linear
-#'   sequence of distributions. For example, a series of utilization
+#'   sequence of distributions (e.g., a series of utilization
 #'   distributions describing space use by an individual animal across each of
 #'   20 consecutive days or a series of species distributions describing
-#'   projected responses to global warming in 0.5 C increments.
+#'   projected responses to global warming in 0.5 C increments).
 #'
 #' @param x RasterStack or integer describing the number of layers for which
 #'   colors need to be generated.
@@ -144,7 +144,7 @@ palette_timecycle.Raster<- function(x, start_hue = 240, clockwise = TRUE) {
 #' library(colorspace)
 #' hclplot(pal_a[pal_a$specificity == 100, ]$color)
 #' hclplot(pal_b[pal_b$specificity == 100, ]$color)
-#' hclplot(pal_c[pal_b$specificity == 100, ]$color)
+#' hclplot(pal_c[pal_c$specificity == 100, ]$color)
 palette_timeline <- function(x, start_hue = -130, clockwise = FALSE) {
   UseMethod("palette_timeline")
 }
@@ -152,7 +152,7 @@ palette_timeline <- function(x, start_hue = -130, clockwise = FALSE) {
 #' @export
 palette_timeline.integer <- function(x, start_hue = -130, clockwise = FALSE) {
   if (x < 2) {
-    stop("At least two intervals are required to generate a palette.")
+    stop("At least two layers are required to generate a palette.")
   }
   stopifnot(is.numeric(start_hue), length(start_hue) == 1,
             start_hue >= -360, start_hue <= 360)
@@ -223,14 +223,13 @@ palette_timeline.Raster<- function(x, start_hue = -130, clockwise = FALSE) {
 #' @export
 #' @examples
 #' # load elephant data
-#' # treat layers as groups of elephants, not years for a single elephant
 #' data(elephant_ud)
 #'
 #' # generate hcl color palette
 #' pal <- palette_set(elephant_ud)
 #' head(pal)
 #'
-#' # visualize the palette in HCL space  with colorspace::hclplot
+#' # visualize the palette in HCL space with colorspace::hclplot
 #' library(colorspace)
 #' hclplot(pal[pal$specificity == 100, ]$color)
 palette_set <- function(x) {
@@ -240,9 +239,9 @@ palette_set <- function(x) {
 #' @export
 palette_set.integer <- function(x) {
   if (x < 2) {
-    stop("At least two groups are required to generate a palette.")
+    stop("At least two layers are required to generate a palette.")
   } else if (x > 8) {
-    stop(paste("Too many layers for palette_group.",
+    stop(paste("Too many layers for palette_set.",
                "Try palette_timecycle or palette_timeline."))
   }
 
