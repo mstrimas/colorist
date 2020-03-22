@@ -30,14 +30,13 @@ a set of four species distributions that depend on similar food resources).
 }
 \examples{
 # load elephant data
-# treat layers as groups of elephants, not years for a single elephant
 data(elephant_ud)
 
 # generate hcl color palette
 pal <- palette_set(elephant_ud)
 head(pal)
 
-# visualize the palette in HCL space  with colorspace::hclplot
+# visualize the palette in HCL space with colorspace::hclplot
 library(colorspace)
 hclplot(pal[pal$specificity == 100, ]$color)
 }

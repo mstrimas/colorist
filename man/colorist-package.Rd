@@ -4,7 +4,7 @@
 \name{colorist-package}
 \alias{colorist}
 \alias{colorist-package}
-\title{colorist: Tools for Coloring Wildlife Distributions in Space-time}
+\title{colorist: Tools for Coloring Wildlife Distributions in Space-Time}
 \description{
 Color and visualize wildlife distributions in
     space-time using raster data. In addition to enabling display of

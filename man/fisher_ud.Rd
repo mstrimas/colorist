@@ -24,10 +24,10 @@ nine nights of data. Utilization distributions were generated using the
 \references{
 LaPoint, S., P. Gallery, M. Wikelski, R. Kays. 2013. Animal behavior,
 cost-based corridor models, and real corridors. Landscape Ecology 28(8):
-1615–1630. \url{https://doi:10.1007/s10980-013-9910-0}
+1615–1630. \url{https://doi.org/10.1007/s10980-013-9910-0}
 
 LaPoint, S., P. Gallery, M. Wikelski, R. Kays. 2013. Data from: Animal behavior,
 cost-based corridor models, and real corridors. Movebank Data Repository.
-\url{https://doi:10.5441/001/1.2tp2j43g}
+\url{https://doi.org/10.5441/001/1.2tp2j43g}
 }
 \keyword{datasets}

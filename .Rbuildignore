@@ -8,3 +8,5 @@ supplementary/
 ^\.travis\.yml$
 ^docs$
 ^makefile.R$
+^cran-comments\.md$
+^_pkgdown.yaml

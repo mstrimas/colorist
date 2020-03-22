@@ -1,5 +1,5 @@
 Package: colorist
-Title: Tools for Coloring Wildlife Distributions in Space-time
+Title: Tools for Coloring Wildlife Distributions in Space-Time
 Version: 0.1.0
 Authors@R: 
     c(person(given = "Justin",

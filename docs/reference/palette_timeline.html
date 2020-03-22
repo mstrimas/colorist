@@ -37,10 +37,10 @@
 
 <meta property="og:title" content="Make an HCL palette for visualizing a linear sequence of distributions — palette_timeline" />
 <meta property="og:description" content="This function generates an HCL palette for visualizing a linear
-sequence of distributions. For example, a series of utilization
+sequence of distributions (e.g., a series of utilization
 distributions describing space use by an individual animal across each of
 20 consecutive days or a series of species distributions describing
-projected responses to global warming in 0.5 C increments." />
+projected responses to global warming in 0.5 C increments)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -88,6 +88,9 @@ projected responses to global warming in 0.5 C increments." />
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -116,10 +119,10 @@ projected responses to global warming in 0.5 C increments." />
 
     <div class="ref-description">
     <p>This function generates an HCL palette for visualizing a linear
-sequence of distributions. For example, a series of utilization
+sequence of distributions (e.g., a series of utilization
 distributions describing space use by an individual animal across each of
 20 consecutive days or a series of species distributions describing
-projected responses to global warming in 0.5 C increments.</p>
+projected responses to global warming in 0.5 C increments).</p>
     </div>
 
     <pre class="usage"><span class='fu'>palette_timeline</span>(<span class='no'>x</span>, <span class='kw'>start_hue</span> <span class='kw'>=</span> -<span class='fl'>130</span>, <span class='kw'>clockwise</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
@@ -189,7 +192,7 @@ specificity values.</p></li>
 
 <span class='co'># visualize the palette in HCL space  with colorspace::hclplot</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>colorspace</span>)
-<span class='fu'><a href='http://colorspace.R-Forge.R-project.org//reference/hclplot.html'>hclplot</a></span>(<span class='no'>pal_a</span>[<span class='no'>pal_a</span>$<span class='no'>specificity</span> <span class='kw'>==</span> <span class='fl'>100</span>, ]$<span class='no'>color</span>)</div><div class='img'><img src='palette_timeline-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='http://colorspace.R-Forge.R-project.org//reference/hclplot.html'>hclplot</a></span>(<span class='no'>pal_b</span>[<span class='no'>pal_b</span>$<span class='no'>specificity</span> <span class='kw'>==</span> <span class='fl'>100</span>, ]$<span class='no'>color</span>)</div><div class='img'><img src='palette_timeline-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='http://colorspace.R-Forge.R-project.org//reference/hclplot.html'>hclplot</a></span>(<span class='no'>pal_c</span>[<span class='no'>pal_b</span>$<span class='no'>specificity</span> <span class='kw'>==</span> <span class='fl'>100</span>, ]$<span class='no'>color</span>)</div><div class='img'><img src='palette_timeline-3.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='http://colorspace.R-Forge.R-project.org//reference/hclplot.html'>hclplot</a></span>(<span class='no'>pal_a</span>[<span class='no'>pal_a</span>$<span class='no'>specificity</span> <span class='kw'>==</span> <span class='fl'>100</span>, ]$<span class='no'>color</span>)</div><div class='img'><img src='palette_timeline-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='http://colorspace.R-Forge.R-project.org//reference/hclplot.html'>hclplot</a></span>(<span class='no'>pal_b</span>[<span class='no'>pal_b</span>$<span class='no'>specificity</span> <span class='kw'>==</span> <span class='fl'>100</span>, ]$<span class='no'>color</span>)</div><div class='img'><img src='palette_timeline-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='http://colorspace.R-Forge.R-project.org//reference/hclplot.html'>hclplot</a></span>(<span class='no'>pal_c</span>[<span class='no'>pal_c</span>$<span class='no'>specificity</span> <span class='kw'>==</span> <span class='fl'>100</span>, ]$<span class='no'>color</span>)</div><div class='img'><img src='palette_timeline-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
