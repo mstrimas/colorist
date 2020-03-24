@@ -1,4 +1,10 @@
-# ebirdst 0.2.1
+# Resubmission
+
+- Removed "Tools for" from Title
+- Removed back ticks from Description
+- There are no references for the theoretical background. We are currently writing a paper on the methods and will add a reference to the package Description once the paper is published.
+
+# colorist 0.1.0
 
 - First CRAN release
 

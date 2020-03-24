@@ -10,3 +10,4 @@ supplementary/
 ^makefile.R$
 ^cran-comments\.md$
 ^_pkgdown.yaml
+^CRAN-RELEASE$
