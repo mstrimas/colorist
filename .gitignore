@@ -2,4 +2,8 @@
 .Rhistory
 .RData
 supplementary/
-data-raw/*gpkg
+data-raw/fisher-tracks.gpkg
+data-raw/elephant-tracks.gpkg
+inst/doc
+doc
+Meta

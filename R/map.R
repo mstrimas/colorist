@@ -73,7 +73,7 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
   if (isTRUE(attr(x, "metric") == "pull")) {
     good_layer <- TRUE
     if (is_integer(layer)) {
-      if (layer <= 0 || layer >= raster::nlayers(x)) {
+      if (layer <= 0 || layer > raster::nlayers(x)) {
         good_layer <- FALSE
       }
     } else if (is.character(layer)) {

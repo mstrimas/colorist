@@ -84,6 +84,9 @@ color palette." />
   </a>
 </li>
 <li>
+  <a href="../articles/colorist.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -195,15 +198,8 @@ to adjust the relative visual weight of high and low intensity values.</p>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"elephant_ud"</span>)
 
 <span class='co'># prepare metrics</span>
-<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='metrics_distill.html'>metrics_distill</a></span>(<span class='no'>elephant_ud</span>)</div><div class='output co'>#&gt; class      : RasterStack 
-#&gt; dimensions : 208, 193, 40144, 2  (nrow, ncol, ncell, nlayers)
-#&gt; resolution : 500, 500  (x, y)
-#&gt; extent     : -58642.18, 37857.82, -2376938, -2272938  (xmin, xmax, ymin, ymax)
-#&gt; crs        : +proj=moll +lon_0=15.8231920275931 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs 
-#&gt; names      :        LA11,        LA14 
-#&gt; min values :           0,           0 
-#&gt; max values : 0.002054668, 0.002409927 
-#&gt; </div><div class='input'>
+<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='metrics_distill.html'>metrics_distill</a></span>(<span class='no'>elephant_ud</span>)
+
 <span class='co'># generate palette</span>
 <span class='no'>pal</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='palette_set.html'>palette_set</a></span>(<span class='no'>elephant_ud</span>)
 
