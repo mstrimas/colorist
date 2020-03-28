@@ -43,7 +43,7 @@ The basic workflow for colorist is as follows:
 
 Here, we describe three use cases to illustrate `colorist` functions and how they can be combined to map distributions.
 
-### 1: Map a species distribution across the annual cycle
+### 1. Map a species distribution across the annual cycle
 
 There is growing interest in characterizing wildlife distributions across the full-annual cycle, as opposed to one or two seasons, so that we can better understand the places and times at which populations are especially vulnerable. Maps play a central role in the process of acquiring and representing knowledge. In the past, range maps for resident species typically contained a single block of color along with political boundaries that indicated where a species can be found throughout the year. For migratory species, range maps contained several blocks of color indicating where a species might be found during a particular season, or throughout the entire year. 
 
@@ -120,7 +120,7 @@ legend_timecycle(p1, origin_label = "Jan 1")
 
 With an annual cycle map and legend in hand, we can now figure out where to find Field Sparrows in space and time. Very colorful cells indicate areas with high occurrence probabilities, but only during specific times of year. For example, rich blue colors towards the bottom of the map indicate that birds occur in those cells with high probability, but almost exclusively in the winter months. In contrast, dark gray areas indicate consistently high occurrence probabilities in cells throughout the year.
 
-### 2: Map individual behavior over time
+### 2. Map individual behavior over time
 
 Researchers have been placing devices on animals for more than a half century to record individual movements through space and time. In recent years, tracking devices have become smaller, lighter, and increasingly capable of recording data with high spatial-temporal resolution. As a result, it is now possible to understand and communicate how individual animals use their environments in much more detail than was feasible with coarse tracking data and traditional home range maps. 
 
@@ -172,7 +172,7 @@ Output from `legend_timeline()` will help to orient viewers and we can use the `
 legend_timeline(p2, time_labels = c("April 7", "April 15"))
 ```
 
-### Example 3: Map distributions of multiple individuals during the same time period
+### 3. Map distributions of multiple individuals during the same time period
 
 In the previous examples, we used `colorist` to explore the distributions of a single species and a single individual across multiple time periods. Other conceptualizations and uses of `colorist` functions are possible, however. For example, `colorist` can also be used to explore the distribution of multiple species or individuals within a single time period.
 
