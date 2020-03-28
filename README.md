@@ -37,7 +37,15 @@ found.
 
 ## Installation
 
-You can install the development version of colorist from
+Install `colorist` from CRAN with:
+
+``` r
+install.packages("colorist")
+```
+
+Alternatively, you can install the development version from GitHub with:
+
+Alternatively, you can install the development version of colorist from
 [GitHub](https://github.com/mstrimas/colorist) with:
 
 ``` r
