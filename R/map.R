@@ -139,7 +139,7 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
                    plot.background = ggplot2::element_rect(fill = "white"),
                    panel.background = ggplot2::element_rect(fill = "white"),
                    panel.border = ggplot2::element_rect(fill = NA,
-                                                        color = "black"),
+                                                        color = "white"),
                    legend.key = ggplot2::element_blank(),
                    axis.title = ggplot2::element_blank(),
                    axis.text = ggplot2::element_blank(),
