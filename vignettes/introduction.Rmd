@@ -28,6 +28,8 @@ We developed the `colorist` package to provide researchers with a variety of opt
 
 ## Usage
 
+Like other visualization tools, we suggest that the `colorist` package may be useful to researchers in different ways throughout the process of building knowledge. Researchers may want to use `colorist` to explore preliminary data through visualizations, with the goal of developing or refining research questions. Alternatively, researchers may come to `colorist` having already discovered something interesting about wildlife distributions that they would like to communicate in visualizations. Regardless of where researchers are in the process of discovery, it is important to remember that `colorist` functions were built to handle and display data. People are still in charge of their interpretation (at least for now).
+
 The `colorist` package works on raster data stored as `RasterStack` objects. Individual raster layers might represent an ordered temporal sequence of species distributions or utilization distributions. Alternatively, raster layers might represent an unordered set of distributions for multiple species, or individuals, within a single time period. Whatever temporal or identity relationships exist within the stack, all raster layers should contain values in the same units (e.g., abundance, occurrence, or probability density) to ensure that they can be meaningfully compared. 
 
 When preparing raster layers, users should be sure to distinguish raster cells with 0 values (e.g., cells in which a species is predicted to occur with probability 0) from cells with NA values (e.g., cells for which occurrence predictions could not be made). This distinction is important for identifying areas where knowledge of distributions is incomplete. In addition, because colorist functions can take time to process large `RasterStack` objects, researchers may want to aggregate their raster data spatially and/or temporally while exploring alternative visualization strategies. 
@@ -45,32 +47,39 @@ Here, we describe three use cases to illustrate `colorist` functions and how the
 
 ### 1. Map a species distribution across the annual cycle
 
-There is growing interest in characterizing wildlife distributions across the full-annual cycle, as opposed to one or two seasons, so that we can better understand the places and times at which populations are especially vulnerable. Maps play a central role in the process of acquiring and representing knowledge. In the past, range maps for resident species typically contained a single block of color along with political boundaries that indicated where a species can be found throughout the year. For migratory species, range maps contained several blocks of color indicating where a species might be found during a particular season, or throughout the entire year. 
+There is growing interest in characterizing wildlife distributions across the full-annual cycle, as opposed to one or two seasons, so that we can better understand the places and times at which populations are vulnerable. Maps play an important role in that process. In the past, range maps for resident species typically contained a single block of color along with political boundaries that indicated where a species can be found throughout the year. In contrast, range maps for migratory species typically contained several blocks of color indicating where a species might be found during a particular season, or throughout the entire year. 
 
 Here, we use aggregated [eBird Status and Trends](https://ebird.org/science) data for [Field Sparrow](https://ebird.org/science/status-and-trends) (*Spizella pusilla*) to illustrate a different strategy for creating annual cycle maps, one that leverages continuous occurrence data (rather than categorical presence-absence data) to describe where and when viewers might be able to find a species. Field Sparrow is a relatively small bird that is commonly found in open habitats throughout eastern North America. It is often considered a partial migrant in that some populations move throughout the year, while others are stationary. This results in heterogeneity in when, where, and how consistently birds can be found in space-time.
 
-We start by loading the `fiespa_occ` data set. It contains twelve raster layers, one for each month of the year. Cell values in each layer indicate the modeled probability of field sparrow occurrence. Additional Status and Trends data can be accessed using the [`ebirdst` R package](https://cornelllabofornithology.github.io/ebirdst/).
+We start by loading the `fiespa_occ` data set. It contains twelve raster layers, one for each month of the year. Cell values in each layer indicate the modeled probability of Field Sparrow occurrence. Additional Status and Trends data can be accessed using the [`ebirdst` R package](https://cornelllabofornithology.github.io/ebirdst/).
 
 ```{r fiespa-data}
+# install packages
 library(sf)
 library(ggplot2)
 library(colorist)
 
+# load data 
 data("fiespa_occ")
+
 fiespa_occ
 ```
 
 After confirming the data have been loaded correctly, we use `metrics_pull()` to transform occurrence values from the stack into intensity values that range from 0 (i.e., cells without Field Sparrows) to 1 (i.e., the cell[s] with the highest occurrence value anywhere in the stack). This process of "pulling" metrics from the `RasterStack` preserves all of the information in the original stack while preparing layers for subsequent visualization.
 
 ```{r fiespa-metrics}
+# pull information from the stack
 m1 <- metrics_pull(fiespa_occ)
+
 m1
 ```
 
 Next, we want to choose a color palette that helps communicate temporal information about Field Sparrow occurrence. Among the three palette functions currently included in `colorist`, we want to use `palette_timecycle()` because our data layers represent an ordered sequence of distributions that circles back on itself (i.e., the distribution of Field Sparrows in December is temporally adjacent to both November and January distributions). 
 
 ```{r fiespa-palette}
+# generate a color palette
 p1 <- palette_timecycle(fiespa_occ)
+
 head(p1)
 ```
 
@@ -79,12 +88,14 @@ The `palette_timecycle()` function returns a data frame with three fields: `spec
 To visualize our distributions in individual facets, we provide the `map_multiples()` function with distribution metrics and palette information. The structure of the plot and labels for each distribution within the plot can be specified using the `ncol` and `labels` arguments, respectively.
 
 ```{r fiespa-mapmult}
+# map each of the layers
 map_multiples(m1, p1, ncol = 4, labels = names(fiespa_occ))
 ```
 
 If we want to extract one month of data for closer inspection, we can use `map_single()` and specify which month of data we would like to see using the layer argument. 
 
 ```{r fiespa-mapsing}
+# map one layer
 map_single(m1, p1, layer = 6)
 ```
 
@@ -108,13 +119,17 @@ The interpretation of specificity values depends on the nature of the data layer
 After providing `metrics_distill()` with the `fiespa_occ` data, the `map_single()` function combines the resulting distribution metrics and palette information to generate a map.
 
 ```{r fiespa-distill}
+# distill distribution information across layers
 m1_distill <- metrics_distill(fiespa_occ)
+
+# visualize distilled information on a single map
 map_single(m1_distill, p1)
 ```
 
 Interpreting annual cycle maps becomes straightforward with a little experience, but a legend is typically required to orient viewers. We can generate a legend for the Field Sparrow annual cycle map using `legend_timecycle()`, a function that requires a data frame generated by `palette_timecycle()`. Information about when the time cycle begins (and ends) can also be provided in the origin_label argument. When interpreting the legend and map, remember that specificity indicates degree of seasonality in Field Sparrow occurrence.
 
 ```{r fielsp-legend}
+# generate a legend
 legend_timecycle(p1, origin_label = "Jan 1")
 ```
 
@@ -129,7 +144,9 @@ Here, we use `colorist` to explore how an individual Fisher (*Pekania pennanti*)
 We start by loading the `fisher_ud` data set, which contains utilization distributions calculated for an individual animal (MP5) on each of nine sequential nights in April 2011. Cell values in each raster layer indicate the probability density of cell use between sunset and sunrise.
 
 ```{r fisher-data}
+# loda data
 data("fisher_ud")
+
 fisher_ud
 ```
 
@@ -151,6 +168,7 @@ Many of the maps appear relatively washed out because intensity values in every 
 The `lambda` parameter in `map_multiples()` and `map_single()` allows users to visually tune the relative weights of high and low intensity values using a modulus transformation (see [scales::modulus_trans()]). In this case, we want to reduce the disparity between the visual weights of high and low intensity values, so we set `lambda = -5`. 
 
 ```{r fisher-lambda}
+# map each of the layers and adjust visual weights
 map_multiples(m2, p2, lambda = -5)
 ```
 
@@ -159,16 +177,17 @@ This enables us to better see the places where our focal animal spent at least s
 It is important to remember that specificity values (and resulting visualization of specificity values) for Fisher should be interpreted differently than for Field Sparrow. Here, specificity values indicate the degree to which MP5 used the same locations within the landscape across nine nights. Low specificity suggests consistent use through time. High specificity suggests very inconsistent or ephemeral use.
 
 ```{r fisher-distill}
-# distill distributional information across layers
+# distill distribution information across layers
 m2_distill <- metrics_distill(fisher_ud)
 
-# visualize all layers on a single map
+# visualize distilled information on a single map
 map_single(m2_distill, p2, lambda = -5)
 ```
 
 Output from `legend_timeline()` will help to orient viewers and we can use the `time_labels` argument to indicate the ends of the timeline. Looking across the nine nights, MP5 spent relatively little of its time anchored in one area. The bright colors seen throughout the map are the result of high specificity values, which indicate that MP5 explored different parts of its territory almost every night.  
 
 ```{r fisher-legend}
+# generate a legend
 legend_timeline(p2, time_labels = c("April 7", "April 15"))
 ```
 
@@ -201,17 +220,17 @@ Before generating the map, however, we should recalibrate our understanding of w
 Accordingly, if the two utilization distributions were identical, we would expect `map_single()` to produce a range of gray values indicating where the pair spent relatively more or less time. There would not be any blue or red cells indicating areas were being used differentially. In contrast, if the two distributions were only superficially similar then we would expect `map_single()` to produce blue and red cells indicating exclusive use of areas by each individual, and very few gray cells indicating equal use.
 
 ```{r elephant-distill}
-# distill distributional information across layers
+# distill distribution information across individuals
 m3_distill <- metrics_distill(elephant_ud)
 
-# visualize both distributions on a single map
+# visualize distilled information on a single map
 map_single(m3_distill, p3, lambda = -5)
 
 # generate a legend
 legend_set(p3, group_labels = names(elephant_ud))
 ```
 
-Despite the general similarity of the two utilization distributions, some places were used almost exclusively by LA11 (i.e., blue cells) and others were used almost exclusively by LA14 (i.e., red cells). We can contextualize these patterns by adding information about the locations of pans, waterholes, roads, and boundaries to the map. First we need to load relevant spatial data and make sure that the data sets are described by the same coordinate reference system as the elephant data. This contextual information can be [downloaded as a GeoPackage](https://github.com/mstrimas/colorist/raw/master/data-raw/etosha-features.gpkg) from the package GitHub repository, which we do below.
+Despite the general similarity of the two utilization distributions, some places were used almost exclusively by LA11 (i.e., blue cells) and others were used almost exclusively by LA14 (i.e., red cells). We can contextualize these patterns by adding information about the locations of pans, waterholes, roads, and boundaries to the map. These environmental data layers can be [downloaded as a GeoPackage](https://github.com/mstrimas/colorist/raw/master/data-raw/etosha-features.gpkg) from the package GitHub repository, which we do below.
 
 ```{r elephant-sfdl, eval = FALSE}
 # download data to a temp directory
@@ -224,15 +243,19 @@ download.file(paste0(url, basename(f)), f)
 f <- "../data-raw/etosha-features.gpkg"
 ```
 
-Now these layers can be loaded into R from the GeoPackage.
+We can then read the spatial data from the GeoPackage into R and ensure that the data are described by the same coordinate reference system as the elephant data.
 
 ```{r elepaphant-sf, eval = nzchar(Sys.getenv("BUILD_VIGNETTES"))}
+# read and reproject environmental data 
 pans <- read_sf(f, layer = "pans") %>% 
   st_transform(crs = st_crs(elephant_ud))
+
 waterholes <- read_sf(f, layer = "waterholes") %>% 
   st_transform(crs = st_crs(elephant_ud))
+
 park <- read_sf(f, layer = "etosha") %>% 
   st_transform(crs = st_crs(elephant_ud))
+
 roads <- read_sf(f, layer = "roads") %>% 
   st_transform(crs = st_crs(elephant_ud))
 ```
@@ -240,6 +263,7 @@ roads <- read_sf(f, layer = "roads") %>%
 Then we use `map_single()` to reproduce our map of LA11 and LA14 distributions, but we append `geom_sf()` line objects to our `map_single()` function. These additional lines of code allow us to add environmental context to our underlying elephant map (which is a `ggplot` object) and communicate additional information about how elephants LA11 and LA14 navigate Etosha National Park. We can also add a title to our map and remove the black border around the panel.
 
 ```{r elephant-pretty, dpi = 600, fig.width = 6, fig.height = 3.5, eval = nzchar(Sys.getenv("BUILD_VIGNETTES"))}
+# visualize both distributions on a single map and add environmental data 
 elephant_map <- map_single(m3_distill, p3, lambda = -5) +
   geom_sf(data = pans, alpha = 0.2, size = 0.15, color = "gray40") + 
   geom_sf(data = roads, size = 0.1, color = "gray60") + 
@@ -248,12 +272,15 @@ elephant_map <- map_single(m3_distill, p3, lambda = -5) +
   geom_sf(data = park, size = 0.2, fill = NA, color = "gray20", linetype = 6) +
   ggtitle("Two Elephants in Etosha National Park") +
   theme(panel.border = element_blank())
+
+# show the map
 elephant_map
 ```
 
 The resulting map object (`elephant_map`) could be saved using the `ggsave()` function.
 
 ```{r elephant-save, eval = FALSE}
+# save the map
 ggsave(plot = elephant_map,
        filename = "afrele_map_singles.png",
        width = 6,
