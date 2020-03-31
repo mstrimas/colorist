@@ -72,7 +72,6 @@ pal <- palette_set(elephant_ud)
 # produce map
 # set lambda to make areas that were used less intensively more conspicuous
 map_single(r, pal, lambda = -5)
-
 }
 \seealso{
 Other map: 

@@ -1,6 +1,6 @@
 Package: colorist
 Title: Coloring Wildlife Distributions in Space-Time
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: 
     c(person(given = "Justin",
              family = "Schuetz",

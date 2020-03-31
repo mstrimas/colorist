@@ -61,7 +61,6 @@ library(colorist)
 
 # load data 
 data("fiespa_occ")
-
 fiespa_occ
 ```
 
@@ -70,7 +69,6 @@ After confirming the data have been loaded correctly, we use `metrics_pull()` to
 ```{r fiespa-metrics}
 # pull information from the stack
 m1 <- metrics_pull(fiespa_occ)
-
 m1
 ```
 
@@ -79,7 +77,6 @@ Next, we want to choose a color palette that helps communicate temporal informat
 ```{r fiespa-palette}
 # generate a color palette
 p1 <- palette_timecycle(fiespa_occ)
-
 head(p1)
 ```
 
@@ -146,7 +143,6 @@ We start by loading the `fisher_ud` data set, which contains utilization distrib
 ```{r fisher-data}
 # loda data
 data("fisher_ud")
-
 fisher_ud
 ```
 
@@ -225,7 +221,6 @@ m3_distill <- metrics_distill(elephant_ud)
 
 # visualize distilled information on a single map
 map_single(m3_distill, p3, lambda = -5)
-
 # generate a legend
 legend_set(p3, group_labels = names(elephant_ud))
 ```
@@ -246,7 +241,6 @@ f <- "../data-raw/etosha-features.gpkg"
 We can then read the spatial data from the GeoPackage into R and ensure that the data are described by the same coordinate reference system as the elephant data.
 
 ```{r elepaphant-sf, eval = nzchar(Sys.getenv("BUILD_VIGNETTES"))}
-# read and reproject environmental data 
 pans <- read_sf(f, layer = "pans") %>% 
   st_transform(crs = st_crs(elephant_ud))
 

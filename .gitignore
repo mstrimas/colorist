@@ -1,7 +1,6 @@
 .Rproj.user
 .Rhistory
 .RData
-supplementary/
 data-raw/fisher-tracks.gpkg
 data-raw/elephant-tracks.gpkg
 inst/doc
