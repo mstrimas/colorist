@@ -59,7 +59,6 @@
 #' # produce map
 #' # set lambda to make areas that were used less intensively more conspicuous
 #' map_single(r, pal, lambda = -5)
-#'
 map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
   stopifnot(inherits(x, c("RasterStack", "RasterBrick")))
   stopifnot(inherits(palette, "data.frame"),
