@@ -196,7 +196,7 @@ palette_timeline.Raster<- function(x, start_hue = -130, clockwise = FALSE) {
 }
 
 
-# palette_groups ----
+# palette_set ----
 
 #' Make an HCL palette for visualizing an unordered set of distributions
 #'
@@ -233,16 +233,16 @@ palette_timeline.Raster<- function(x, start_hue = -130, clockwise = FALSE) {
 #' # visualize the palette in HCL space  with colorspace::hclplot
 #' library(colorspace)
 #' hclplot(pal[pal$specificity == 100, ]$color)
-palette_groups <- function(x) {
-  UseMethod("palette_groups")
+palette_set <- function(x) {
+  UseMethod("palette_set")
 }
 
 #' @export
-palette_groups.integer <- function(x) {
+palette_set.integer <- function(x) {
   if (x < 2) {
     stop("At least two groups are required to generate a palette.")
   } else if (x > 8) {
-    stop(paste("Too many layers for palette_group.",
+    stop(paste("Too many layers for palette_set.",
                "Try palette_timecycle or palette_timeline."))
   }
 
@@ -269,16 +269,16 @@ palette_groups.integer <- function(x) {
   wheel <- wheel[wheel$layer_id %in% seq.int(x), ]
   wheel <- wheel[order(wheel[["specificity"]], wheel[["layer_id"]]), ]
   row.names(wheel) <- NULL
-  class(wheel) <- c("palette_groups", "data.frame")
+  class(wheel) <- c("palette_set", "data.frame")
   return(wheel)
 }
 
 #' @export
-palette_groups.numeric <- function(x) {
-  palette_groups(as.integer(x))
+palette_set.numeric <- function(x) {
+  palette_set(as.integer(x))
 }
 
 #' @export
-palette_groups.Raster<- function(x) {
-  palette_groups(raster::nlayers(x))
+palette_set.Raster<- function(x) {
+  palette_set(raster::nlayers(x))
 }
