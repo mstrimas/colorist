@@ -2,7 +2,7 @@
 title: "Introduction to colorist"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{colorist}
+  %\VignetteIndexEntry{Introduction to colorist}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 

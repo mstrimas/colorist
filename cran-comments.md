@@ -1,17 +1,13 @@
-# Resubmission
+# colorist 0.1.1
 
-- Removed "Tools for" from Title
-- Removed back ticks from Description
-- There are no references for the theoretical background. We are currently writing a paper on the methods and will add a reference to the package Description once the paper is published.
-
-# colorist 0.1.0
-
-- First CRAN release
+- Vignette added
+- Adding an additional lambda parameter to control specificity
+- Bug fixes
 
 ## Test environments
 
-- local OS X install, R 3.6.3
-- OS X (travis-ci), R 3.6.2
+- local OS X install, R 4.0.2
+- OS X (travis-ci), R 4.0.2
 - ubuntu 16.04 (travis-ci), R 3.6.3
 - Windows (appveyor), R 3.6.3
 - Rhub

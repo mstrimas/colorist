@@ -4,7 +4,7 @@
 \alias{map_single}
 \title{Visualize distributions in a single map}
 \usage{
-map_single(x, palette, layer, lambda = 0, return_df = FALSE)
+map_single(x, palette, layer, lambda_i = 0, lambda_s = 0, return_df = FALSE)
 }
 \arguments{
 \item{x}{RasterStack of distributions processed by \code{\link[=metrics_pull]{metrics_pull()}} or
@@ -18,10 +18,15 @@ of layer. A single distribution from within \code{x} is mapped when the \code{la
 argument is specified. The \code{layer} argument is ignored if
 \code{\link[=metrics_distill]{metrics_distill()}} was used to generate \code{x}.}
 
-\item{lambda}{number that allows visual tuning of intensity values via the
-\code{\link[scales:modulus_trans]{scales::modulus_trans()}} function (see Details). Negative numbers decrease
+\item{lambda_i}{number that allows visual tuning of intensity values via the
+\code{\link[scales:boxcox_trans]{scales::modulus_trans()}} function (see Details). Negative numbers decrease
 apparent skew of intensity values. Positive numbers increase apparent skew
 of intensity values.}
+
+\item{lambda_s}{number that allows visual tuning of specificity values via
+the \code{\link[scales:boxcox_trans]{scales::modulus_trans()}} function (see Details). Negative numbers
+decrease apparent skew of specificity values. Positive numbers increase
+apparent skew of specificity values.}
 
 \item{return_df}{logical specifying whether the function should return a
 ggplot2 plot object (FALSE) or a data frame containing the raster data and
@@ -50,14 +55,20 @@ information in a single map by combining distribution metrics and an HCL
 color palette.
 }
 \details{
-The lambda parameter allows for visual tuning of highly skewed
+The \code{lambda_i} parameter allows for visual tuning of highly skewed
 distribution data. It is not uncommon for distributions to contain highly
 skewed intensity values because individuals spend a vast majority of their
 time within a relatively small area or because populations are relatively
 dense during some seasons and relatively dispersed during others. This can
-make visualizing distributions a challenge. The lambda parameter transforms
-intensity values via the \code{\link[scales:modulus_trans]{scales::modulus_trans()}} function, allowing users
-to adjust the relative visual weight of high and low intensity values.
+make visualizing distributions a challenge. The \code{lambda_i} parameter
+transforms intensity values via the \code{\link[scales:boxcox_trans]{scales::modulus_trans()}} function,
+allowing users to adjust the relative visual weight of high and low
+intensity values.
+
+The \code{lambda_s} parameter allows for visual tuning of specificity
+values via the \code{\link[scales:boxcox_trans]{scales::modulus_trans()}} function. Visually, adjustments to
+\code{lambda_s} modulate the conspicuousness of \code{layer_id} information. USE WITH
+CAUTION!
 }
 \examples{
 # load elephant data
@@ -69,9 +80,9 @@ r <- metrics_distill(elephant_ud)
 # generate palette
 pal <- palette_set(elephant_ud)
 
-# produce map
-# set lambda to make areas that were used less intensively more conspicuous
-map_single(r, pal, lambda = -5)
+# produce map, adjusting lambda_i to make areas that were used less
+# intensively more conspicuous
+map_single(r, pal, lambda_i = -5)
 }
 \seealso{
 Other map: 

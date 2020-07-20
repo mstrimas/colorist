@@ -24,18 +24,19 @@
 #'   ggplot2 plot object (FALSE) or a data frame containing the raster data and
 #'   associated cell colors.
 #'
-#' @details The lambda_i parameter allows for visual tuning of highly skewed
+#' @details The `lambda_i` parameter allows for visual tuning of highly skewed
 #'   distribution data. It is not uncommon for distributions to contain highly
 #'   skewed intensity values because individuals spend a vast majority of their
 #'   time within a relatively small area or because populations are relatively
 #'   dense during some seasons and relatively dispersed during others. This can
-#'   make visualizing distributions a challenge. The lambda_i parameter
+#'   make visualizing distributions a challenge. The `lambda_i` parameter
 #'   transforms intensity values via the [scales::modulus_trans()] function,
-#'   allowing users to adjust the relative visual weight of high and low intensity
-#'   values.
-#' @details The lambda_s parameter allows for visual tuning of specificity
+#'   allowing users to adjust the relative visual weight of high and low
+#'   intensity values.
+#'
+#'   The `lambda_s` parameter allows for visual tuning of specificity
 #'   values via the [scales::modulus_trans()] function. Visually, adjustments to
-#'   lambda_s modulate the conspicuousness of `layer_id` information. USE WITH
+#'   `lambda_s` modulate the conspicuousness of `layer_id` information. USE WITH
 #'   CAUTION!
 #'
 #' @return A ggplot2 plot object of the map. Alternatively, with `return_df =
@@ -68,7 +69,8 @@
 #' # produce map, adjusting lambda_i to make areas that were used less
 #' # intensively more conspicuous
 #' map_single(r, pal, lambda_i = -5)
-map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0, return_df = FALSE) {
+map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0,
+                       return_df = FALSE) {
   stopifnot(inherits(x, c("RasterStack", "RasterBrick")))
   stopifnot(inherits(palette, "data.frame"),
             inherits(palette, c("palette_timeline",
@@ -114,24 +116,17 @@ map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0, return_df 
                 "Try using metrics_pull() or metrics_distill()."))
   }
 
-
   r <- r[stats::complete.cases(r), ]
 
-  # lambda_s if appropriate
-  if (lambda_s != 0 & is.numeric(lambda_s)){
-
-    reference_specificity <- modulus(1, lambda_s + 1)
-
-    r <- r %>%
-      mutate(specificity = 100 * round(pmap_dbl(list(specificity/100, lambda_s + 1), modulus) / reference_specificity, 2))
-
+  # apply lambda_s if appropriate
+  if (lambda_s != 0) {
+    rspec <- modulus(1, lambda_s + 1)
+    lspec <- modulus(r$specificity / 100, lambda_s + 1) / rspec
+    r$specificity <- 100 * round(modulus, 2)
   }
 
-  r <- r %>%
-    dplyr::mutate(layer_id = as.integer(layer_id),
-                  specificity = as.integer(specificity))
-
-
+  r$layer_id <- as.integer(r$layer_id)
+  r$specificity <- as.integer(r$specificity)
 
   # join palette
   r_pal <- merge(r, palette, by = c("specificity", "layer_id"), sort = FALSE)
@@ -220,9 +215,10 @@ map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0, return_df 
 #'   skewed intensity values because individuals spend a vast majority of their
 #'   time within a relatively small area or because populations are relatively
 #'   dense during some seasons and relatively dispersed during others. This can
-#'   make visualizing distributions a challenge. The lambda_i parameter transforms
-#'   intensity values via the [scales::modulus_trans()] function, allowing users
-#'   to adjust the relative visual weight of high and low intensity values.
+#'   make visualizing distributions a challenge. The lambda_i parameter
+#'   transforms intensity values via the [scales::modulus_trans()] function,
+#'   allowing users to adjust the relative visual weight of high and low
+#'   intensity values.
 #'
 #' @family map
 #' @export
@@ -238,7 +234,7 @@ map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0, return_df 
 #'
 #' # produce maps, adjusting lambda_i to make areas that were used less
 #' # intensively more conspicuous
-#' map_multiples(r, pal, lambda_i = -5, labels = str_c("night ", 1:9))
+#' map_multiples(r, pal, lambda_i = -5, labels = paste("night", 1:9))
 map_multiples <- function(x, palette, ncol, lambda_i = 0, labels = NULL,
                           return_df = FALSE) {
   stopifnot(inherits(x, c("RasterStack", "RasterBrick")))
@@ -336,18 +332,11 @@ is_integer <- function(x) {
   is.integer(x) || (is.numeric(x) && all(x == as.integer(x)))
 }
 
-modulus <- function(Y, LAMBDA){
-
-  if(LAMBDA != 0){
-
-    y_t <- sign(Y) * (((abs(Y) + 1) ^ LAMBDA - 1) / LAMBDA)
-
+modulus <- function(y, lambda) {
+  if (lambda != 0) {
+    y_t <- sign(y) * ((abs(y) + 1)^lambda - 1) / lambda
   } else {
-
-    y_t = sign(Y) * (log(abs(Y) + 1))
-
+    y_t = sign(y) * log(abs(y) + 1)
   }
-
   return(y_t)
-
 }

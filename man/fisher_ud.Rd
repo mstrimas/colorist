@@ -14,7 +14,7 @@ An object of class \code{RasterStack} of dimension 176 x 177 x 9.
 fisher_ud
 }
 \description{
-A \link[raster:RasterStack-class]{RasterStack} of the \href{https://en.wikipedia.org/wiki/Utilization_distribution}{utilization distribution} for a
+A \link[raster:Raster-classes]{RasterStack} of the \href{https://en.wikipedia.org/wiki/Utilization_distribution}{utilization distribution} for a
 single fisher in New York state over the course of nine nights in April 2011.
 Cell values represent the probability density that the individual was found
 at a given location between sunset and sunrise and the nine layers represent
