@@ -161,11 +161,11 @@ map_multiples(m2, p2)
 
 Many of the maps appear relatively washed out because intensity values in every cell have been scaled relative to the highest intensity value in the entire `RasterStack`. It is not uncommon for distributions to contain highly skewed intensity values because individual animals spend a vast majority of their time within a relatively small area or, in the case of species distributions, because populations are relatively dense during some seasons and relatively dispersed during others. This can make visualizing distributions a challenge. 
 
-The `lambda` parameter in `map_multiples()` and `map_single()` allows users to visually tune the relative weights of high and low intensity values using a modulus transformation (see [scales::modulus_trans()]). In this case, we want to reduce the disparity between the visual weights of high and low intensity values, so we set `lambda = -5`. 
+The `lambda_i` parameter in `map_multiples()` and `map_single()` allows users to visually tune the relative weights of high and low intensity values using a modulus transformation (see [scales::modulus_trans()]). In this case, we want to reduce the disparity between the visual weights of high and low intensity values, so we set `lambda_i = -5`. 
 
-```{r fisher-lambda}
+```{r fisher-lambda_i}
 # map each of the layers and adjust visual weights
-map_multiples(m2, p2, lambda = -5)
+map_multiples(m2, p2, lambda_i = -5)
 ```
 
 This enables us to better see the places where our focal animal spent at least some time as it moved across the landscape. To further explore how MP5 moved throughout its territory over the course of nine nights, we can "distill" distributional information from across all nine layers and use the resulting metrics to visualize patterns of space use with `map_single()`. 
@@ -177,7 +177,7 @@ It is important to remember that specificity values (and resulting visualization
 m2_distill <- metrics_distill(fisher_ud)
 
 # visualize distilled information on a single map
-map_single(m2_distill, p2, lambda = -5)
+map_single(m2_distill, p2, lambda_i = -5)
 ```
 
 Output from `legend_timeline()` will help to orient viewers and we can use the `time_labels` argument to indicate the ends of the timeline. Looking across the nine nights, MP5 spent relatively little of its time anchored in one area. The bright colors seen throughout the map are the result of high specificity values, which indicate that MP5 explored different parts of its territory almost every night.  
@@ -193,7 +193,7 @@ In the previous examples, we used `colorist` to explore the distributions of a s
 
 Here, we use GPS tracking data collected from African Elephants (*Loxodonta africana*) in Etosha National Park, Namibia during 2011 to explore how two individuals used the landscape over the course of a year. The African Elephant is an iconic species with a complex social system that remains a target of poachers throughout much of Africa. Many populations of African Elephants move seasonally along specific migratory routes, tracking availability of seasonally abundant resources. 
 
-To begin, we load the `elephant_ud` data set which contains utilization distributions for two individual elephants (LA11 and LA14) during 2011. Because the utilization distributions form an unordered set (i.e., they need not be presented in any specific cyclical or linear sequence), we use the `palette_set()` function to assign them colors. Then, we map the two distributions using `map_multiples()` while adding visual emphasis to rarely used areas with the lambda argument and adding identifiers to each map with the labels argument.
+To begin, we load the `elephant_ud` data set which contains utilization distributions for two individual elephants (LA11 and LA14) during 2011. Because the utilization distributions form an unordered set (i.e., they need not be presented in any specific cyclical or linear sequence), we use the `palette_set()` function to assign them colors. Then, we map the two distributions using `map_multiples()` while adding visual emphasis to rarely used areas with the lambda_i argument and adding identifiers to each map with the labels argument.
 
 ```{r elephant-pull}
 # load data
@@ -206,7 +206,7 @@ m3 <- metrics_pull(elephant_ud)
 p3 <- palette_set(elephant_ud)
 
 # generate maps for each individual
-map_multiples(m3, p3, ncol = 2, lambda = -5, labels = names(elephant_ud))
+map_multiples(m3, p3, ncol = 2, lambda_i = -5, labels = names(elephant_ud))
 ```
 
 The utilization distributions for LA11 and LA14 look remarkably similar at first glance, which is not surprising given the two elephants belong to the same herd. However, we can more clearly understand the similarities and differences in how they used space in 2011 by "distilling" distributional information from across the two raster layers with `metrics_distill()` and visualizing the resulting metrics with `map_single()`. 
@@ -220,7 +220,7 @@ Accordingly, if the two utilization distributions were identical, we would expec
 m3_distill <- metrics_distill(elephant_ud)
 
 # visualize distilled information on a single map
-map_single(m3_distill, p3, lambda = -5)
+map_single(m3_distill, p3, lambda_i = -5)
 # generate a legend
 legend_set(p3, group_labels = names(elephant_ud))
 ```
@@ -258,7 +258,7 @@ Then we use `map_single()` to reproduce our map of LA11 and LA14 distributions, 
 
 ```{r elephant-pretty, dpi = 600, fig.width = 6, fig.height = 3.5, eval = nzchar(Sys.getenv("BUILD_VIGNETTES"))}
 # visualize both distributions on a single map and add environmental data 
-elephant_map <- map_single(m3_distill, p3, lambda = -5) +
+elephant_map <- map_single(m3_distill, p3, lambda_i = -5) +
   geom_sf(data = pans, alpha = 0.2, size = 0.15, color = "gray40") + 
   geom_sf(data = roads, size = 0.1, color = "gray60") + 
   geom_sf(data = waterholes, size = 0.25) +
