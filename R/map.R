@@ -12,22 +12,31 @@
 #'   of layer. A single distribution from within `x` is mapped when the `layer`
 #'   argument is specified. The `layer` argument is ignored if
 #'   [metrics_distill()] was used to generate `x`.
-#' @param lambda number that allows visual tuning of intensity values via the
+#' @param lambda_i number that allows visual tuning of intensity values via the
 #'   [scales::modulus_trans()] function (see Details). Negative numbers decrease
 #'   apparent skew of intensity values. Positive numbers increase apparent skew
 #'   of intensity values.
+#' @param lambda_s number that allows visual tuning of specificity values via
+#'   the [scales::modulus_trans()] function (see Details). Negative numbers
+#'   decrease apparent skew of specificity values. Positive numbers increase
+#'   apparent skew of specificity values.
 #' @param return_df logical specifying whether the function should return a
 #'   ggplot2 plot object (FALSE) or a data frame containing the raster data and
 #'   associated cell colors.
 #'
-#' @details The lambda parameter allows for visual tuning of highly skewed
+#' @details The lambda_i parameter allows for visual tuning of highly skewed
 #'   distribution data. It is not uncommon for distributions to contain highly
 #'   skewed intensity values because individuals spend a vast majority of their
 #'   time within a relatively small area or because populations are relatively
 #'   dense during some seasons and relatively dispersed during others. This can
-#'   make visualizing distributions a challenge. The lambda parameter transforms
-#'   intensity values via the [scales::modulus_trans()] function, allowing users
-#'   to adjust the relative visual weight of high and low intensity values.
+#'   make visualizing distributions a challenge. The lambda_i parameter
+#'   transforms intensity values via the [scales::modulus_trans()] function,
+#'   allowing users to adjust the relative visual weight of high and low intensity
+#'   values.
+#' @details The lambda_s parameter allows for visual tuning of specificity
+#'   values via the [scales::modulus_trans()] function. Visually, adjustments to
+#'   lambda_s modulate the conspicuousness of `layer_id` information. USE WITH
+#'   CAUTION!
 #'
 #' @return A ggplot2 plot object of the map. Alternatively, with `return_df =
 #'   TRUE` the function returns a data frame containing the raster data in
@@ -56,17 +65,18 @@
 #' # generate palette
 #' pal <- palette_set(elephant_ud)
 #'
-#' # produce map
-#' # set lambda to make areas that were used less intensively more conspicuous
-#' map_single(r, pal, lambda = -5)
-map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
+#' # produce map, adjusting lambda_i to make areas that were used less
+#' # intensively more conspicuous
+#' map_single(r, pal, lambda_i = -5)
+map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0, return_df = FALSE) {
   stopifnot(inherits(x, c("RasterStack", "RasterBrick")))
   stopifnot(inherits(palette, "data.frame"),
             inherits(palette, c("palette_timeline",
                                 "palette_timecycle",
                                 "palette_set")),
             c("specificity", "layer_id", "color") %in% names(palette))
-  stopifnot(length(lambda) == 1, is.numeric(lambda))
+  stopifnot(length(lambda_i) == 1, is.numeric(lambda_i))
+  stopifnot(length(lambda_s) == 1, is.numeric(lambda_s))
 
   # convert raster to data frame, pull vs. distill
   if (isTRUE(attr(x, "metric") == "pull")) {
@@ -103,7 +113,25 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
     stop(paste0("No metrics function called on the input raster.",
                 "Try using metrics_pull() or metrics_distill()."))
   }
+
+
   r <- r[stats::complete.cases(r), ]
+
+  # lambda_s if appropriate
+  if (lambda_s != 0 & is.numeric(lambda_s)){
+
+    reference_specificity <- modulus(1, lambda_s + 1)
+
+    r <- r %>%
+      mutate(specificity = 100 * round(pmap_dbl(list(specificity/100, lambda_s + 1), modulus) / reference_specificity, 2))
+
+  }
+
+  r <- r %>%
+    dplyr::mutate(layer_id = as.integer(layer_id),
+                  specificity = as.integer(specificity))
+
+
 
   # join palette
   r_pal <- merge(r, palette, by = c("specificity", "layer_id"), sort = FALSE)
@@ -131,7 +159,7 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
                                      alpha = ~ intensity)) +
     ggplot2::scale_fill_manual(values = map_colors) +
     ggplot2::scale_color_manual(values = map_colors) +
-    ggplot2::scale_alpha_continuous(trans = scales::modulus_trans(lambda + 1),
+    ggplot2::scale_alpha_continuous(trans = scales::modulus_trans(lambda_i + 1),
                                     range = c(0, 1)) +
     ggplot2::guides(fill = FALSE, alpha = FALSE) +
     ggplot2::theme(strip.background = ggplot2::element_rect(fill = "white"),
@@ -161,7 +189,7 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
 #' @param palette data frame containing an HCL color palette generated using
 #'   [palette_timecycle()], [palette_timeline()], or [palette_set()].
 #' @param ncol integer specifying the number of columns in the grid of plots.
-#' @param lambda number that allows visual tuning of intensity values via the
+#' @param lambda_i number that allows visual tuning of intensity values via the
 #'   [scales::modulus_trans()] function (see Details). Negative numbers decrease
 #'   apparent skew of intensity values. Positive numbers increase apparent skew
 #'   of intensity values.
@@ -187,12 +215,12 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
 #'   - `color`: the hexadecimal color associated with the given layer and
 #'   specificity values.
 #'
-#' @details The lambda parameter allows for visual tuning of highly skewed
+#' @details The lambda_i parameter allows for visual tuning of highly skewed
 #'   distribution data. It is not uncommon for distributions to contain highly
 #'   skewed intensity values because individuals spend a vast majority of their
 #'   time within a relatively small area or because populations are relatively
 #'   dense during some seasons and relatively dispersed during others. This can
-#'   make visualizing distributions a challenge. The lambda parameter transforms
+#'   make visualizing distributions a challenge. The lambda_i parameter transforms
 #'   intensity values via the [scales::modulus_trans()] function, allowing users
 #'   to adjust the relative visual weight of high and low intensity values.
 #'
@@ -208,10 +236,10 @@ map_single <- function(x, palette, layer, lambda = 0, return_df = FALSE) {
 #' # generate palette
 #' pal <- palette_timeline(fisher_ud)
 #'
-#' # produce maps
-#' # set lambda to make areas that were used less intensively more conspicuous
-#' map_multiples(r, pal, lambda = -5, labels = names(r))
-map_multiples <- function(x, palette, ncol, lambda = 0, labels = NULL,
+#' # produce maps, adjusting lambda_i to make areas that were used less
+#' # intensively more conspicuous
+#' map_multiples(r, pal, lambda_i = -5, labels = str_c("night ", 1:9))
+map_multiples <- function(x, palette, ncol, lambda_i = 0, labels = NULL,
                           return_df = FALSE) {
   stopifnot(inherits(x, c("RasterStack", "RasterBrick")))
   stopifnot(inherits(palette, "data.frame"),
@@ -219,7 +247,7 @@ map_multiples <- function(x, palette, ncol, lambda = 0, labels = NULL,
                                 "palette_timecycle",
                                 "palette_set")),
             c("specificity", "layer_id", "color") %in% names(palette))
-  stopifnot(length(lambda) == 1, is.numeric(lambda))
+  stopifnot(length(lambda_i) == 1, is.numeric(lambda_i))
   if (missing(ncol)) {
     ncol <- round(sqrt(raster::nlayers(x)))
   } else {
@@ -282,7 +310,7 @@ map_multiples <- function(x, palette, ncol, lambda = 0, labels = NULL,
                                      fill = ~ factor(layer_cell),
                                      alpha = ~ intensity)) +
     ggplot2::scale_fill_manual(values = map_colors) +
-    ggplot2::scale_alpha_continuous(trans = scales::modulus_trans(lambda + 1),
+    ggplot2::scale_alpha_continuous(trans = scales::modulus_trans(lambda_i + 1),
                                     range = c(0, 1)) +
     ggplot2::facet_wrap(~ layer_id, ncol = ncol,
                         labeller = ggplot2::labeller(layer_id = labels)) +
@@ -306,4 +334,20 @@ map_multiples <- function(x, palette, ncol, lambda = 0, labels = NULL,
 
 is_integer <- function(x) {
   is.integer(x) || (is.numeric(x) && all(x == as.integer(x)))
+}
+
+modulus <- function(Y, LAMBDA){
+
+  if(LAMBDA != 0){
+
+    y_t <- sign(Y) * (((abs(Y) + 1) ^ LAMBDA - 1) / LAMBDA)
+
+  } else {
+
+    y_t = sign(Y) * (log(abs(Y) + 1))
+
+  }
+
+  return(y_t)
+
 }
