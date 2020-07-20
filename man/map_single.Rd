@@ -11,7 +11,7 @@ map_single(x, palette, layer, lambda = 0, return_df = FALSE)
 \code{\link[=metrics_distill]{metrics_distill()}}.}
 
 \item{palette}{data frame containing an HCL color palette generated using
-\code{\link[=palette_timecycle]{palette_timecycle()}}, \code{\link[=palette_timeline]{palette_timeline()}}, or \code{\link[=palette_groups]{palette_groups()}}.}
+\code{\link[=palette_timecycle]{palette_timecycle()}}, \code{\link[=palette_timeline]{palette_timeline()}}, or \code{\link[=palette_set]{palette_set()}}.}
 
 \item{layer}{integer (or character) corresponding to the layer ID (or name)
 of layer. A single distribution from within \code{x} is mapped when the \code{layer}
@@ -67,10 +67,11 @@ data("elephant_ud")
 r <- metrics_distill(elephant_ud)
 
 # generate palette
-pal <- palette_groups(elephant_ud)
+pal <- palette_set(elephant_ud)
 
 # produce map
-map_single(r, pal)
+# set lambda to make areas that were used less intensively more conspicuous
+map_single(r, pal, lambda = -5)
 }
 \seealso{
 Other map: 

@@ -5,16 +5,16 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tools for Coloring Wildlife Distributions in Space-time • colorist</title>
+<title>Coloring Wildlife Distributions in Space-Time • colorist</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Tools for Coloring Wildlife Distributions in Space-time">
+<script src="pkgdown.js"></script><meta property="og:title" content="Coloring Wildlife Distributions in Space-Time">
 <meta property="og:description" content='Color and visualize wildlife distributions in
     space-time using raster data. In addition to enabling display of
     sequential change in distributions through the use of small multiples,
-    `colorist` provides functions for extracting several features of
+    colorist provides functions for extracting several features of
     interest from a sequence of distributions and for visualizing those
     features using HCL (hue-chroma-luminance) color palettes. Resulting
     maps allow for "fair" visual comparison of intensity values (e.g.,
@@ -40,20 +40,20 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">colorist</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="articles/introduction.html">Vignette</a>
 </li>
 <li>
-  <a href="reference/index.html">Reference</a>
+  <a href="reference/index.html">Function Reference</a>
+</li>
+<li>
+  <a href="news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -80,13 +80,16 @@
 <a href="#colorist" class="anchor"></a>colorist</h1></div>
 <!-- badges: start -->
 
+<!-- badges: end -->
 <p>Maps are essential tools for communicating information about wildlife distributions in space and time. Visualizing patterns of stasis and change can be a challenge, however, especially when distributions exhibit different degrees of spatial-temporal overlap. The typical strategy of layering distributional information from different time periods in a single map often results in occluded or muddied data, depending on how layers are combined. <code>colorist</code> is designed to address this challenge by providing multiple approaches to coloring and visualizing wildlife distributions in space-time using raster data. In addition to enabling simultaneous display of a series of distributions through the use of small multiples, <code>colorist</code> provides functions for extracting several features of interest from a set of distributions and for visualizing those features using HCL (hue-chroma-luminance) color palettes. The resulting maps allow for “fair” visual comparison of intensity values (e.g., occurrence, abundance, or density values) across space and time and can be used to address questions about where, when, and how consistently a species, individual, or group is likely to be found.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install the development version of colorist from <a href="https://github.com/mstrimas/colorist">GitHub</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># install.packages("remotes")</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a>remotes<span class="op">::</span><span class="kw"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"mstrimas/colorist"</span>)</span></code></pre></div>
+<p>Install <code>colorist</code> from CRAN with:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"colorist"</span>)</span></code></pre></div>
+<p>Alternatively, you can install the development version of <code>colorist</code> from <a href="https://github.com/mstrimas/colorist">GitHub</a> with:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># install.packages("remotes")</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>remotes<span class="op">::</span><span class="kw"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"mstrimas/colorist"</span>)</span></code></pre></div>
 </div>
 <div id="background" class="section level2">
 <h2 class="hasAnchor">
@@ -108,31 +111,23 @@
 <strong>Legend:</strong> Users generate a legend to accompany their map.</li>
 </ol>
 <p>We can demonstrate this workflow using an example dataset of monthly Field Sparrow occurrence probability estimates from <a href="https://ebird.org/science/status-and-trends">eBird Status &amp; Trends</a>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(colorist)</span>
-<span id="cb2-2"><a href="#cb2-2"></a></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="co"># load example data, field sparrow occurrence probability</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"fiespa_occ"</span>)</span>
-<span id="cb2-5"><a href="#cb2-5"></a></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="co"># calculate distribution metrics</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a>r &lt;-<span class="st"> </span><span class="kw"><a href="reference/metrics_distill.html">metrics_distill</a></span>(fiespa_occ)</span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="co">#&gt; class      : RasterStack </span></span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="co">#&gt; dimensions : 193, 225, 43425, 12  (nrow, ncol, ncell, nlayers)</span></span>
-<span id="cb2-10"><a href="#cb2-10"></a><span class="co">#&gt; resolution : 14814.03, 14814.04  (x, y)</span></span>
-<span id="cb2-11"><a href="#cb2-11"></a><span class="co">#&gt; extent     : -1482551, 1850606, -1453281, 1405830  (xmin, xmax, ymin, ymax)</span></span>
-<span id="cb2-12"><a href="#cb2-12"></a><span class="co">#&gt; crs        : +proj=laea +lat_0=38.7476367322638 +lon_0=-90.2379515912106 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0 </span></span>
-<span id="cb2-13"><a href="#cb2-13"></a><span class="co">#&gt; names      :       jan,       feb,       mar,       apr,       may,       jun,       jul,       aug,       sep,       oct,       nov,       dec </span></span>
-<span id="cb2-14"><a href="#cb2-14"></a><span class="co">#&gt; min values :         0,         0,         0,         0,         0,         0,         0,         0,         0,         0,         0,         0 </span></span>
-<span id="cb2-15"><a href="#cb2-15"></a><span class="co">#&gt; max values : 0.8538026, 0.8272926, 0.7993844, 0.7805922, 0.7799550, 0.7745436, 0.7626938, 0.7867995, 0.7790458, 0.7896419, 0.8158410, 0.8681034</span></span>
-<span id="cb2-16"><a href="#cb2-16"></a></span>
-<span id="cb2-17"><a href="#cb2-17"></a><span class="co"># generate hcl color palette</span></span>
-<span id="cb2-18"><a href="#cb2-18"></a>pal &lt;-<span class="st"> </span><span class="kw"><a href="reference/palette_timecycle.html">palette_timecycle</a></span>(fiespa_occ)</span>
-<span id="cb2-19"><a href="#cb2-19"></a></span>
-<span id="cb2-20"><a href="#cb2-20"></a><span class="co"># map</span></span>
-<span id="cb2-21"><a href="#cb2-21"></a><span class="kw"><a href="reference/map_single.html">map_single</a></span>(r, pal)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(colorist)</span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co"># load example data, field sparrow occurrence probability</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"fiespa_occ"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5"></a></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="co"># calculate distribution metrics</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a>r &lt;-<span class="st"> </span><span class="kw"><a href="reference/metrics_distill.html">metrics_distill</a></span>(fiespa_occ)</span>
+<span id="cb3-8"><a href="#cb3-8"></a></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="co"># generate hcl color palette</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a>pal &lt;-<span class="st"> </span><span class="kw"><a href="reference/palette_timecycle.html">palette_timecycle</a></span>(fiespa_occ)</span>
+<span id="cb3-11"><a href="#cb3-11"></a></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="co"># map</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="kw"><a href="reference/map_single.html">map_single</a></span>(r, pal, <span class="dt">lambda =</span> <span class="dv">-2</span>)</span></code></pre></div>
 <p><img src="reference/figures/README-elephant-1.png" width="100%"></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a></span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="co"># legend</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="kw"><a href="reference/legend_timecycle.html">legend_timecycle</a></span>(pal)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="co"># legend</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="kw"><a href="reference/legend_timecycle.html">legend_timecycle</a></span>(pal)</span></code></pre></div>
 <p><img src="reference/figures/README-elephant-2.png" width="100%"></p>
 </div>
 </div>
@@ -142,6 +137,8 @@
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
+<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=colorist">https://​cloud.r-project.org/​package=colorist</a>
+</li>
 <li>Browse source code at <br><a href="https://github.com/mstrimas/colorist">https://​github.com/​mstrimas/​colorist</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/mstrimas/colorist/issues">https://​github.com/​mstrimas/​colorist/​issues</a>
@@ -158,19 +155,23 @@
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Justin Schuetz <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-6163-538X" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
-<li>Matthew Strimas-Mackey <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-8929-7776" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
-<li>Tom Auer <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-8619-7147" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
+<li>
+<a href="http://www.justinschuetz.com/">Justin Schuetz</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-6163-538X" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
+<li>
+<a href="http://strimas.com">Matthew Strimas-Mackey</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-8929-7776" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
+<li>
+<a href="http://twitter.com/tom_auer">Tom Auer</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-8619-7147" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
 </ul>
 </div>
 
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
+<li><a href="https://CRAN.R-project.org/package=colorist"><img src="https://www.r-pkg.org/badges/version/colorist" alt="CRAN status"></a></li>
 <li><a href="http://www.gnu.org/licenses/gpl-3.0"><img src="https://img.shields.io/badge/License-GPL%20v3-blue.svg" alt="License: GPL v3"></a></li>
+<li><a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle: maturing"></a></li>
 <li><a href="https://ci.appveyor.com/project/mstrimas/colorist"><img src="https://ci.appveyor.com/api/projects/status/github/mstrimas/colorist?branch=master&amp;svg=true" alt="AppVeyor build status"></a></li>
 <li><a href="https://travis-ci.org/mstrimas/colorist"><img src="https://travis-ci.org/mstrimas/colorist.svg?branch=master" alt="Travis build status"></a></li>
-<li><a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle: maturing"></a></li>
 </ul>
 </div>
 </div>
@@ -178,7 +179,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Justin Schuetz, Matthew Strimas-Mackey, Tom Auer.</p>
+  <p>Developed by <a href="http://www.justinschuetz.com/">Justin Schuetz</a>, <a href="http://strimas.com">Matthew Strimas-Mackey</a>, <a href="http://twitter.com/tom_auer">Tom Auer</a>.</p>
 </div>
 
 <div class="pkgdown">

@@ -10,7 +10,7 @@ map_multiples(x, palette, ncol, lambda = 0, labels = NULL, return_df = FALSE)
 \item{x}{RasterStack of distributions processed by \code{\link[=metrics_pull]{metrics_pull()}}.}
 
 \item{palette}{data frame containing an HCL color palette generated using
-\code{\link[=palette_timecycle]{palette_timecycle()}}, \code{\link[=palette_timeline]{palette_timeline()}}, or \code{\link[=palette_groups]{palette_groups()}}.}
+\code{\link[=palette_timecycle]{palette_timecycle()}}, \code{\link[=palette_timeline]{palette_timeline()}}, or \code{\link[=palette_set]{palette_set()}}.}
 
 \item{ncol}{integer specifying the number of columns in the grid of plots.}
 
@@ -70,8 +70,9 @@ r <- metrics_pull(fisher_ud)
 # generate palette
 pal <- palette_timeline(fisher_ud)
 
-# produce map
-map_multiples(r, pal)
+# produce maps
+# set lambda to make areas that were used less intensively more conspicuous
+map_multiples(r, pal, lambda = -5, labels = names(r))
 }
 \seealso{
 Other map: 

@@ -37,10 +37,10 @@
 
 <meta property="og:title" content="Make an HCL palette for visualizing a linear sequence of distributions — palette_timeline" />
 <meta property="og:description" content="This function generates an HCL palette for visualizing a linear
-sequence of distributions. For example, a series of utilization
+sequence of distributions (e.g., a series of utilization
 distributions describing space use by an individual animal across each of
 20 consecutive days or a series of species distributions describing
-projected responses to global warming in 0.5 C increments." />
+projected responses to global warming in 0.5 C increments)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -73,20 +73,20 @@ projected responses to global warming in 0.5 C increments." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">colorist</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../articles/introduction.html">Vignette</a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">Function Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -116,10 +116,10 @@ projected responses to global warming in 0.5 C increments." />
 
     <div class="ref-description">
     <p>This function generates an HCL palette for visualizing a linear
-sequence of distributions. For example, a series of utilization
+sequence of distributions (e.g., a series of utilization
 distributions describing space use by an individual animal across each of
 20 consecutive days or a series of species distributions describing
-projected responses to global warming in 0.5 C increments.</p>
+projected responses to global warming in 0.5 C increments).</p>
     </div>
 
     <pre class="usage"><span class='fu'>palette_timeline</span>(<span class='no'>x</span>, <span class='kw'>start_hue</span> <span class='kw'>=</span> -<span class='fl'>130</span>, <span class='kw'>clockwise</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
@@ -163,9 +163,9 @@ specificity values.</p></li>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='palette_timecycle.html'>palette_timecycle</a> for cyclical sequences of distributions and
-<a href='palette_groups.html'>palette_groups</a> for unordered sets of distributions.</p>
+<a href='palette_set.html'>palette_set</a> for unordered sets of distributions.</p>
 <p>Other palette: 
-<code><a href='palette_groups.html'>palette_groups</a>()</code>,
+<code><a href='palette_set.html'>palette_set</a>()</code>,
 <code><a href='palette_timecycle.html'>palette_timecycle</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -189,7 +189,7 @@ specificity values.</p></li>
 
 <span class='co'># visualize the palette in HCL space  with colorspace::hclplot</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>colorspace</span>)
-<span class='fu'><a href='http://colorspace.R-Forge.R-project.org//reference/hclplot.html'>hclplot</a></span>(<span class='no'>pal_a</span>[<span class='no'>pal_a</span>$<span class='no'>specificity</span> <span class='kw'>==</span> <span class='fl'>100</span>, ]$<span class='no'>color</span>)</div><div class='img'><img src='palette_timeline-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='http://colorspace.R-Forge.R-project.org//reference/hclplot.html'>hclplot</a></span>(<span class='no'>pal_b</span>[<span class='no'>pal_b</span>$<span class='no'>specificity</span> <span class='kw'>==</span> <span class='fl'>100</span>, ]$<span class='no'>color</span>)</div><div class='img'><img src='palette_timeline-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='http://colorspace.R-Forge.R-project.org//reference/hclplot.html'>hclplot</a></span>(<span class='no'>pal_c</span>[<span class='no'>pal_b</span>$<span class='no'>specificity</span> <span class='kw'>==</span> <span class='fl'>100</span>, ]$<span class='no'>color</span>)</div><div class='img'><img src='palette_timeline-3.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='http://colorspace.R-Forge.R-project.org//reference/hclplot.html'>hclplot</a></span>(<span class='no'>pal_a</span>[<span class='no'>pal_a</span>$<span class='no'>specificity</span> <span class='kw'>==</span> <span class='fl'>100</span>, ]$<span class='no'>color</span>)</div><div class='img'><img src='palette_timeline-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='http://colorspace.R-Forge.R-project.org//reference/hclplot.html'>hclplot</a></span>(<span class='no'>pal_b</span>[<span class='no'>pal_b</span>$<span class='no'>specificity</span> <span class='kw'>==</span> <span class='fl'>100</span>, ]$<span class='no'>color</span>)</div><div class='img'><img src='palette_timeline-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='http://colorspace.R-Forge.R-project.org//reference/hclplot.html'>hclplot</a></span>(<span class='no'>pal_c</span>[<span class='no'>pal_c</span>$<span class='no'>specificity</span> <span class='kw'>==</span> <span class='fl'>100</span>, ]$<span class='no'>color</span>)</div><div class='img'><img src='palette_timeline-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -206,7 +206,7 @@ specificity values.</p></li>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Justin Schuetz, Matthew Strimas-Mackey, Tom Auer.</p>
+  <p>Developed by <a href='http://www.justinschuetz.com/'>Justin Schuetz</a>, <a href='http://strimas.com'>Matthew Strimas-Mackey</a>, <a href='http://twitter.com/tom_auer'>Tom Auer</a>.</p>
 </div>
 
 <div class="pkgdown">

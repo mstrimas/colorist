@@ -58,10 +58,10 @@ legend_timeline(pal)
 }
 \seealso{
 \link{legend_timecycle} for cyclical sequences of distributions and
-\link{legend_groups} for distributions of distinct groups.
+\link{legend_set} for distributions of distinct groups.
 
 Other legend: 
-\code{\link{legend_groups}()},
+\code{\link{legend_set}()},
 \code{\link{legend_timecycle}()}
 }
 \concept{legend}

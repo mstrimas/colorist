@@ -34,10 +34,10 @@ specificity values.
 }
 \description{
 This function generates an HCL palette for visualizing a linear
-sequence of distributions. For example, a series of utilization
+sequence of distributions (e.g., a series of utilization
 distributions describing space use by an individual animal across each of
 20 consecutive days or a series of species distributions describing
-projected responses to global warming in 0.5 C increments.
+projected responses to global warming in 0.5 C increments).
 }
 \examples{
 # load fisher data
@@ -57,14 +57,14 @@ pal_c <- palette_timeline(fisher_ud, start = 50)
 library(colorspace)
 hclplot(pal_a[pal_a$specificity == 100, ]$color)
 hclplot(pal_b[pal_b$specificity == 100, ]$color)
-hclplot(pal_c[pal_b$specificity == 100, ]$color)
+hclplot(pal_c[pal_c$specificity == 100, ]$color)
 }
 \seealso{
 \link{palette_timecycle} for cyclical sequences of distributions and
-\link{palette_groups} for unordered sets of distributions.
+\link{palette_set} for unordered sets of distributions.
 
 Other palette: 
-\code{\link{palette_groups}()},
+\code{\link{palette_set}()},
 \code{\link{palette_timecycle}()}
 }
 \concept{palette}

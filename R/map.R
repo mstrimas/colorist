@@ -63,12 +63,11 @@
 #' r <- metrics_distill(elephant_ud)
 #'
 #' # generate palette
-#' pal <- palette_groups(elephant_ud)
+#' pal <- palette_set(elephant_ud)
 #'
 #' # produce map, adjusting lambda_i to make areas that were used less
 #' # intensively more conspicuous
 #' map_single(r, pal, lambda_i = -5)
-#'
 map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0, return_df = FALSE) {
   stopifnot(inherits(x, c("RasterStack", "RasterBrick")))
   stopifnot(inherits(palette, "data.frame"),
@@ -111,8 +110,8 @@ map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0, return_df 
     r <- raster::as.data.frame(x[[l]], xy = TRUE)
     r$cell_number <- seq.int(nrow(r))
   } else {
-    stop(paste0("No metric function called on the input raster.",
-                "Try using metric_pull() or metric_distill()."))
+    stop(paste0("No metrics function called on the input raster.",
+                "Try using metrics_pull() or metrics_distill()."))
   }
 
 
@@ -154,9 +153,10 @@ map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0, return_df 
 
   # generate plot
   m <- ggplot2::ggplot() +
-    ggplot2::geom_tile(data = r_pal, aes(x = x, y = y,
-                            fill = factor(cell_number),
-                            alpha = intensity)) +
+    ggplot2::geom_tile(data = r_pal,
+                       ggplot2::aes_(x = ~ x, y = ~ y,
+                                     fill = ~ factor(cell_number),
+                                     alpha = ~ intensity)) +
     ggplot2::scale_fill_manual(values = map_colors) +
     ggplot2::scale_color_manual(values = map_colors) +
     ggplot2::scale_alpha_continuous(trans = scales::modulus_trans(lambda_i + 1),
@@ -173,7 +173,7 @@ map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0, return_df 
                    axis.ticks = ggplot2::element_blank()) +
     ggplot2::xlab("Longitude") +
     ggplot2::ylab("Latitude") +
-    ggplot2::coord_sf(crs = crs(x))
+    ggplot2::coord_equal()
 
   return(m)
 }
@@ -245,7 +245,7 @@ map_multiples <- function(x, palette, ncol, lambda_i = 0, labels = NULL,
   stopifnot(inherits(palette, "data.frame"),
             inherits(palette, c("palette_timeline",
                                 "palette_timecycle",
-                                "palette_groups")),
+                                "palette_set")),
             c("specificity", "layer_id", "color") %in% names(palette))
   stopifnot(length(lambda_i) == 1, is.numeric(lambda_i))
   if (missing(ncol)) {
@@ -255,11 +255,11 @@ map_multiples <- function(x, palette, ncol, lambda_i = 0, labels = NULL,
               ncol <= raster::nlayers(x))
   }
   if (isTRUE(attr(x, "metric") == "distill")) {
-    stop(paste0("map_multiples() does not work with metric_distill().",
-                "Try using metric_pull()."))
+    stop(paste0("map_multiples() does not work with metrics_distill().",
+                "Try using metrics_pull()."))
   } else if (!isTRUE(attr(x, "metric") == "pull")) {
-    stop(paste0("No metric function called on the input raster.",
-                "Try using metric_pull()."))
+    stop(paste0("No metrics function called on the input raster.",
+                "Try using metrics_pull()."))
   }
 
   # convert raster to data frame
@@ -305,11 +305,11 @@ map_multiples <- function(x, palette, ncol, lambda_i = 0, labels = NULL,
 
   # generate multipanel plot
   m <- ggplot2::ggplot() +
-    ggplot2::geom_tile(data = r_pal, aes(x = x, y = y,
-                                         fill = factor(layer_cell),
-                                         alpha = intensity)) +
+    ggplot2::geom_tile(data = r_pal,
+                       ggplot2::aes_(x = ~ x, y = ~ y,
+                                     fill = ~ factor(layer_cell),
+                                     alpha = ~ intensity)) +
     ggplot2::scale_fill_manual(values = map_colors) +
-    #ggplot2::scale_color_manual(values = map_colors) +
     ggplot2::scale_alpha_continuous(trans = scales::modulus_trans(lambda_i + 1),
                                     range = c(0, 1)) +
     ggplot2::facet_wrap(~ layer_id, ncol = ncol,
@@ -326,7 +326,7 @@ map_multiples <- function(x, palette, ncol, lambda_i = 0, labels = NULL,
                    axis.ticks = ggplot2::element_blank()) +
     ggplot2::xlab("Longitude") +
     ggplot2::ylab("Latitude") +
-    ggplot2::coord_sf(crs = crs(x))
+    ggplot2::coord_equal()
 
   return(m)
 }

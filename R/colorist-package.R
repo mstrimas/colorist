@@ -1,5 +1,5 @@
 #' @keywords internal
-#' @importClassesFrom raster Raster RasterLayer RasterStack
+#' @importClassesFrom raster Raster RasterLayer RasterStack RasterBrick
 "_PACKAGE"
 
 # The following block is used by usethis to automatically manage

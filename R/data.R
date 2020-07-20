@@ -62,9 +62,9 @@
 #' @references
 #' LaPoint, S., P. Gallery, M. Wikelski, R. Kays. 2013. Animal behavior,
 #' cost-based corridor models, and real corridors. Landscape Ecology 28(8):
-#' 1615–1630. <https://doi:10.1007/s10980-013-9910-0>
+#' 1615–1630. <https://doi.org/10.1007/s10980-013-9910-0>
 #'
 #' LaPoint, S., P. Gallery, M. Wikelski, R. Kays. 2013. Data from: Animal behavior,
 #' cost-based corridor models, and real corridors. Movebank Data Repository.
-#' <https://doi:10.5441/001/1.2tp2j43g>
+#' <https://doi.org/10.5441/001/1.2tp2j43g>
 "fisher_ud"

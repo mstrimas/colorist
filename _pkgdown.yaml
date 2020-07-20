@@ -1,0 +1,18 @@
+navbar:
+  title: ~
+  type: default
+  left:
+  - text: Vignette
+    href: articles/introduction.html
+  - text: Function Reference
+    href: reference/index.html
+  - text: Changelog
+    href: news/index.html
+
+authors:
+  Justin Schuetz:
+    href: http://www.justinschuetz.com/
+  Matthew Strimas-Mackey:
+    href: http://strimas.com
+  Tom Auer:
+    href: http://twitter.com/tom_auer

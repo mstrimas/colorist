@@ -3,14 +3,17 @@
 
 <!-- badges: start -->
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/colorist)](https://CRAN.R-project.org/package=colorist)
 [![License: GPL
 v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
+[![Lifecycle:
+maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![AppVeyor build
 status](https://ci.appveyor.com/api/projects/status/github/mstrimas/colorist?branch=master&svg=true)](https://ci.appveyor.com/project/mstrimas/colorist)
 [![Travis build
 status](https://travis-ci.org/mstrimas/colorist.svg?branch=master)](https://travis-ci.org/mstrimas/colorist)
-[![Lifecycle:
-maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+
 <!-- badges: end -->
 
 Maps are essential tools for communicating information about wildlife
@@ -34,8 +37,14 @@ found.
 
 ## Installation
 
-You can install the development version of colorist from
-[GitHub](https://github.com/mstrimas/colorist) with:
+Install `colorist` from CRAN with:
+
+``` r
+install.packages("colorist")
+```
+
+Alternatively, you can install the development version of `colorist`
+from [GitHub](https://github.com/mstrimas/colorist) with:
 
 ``` r
 # install.packages("remotes")
@@ -91,20 +100,12 @@ data("fiespa_occ")
 
 # calculate distribution metrics
 r <- metrics_distill(fiespa_occ)
-#> class      : RasterStack 
-#> dimensions : 193, 225, 43425, 12  (nrow, ncol, ncell, nlayers)
-#> resolution : 14814.03, 14814.04  (x, y)
-#> extent     : -1482551, 1850606, -1453281, 1405830  (xmin, xmax, ymin, ymax)
-#> crs        : +proj=laea +lat_0=38.7476367322638 +lon_0=-90.2379515912106 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0 
-#> names      :       jan,       feb,       mar,       apr,       may,       jun,       jul,       aug,       sep,       oct,       nov,       dec 
-#> min values :         0,         0,         0,         0,         0,         0,         0,         0,         0,         0,         0,         0 
-#> max values : 0.8538026, 0.8272926, 0.7993844, 0.7805922, 0.7799550, 0.7745436, 0.7626938, 0.7867995, 0.7790458, 0.7896419, 0.8158410, 0.8681034
 
 # generate hcl color palette
 pal <- palette_timecycle(fiespa_occ)
 
 # map
-map_single(r, pal)
+map_single(r, pal, lambda = -2)
 ```
 
 <img src="man/figures/README-elephant-1.png" width="100%" />

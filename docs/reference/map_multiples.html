@@ -71,20 +71,20 @@ metrics and an HCL color palette." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">colorist</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../articles/introduction.html">Vignette</a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">Function Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -130,7 +130,7 @@ metrics and an HCL color palette.</p>
     <tr>
       <th>palette</th>
       <td><p>data frame containing an HCL color palette generated using
-<code><a href='palette_timecycle.html'>palette_timecycle()</a></code>, <code><a href='palette_timeline.html'>palette_timeline()</a></code>, or <code><a href='palette_groups.html'>palette_groups()</a></code>.</p></td>
+<code><a href='palette_timecycle.html'>palette_timecycle()</a></code>, <code><a href='palette_timeline.html'>palette_timeline()</a></code>, or <code><a href='palette_set.html'>palette_set()</a></code>.</p></td>
     </tr>
     <tr>
       <th>ncol</th>
@@ -200,8 +200,9 @@ to adjust the relative visual weight of high and low intensity values.</p>
 <span class='co'># generate palette</span>
 <span class='no'>pal</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='palette_timeline.html'>palette_timeline</a></span>(<span class='no'>fisher_ud</span>)
 
-<span class='co'># produce map</span>
-<span class='fu'>map_multiples</span>(<span class='no'>r</span>, <span class='no'>pal</span>)</div><div class='img'><img src='map_multiples-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='co'># produce maps</span>
+<span class='co'># set lambda to make areas that were used less intensively more conspicuous</span>
+<span class='fu'>map_multiples</span>(<span class='no'>r</span>, <span class='no'>pal</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> -<span class='fl'>5</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>r</span>))</div><div class='img'><img src='map_multiples-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -219,7 +220,7 @@ to adjust the relative visual weight of high and low intensity values.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Justin Schuetz, Matthew Strimas-Mackey, Tom Auer.</p>
+  <p>Developed by <a href='http://www.justinschuetz.com/'>Justin Schuetz</a>, <a href='http://strimas.com'>Matthew Strimas-Mackey</a>, <a href='http://twitter.com/tom_auer'>Tom Auer</a>.</p>
 </div>
 
 <div class="pkgdown">

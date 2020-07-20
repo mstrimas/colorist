@@ -2,9 +2,13 @@
 ^\.Rproj\.user$
 ^data-raw$
 ^README\.Rmd$
-supplementary/
 ^LICENSE\.md$
 ^appveyor\.yml$
 ^\.travis\.yml$
 ^docs$
 ^makefile.R$
+^cran-comments\.md$
+^_pkgdown.yaml
+^CRAN-RELEASE$
+^doc$
+^Meta$

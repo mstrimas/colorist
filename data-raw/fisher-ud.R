@@ -88,8 +88,7 @@ ud_date <- locs_moll %>%
   nest() %>%
   mutate(trajectory = map(data, make_trajectory),
          ud = map(trajectory, make_ud, grid = template))
-fisher_ud <- stack(ud_date$ud) %>%
-  setNames(format(ud_date$date, "%b%d") %>% tolower())
+fisher_ud <- stack(ud_date$ud)
 
 # trim out very low values
 fisher_ud <- fisher_ud * (fisher_ud > 1e-6)
@@ -99,5 +98,6 @@ fisher_ud <- fisher_ud / cellStats(fisher_ud, sum)
 # save package data
 fisher_ud <- stack(fisher_ud)
 fisher_ud <- readAll(fisher_ud)
+names(fisher_ud) <- paste0("night", seq_len(nlayers(fisher_ud)))
 writeRaster(fisher_ud, "data-raw/fisher-ud.tif", overwrite = TRUE)
 usethis::use_data(fisher_ud, overwrite = TRUE)
