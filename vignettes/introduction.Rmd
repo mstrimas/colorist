@@ -254,7 +254,7 @@ roads <- read_sf(f, layer = "roads") %>%
   st_transform(crs = st_crs(elephant_ud))
 ```
 
-Then we use `map_single()` to reproduce our map of LA11 and LA14 distributions, but we append `geom_sf()` line objects to our `map_single()` function. These additional lines of code allow us to add environmental context to our underlying elephant map (which is a `ggplot` object) and communicate additional information about how elephants LA11 and LA14 navigate Etosha National Park. We can also add a title to our map and remove the black border around the panel.
+Then we use `map_single()` to reproduce our map of LA11 and LA14 distributions, but we append `geom_sf()` line objects to our `map_single()` function. These additional lines of code allow us to add environmental context to our underlying elephant map (which is a `ggplot` object) and communicate additional information about how elephants LA11 and LA14 navigate Etosha National Park. 
 
 ```{r elephant-pretty, dpi = 600, fig.width = 6, fig.height = 3.5, eval = nzchar(Sys.getenv("BUILD_VIGNETTES"))}
 # visualize both distributions on a single map and add environmental data 
@@ -264,8 +264,7 @@ elephant_map <- map_single(m3_distill, p3, lambda_i = -5) +
   geom_sf(data = waterholes, size = 0.25) +
   geom_sf(data = park, size = 3, fill = NA, color = alpha("gray60", 0.2)) +
   geom_sf(data = park, size = 0.2, fill = NA, color = "gray20", linetype = 6) +
-  ggtitle("Two Elephants in Etosha National Park") +
-  theme(panel.border = element_blank())
+  ggtitle("Two Elephants in Etosha National Park") 
 
 # show the map
 elephant_map
