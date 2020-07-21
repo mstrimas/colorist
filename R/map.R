@@ -35,9 +35,10 @@
 #'   intensity values.
 #'
 #'   The `lambda_s` parameter allows for visual tuning of specificity
-#'   values via the [scales::modulus_trans()] function. Visually, adjustments to
-#'   `lambda_s` modulate the conspicuousness of `layer_id` information. USE WITH
-#'   CAUTION!
+#'   values via the [scales::modulus_trans()] function. Adjustment of
+#'   `lambda_s` affects the distribution of chroma values across areas of
+#'   relatively low and high specificity, thus modifying information available
+#'   to viewers. USE WITH CAUTION!
 #'
 #' @return A ggplot2 plot object of the map. Alternatively, with `return_df =
 #'   TRUE` the function returns a data frame containing the raster data in
