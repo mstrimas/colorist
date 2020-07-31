@@ -123,7 +123,7 @@ map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0,
   if (lambda_s != 0) {
     rspec <- modulus(1, lambda_s + 1)
     lspec <- modulus(r$specificity / 100, lambda_s + 1) / rspec
-    r$specificity <- 100 * round(modulus, 2)
+    r$specificity <- 100 * round(lspec, 2)
   }
 
   r$layer_id <- as.integer(r$layer_id)
@@ -335,7 +335,7 @@ is_integer <- function(x) {
 
 modulus <- function(y, lambda) {
   if (lambda != 0) {
-    y_t <- sign(y) * ((abs(y) + 1)^lambda - 1) / lambda
+    y_t <- sign(y) * ((abs(y) + 1) ^ lambda - 1) / lambda
   } else {
     y_t = sign(y) * log(abs(y) + 1)
   }
