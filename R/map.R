@@ -25,14 +25,14 @@
 #'   associated cell colors.
 #'
 #' @details The `lambda_i` parameter allows for visual tuning of intensity
-#'   with unusual distributions. For example, distributions often contain highly
-#'   skewed intensity values because individuals spend a vast majority of their
-#'   time within a relatively small area or because populations are relatively
-#'   dense during some seasons and relatively dispersed during others. This can
-#'   make visualizing distributions a challenge. The `lambda_i` parameter
-#'   transforms intensity values via the [scales::modulus_trans()] function,
-#'   allowing users to adjust the relative visual weight of high and low
-#'   intensity values.
+#'   values with unusual distributions. For example, distributions often
+#'   contain highly skewed intensity values because individuals spend a vast
+#'   majority of their time within a relatively small area or because
+#'   populations are relatively dense during some seasons and relatively
+#'   dispersed during others. This can make visualizing distributions a
+#'   challenge. The `lambda_i` parameter transforms intensity values via the
+#'   [scales::modulus_trans()] function, allowing users to adjust the relative
+#'   visual weight of high and low intensity values.
 #'
 #'   The `lambda_s` parameter allows for visual tuning of specificity
 #'   values via the [scales::modulus_trans()] function. Adjustment of
@@ -212,14 +212,14 @@ map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0,
 #'   specificity values.
 #'
 #' @details The `lambda_i` parameter allows for visual tuning of intensity
-#'   with unusual distributions. For example, distributions often contain highly
-#'   skewed intensity values because individuals spend a vast majority of their
-#'   time within a relatively small area or because populations are relatively
-#'   dense during some seasons and relatively dispersed during others. This can
-#'   make visualizing distributions a challenge. The `lambda_i` parameter
-#'   transforms intensity values via the [scales::modulus_trans()] function,
-#'   allowing users to adjust the relative visual weight of high and low
-#'   intensity values.
+#'   values with unusual distributions. For example, distributions often
+#'   contain highly skewed intensity values because individuals spend a vast
+#'   majority of their time within a relatively small area or because
+#'   populations are relatively dense during some seasons and relatively
+#'   dispersed during others. This can make visualizing distributions a
+#'   challenge. The `lambda_i` parameter transforms intensity values via the
+#'   [scales::modulus_trans()] function, allowing users to adjust the relative
+#'   visual weight of high and low intensity values.
 #'
 #' @family map
 #' @export
