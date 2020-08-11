@@ -208,6 +208,10 @@ palette_timeline.Raster<- function(x, start_hue = -130, clockwise = FALSE) {
 #'
 #' @param x RasterStack or integer describing the number of layers for which
 #'   colors need to be generated.
+#' @param custom_hues vector of integers between -360 and 360 representing
+#'   hues in the color wheel. For further details, consult the documentation
+#'   for [colorspace::rainbow_hcl]. The length of the vector must equal the
+#'   number of layers described by `x`. Hues are assigned to layers in order.
 #'
 #' @return A data frame with three columns:
 #'   - `layer_id`: integer identifying the layer containing the maximum
@@ -232,12 +236,12 @@ palette_timeline.Raster<- function(x, start_hue = -130, clockwise = FALSE) {
 #' # visualize the palette in HCL space with colorspace::hclplot
 #' library(colorspace)
 #' hclplot(pal[pal$specificity == 100, ]$color)
-palette_set <- function(x) {
+palette_set <- function(x, custom_hues) {
   UseMethod("palette_set")
 }
 
 #' @export
-palette_set.integer <- function(x) {
+palette_set.integer <- function(x, custom_hues) {
   if (x < 2) {
     stop("At least two layers are required to generate a palette.")
   } else if (x > 8) {
@@ -245,23 +249,53 @@ palette_set.integer <- function(x) {
                "Try palette_timecycle or palette_timeline."))
   }
 
-  # set up color wheel
-  layer <- c(6, 1, 3, 8, 5, 2, 7, 4)
-  n <- length(layer)
-  wheel <- data.frame(specificity = rep(0:100, each = n),
-                      layer_id = rep(layer, times = 101),
-                      color = NA_character_,
-                      stringsAsFactors = FALSE)
+  if (missing(custom_hues)) {
+    # set up color wheel
+    layer <- c(6, 1, 3, 8, 5, 2, 7, 4)
+    n <- length(layer)
+    wheel <- data.frame(specificity = rep(0:100, each = n),
+                        layer_id = rep(layer, times = 101),
+                        color = NA_character_,
+                        stringsAsFactors = FALSE)
 
-  # generate palettes for each chroma value
-  for (i in 0:100) {
-    idx <- seq(i * n + 1, (i + 1) * n, by = 1)
-    wheel[["color"]][idx] <- colorspace::rainbow_hcl(n,
-                                                     c = i,
-                                                     l = 45,
-                                                     start = 240,
-                                                     end = 240 - 360 * (7/8),
-                                                     fixup = TRUE)
+    # generate palettes for each chroma value
+    for (i in 0:100) {
+      idx <- seq(i * n + 1, (i + 1) * n, by = 1)
+      wheel[["color"]][idx] <- colorspace::rainbow_hcl(n,
+                                                      c = i,
+                                                      l = 45,
+                                                      start = 240,
+                                                      end = 240 - 360 * (7/8),
+                                                      fixup = TRUE)
+    }
+  } else {
+    if (x != length(custom_hues)) {
+      stop("The number of layers in x and number of hues described in
+           custom_hues must be equal.")
+    }
+    stopifnot(is.vector(custom_hues),
+              is.numeric(custom_hues),
+              custom_hues >= -360,
+              custom_hues <= 360)
+
+    # set up color wheel
+    layer <- 1:x
+    n <- length(layer)
+    wheel <- data.frame(specificity = rep(0:100, each = n),
+                        layer_id = rep(layer, times = 101),
+                        color = NA_character_,
+                        stringsAsFactors = FALSE)
+
+    # generate palettes for each chroma value
+    for (i in 0:100) {
+      idx <- seq(i * n + 1, (i + 1) * n, by = 1)
+      wheel[["color"]][idx] <- colorspace::rainbow_hcl(n,
+                                                       c = i,
+                                                       l = 45,
+                                                       start = custom_hues[layer],
+                                                       end = custom_hues[layer],
+                                                       fixup = TRUE)
+    }
   }
 
   # drop irrelevant layers
@@ -270,14 +304,15 @@ palette_set.integer <- function(x) {
   row.names(wheel) <- NULL
   class(wheel) <- c("palette_set", "data.frame")
   return(wheel)
+
 }
 
 #' @export
-palette_set.numeric <- function(x) {
-  palette_set(as.integer(x))
+palette_set.numeric <- function(x, custom_hues) {
+  palette_set(as.integer(x), custom_hues)
 }
 
 #' @export
-palette_set.Raster<- function(x) {
-  palette_set(raster::nlayers(x))
+palette_set.Raster<- function(x, custom_hues) {
+  palette_set(raster::nlayers(x), custom_hues)
 }
