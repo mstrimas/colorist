@@ -13,19 +13,19 @@
 #'   argument is specified. The `layer` argument is ignored if
 #'   [metrics_distill()] was used to generate `x`.
 #' @param lambda_i number that allows visual tuning of intensity values via the
-#'   [scales::modulus_trans()] function (see Details). Negative numbers decrease
-#'   apparent skew of intensity values. Positive numbers increase apparent skew
-#'   of intensity values.
+#'   [scales::modulus_trans()] function (see Details). Negative numbers increase
+#'   the opacity of cells with low intensity values. Positive numbers decrease
+#'   the opacity of cells with low intensity values.
 #' @param lambda_s number that allows visual tuning of specificity values via
 #'   the [scales::modulus_trans()] function (see Details). Negative numbers
-#'   decrease apparent skew of specificity values. Positive numbers increase
-#'   apparent skew of specificity values.
+#'   increase the chroma of cells with low specificity values. Positive numbers
+#'   decrease the chroma of cells with low specificity values.
 #' @param return_df logical specifying whether the function should return a
 #'   ggplot2 plot object (FALSE) or a data frame containing the raster data and
 #'   associated cell colors.
 #'
-#' @details The `lambda_i` parameter allows for visual tuning of highly skewed
-#'   distribution data. It is not uncommon for distributions to contain highly
+#' @details The `lambda_i` parameter allows for visual tuning of intensity
+#'   with unusual distributions. For example, distributions often contain highly
 #'   skewed intensity values because individuals spend a vast majority of their
 #'   time within a relatively small area or because populations are relatively
 #'   dense during some seasons and relatively dispersed during others. This can
@@ -186,9 +186,9 @@ map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0,
 #'   [palette_timecycle()], [palette_timeline()], or [palette_set()].
 #' @param ncol integer specifying the number of columns in the grid of plots.
 #' @param lambda_i number that allows visual tuning of intensity values via the
-#'   [scales::modulus_trans()] function (see Details). Negative numbers decrease
-#'   apparent skew of intensity values. Positive numbers increase apparent skew
-#'   of intensity values.
+#'   [scales::modulus_trans()] function (see Details). Negative numbers increase
+#'   the opacity of cells with low intensity values. Positive numbers decrease
+#'   the opacity of cells with low intensity values.
 #' @param labels character vector of layer labels for each plot. The default is
 #'   to not show labels.
 #' @param return_df logical specifying whether the function should return a
@@ -211,12 +211,12 @@ map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0,
 #'   - `color`: the hexadecimal color associated with the given layer and
 #'   specificity values.
 #'
-#' @details The lambda_i parameter allows for visual tuning of highly skewed
-#'   distribution data. It is not uncommon for distributions to contain highly
+#' @details The `lambda_i` parameter allows for visual tuning of intensity
+#'   with unusual distributions. For example, distributions often contain highly
 #'   skewed intensity values because individuals spend a vast majority of their
 #'   time within a relatively small area or because populations are relatively
 #'   dense during some seasons and relatively dispersed during others. This can
-#'   make visualizing distributions a challenge. The lambda_i parameter
+#'   make visualizing distributions a challenge. The `lambda_i` parameter
 #'   transforms intensity values via the [scales::modulus_trans()] function,
 #'   allowing users to adjust the relative visual weight of high and low
 #'   intensity values.
