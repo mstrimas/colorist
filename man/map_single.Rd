@@ -19,14 +19,14 @@ argument is specified. The \code{layer} argument is ignored if
 \code{\link[=metrics_distill]{metrics_distill()}} was used to generate \code{x}.}
 
 \item{lambda_i}{number that allows visual tuning of intensity values via the
-\code{\link[scales:boxcox_trans]{scales::modulus_trans()}} function (see Details). Negative numbers decrease
-apparent skew of intensity values. Positive numbers increase apparent skew
-of intensity values.}
+\code{\link[scales:boxcox_trans]{scales::modulus_trans()}} function (see Details). Negative numbers increase
+the opacity of cells with low intensity values. Positive numbers decrease
+the opacity of cells with low intensity values.}
 
 \item{lambda_s}{number that allows visual tuning of specificity values via
 the \code{\link[scales:boxcox_trans]{scales::modulus_trans()}} function (see Details). Negative numbers
-decrease apparent skew of specificity values. Positive numbers increase
-apparent skew of specificity values.}
+increase the chroma of cells with low specificity values. Positive numbers
+decrease the chroma of cells with low specificity values.}
 
 \item{return_df}{logical specifying whether the function should return a
 ggplot2 plot object (FALSE) or a data frame containing the raster data and
@@ -55,20 +55,21 @@ information in a single map by combining distribution metrics and an HCL
 color palette.
 }
 \details{
-The \code{lambda_i} parameter allows for visual tuning of highly skewed
-distribution data. It is not uncommon for distributions to contain highly
-skewed intensity values because individuals spend a vast majority of their
-time within a relatively small area or because populations are relatively
-dense during some seasons and relatively dispersed during others. This can
-make visualizing distributions a challenge. The \code{lambda_i} parameter
-transforms intensity values via the \code{\link[scales:boxcox_trans]{scales::modulus_trans()}} function,
-allowing users to adjust the relative visual weight of high and low
-intensity values.
+The \code{lambda_i} parameter allows for visual tuning of intensity
+values with unusual distributions. For example, distributions often
+contain highly skewed intensity values because individuals spend a vast
+majority of their time within a relatively small area or because
+populations are relatively dense during some seasons and relatively
+dispersed during others. This can make visualizing distributions a
+challenge. The \code{lambda_i} parameter transforms intensity values via the
+\code{\link[scales:boxcox_trans]{scales::modulus_trans()}} function, allowing users to adjust the relative
+visual weight of high and low intensity values.
 
 The \code{lambda_s} parameter allows for visual tuning of specificity
-values via the \code{\link[scales:boxcox_trans]{scales::modulus_trans()}} function. Visually, adjustments to
-\code{lambda_s} modulate the conspicuousness of \code{layer_id} information. USE WITH
-CAUTION!
+values via the \code{\link[scales:boxcox_trans]{scales::modulus_trans()}} function. Adjustment of
+\code{lambda_s} affects the distribution of chroma values across areas of
+relatively low and high specificity, thus modifying information available
+to viewers. USE WITH CAUTION!
 }
 \examples{
 # load elephant data

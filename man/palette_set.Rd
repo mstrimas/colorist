@@ -4,11 +4,16 @@
 \alias{palette_set}
 \title{Make an HCL palette for visualizing an unordered set of distributions}
 \usage{
-palette_set(x)
+palette_set(x, custom_hues)
 }
 \arguments{
 \item{x}{RasterStack or integer describing the number of layers for which
 colors need to be generated.}
+
+\item{custom_hues}{vector of integers between -360 and 360 representing
+hues in the color wheel. For further details, consult the documentation
+for \link[colorspace:rainbow_hcl]{colorspace::rainbow_hcl}. The length of the vector must equal the
+number of layers described by \code{x}. Hues are assigned to layers in order.}
 }
 \value{
 A data frame with three columns:

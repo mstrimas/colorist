@@ -125,7 +125,7 @@ describing space use by five separate individuals in the same population or
 a set of four species distributions that depend on similar food resources).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>palette_set</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>palette_set</span>(<span class='no'>x</span>, <span class='no'>custom_hues</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -134,6 +134,13 @@ a set of four species distributions that depend on similar food resources).</p>
       <th>x</th>
       <td><p>RasterStack or integer describing the number of layers for which
 colors need to be generated.</p></td>
+    </tr>
+    <tr>
+      <th>custom_hues</th>
+      <td><p>vector of integers between -360 and 360 representing
+hues in the color wheel. For further details, consult the documentation
+for <a href='http://colorspace.R-Forge.R-project.org//reference/rainbow_hcl.html'>colorspace::rainbow_hcl</a>. The length of the vector must equal the
+number of layers described by <code>x</code>. Hues are assigned to layers in order.</p></td>
     </tr>
     </table>
 

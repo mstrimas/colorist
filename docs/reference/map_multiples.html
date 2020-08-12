@@ -142,9 +142,9 @@ metrics and an HCL color palette.</p>
     <tr>
       <th>lambda_i</th>
       <td><p>number that allows visual tuning of intensity values via the
-<code><a href='https://scales.r-lib.org//reference/boxcox_trans.html'>scales::modulus_trans()</a></code> function (see Details). Negative numbers decrease
-apparent skew of intensity values. Positive numbers increase apparent skew
-of intensity values.</p></td>
+<code><a href='https://scales.r-lib.org//reference/boxcox_trans.html'>scales::modulus_trans()</a></code> function (see Details). Negative numbers increase
+the opacity of cells with low intensity values. Positive numbers decrease
+the opacity of cells with low intensity values.</p></td>
     </tr>
     <tr>
       <th>labels</th>
@@ -180,15 +180,15 @@ specificity values.</p></li>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The lambda_i parameter allows for visual tuning of highly skewed
-distribution data. It is not uncommon for distributions to contain highly
-skewed intensity values because individuals spend a vast majority of their
-time within a relatively small area or because populations are relatively
-dense during some seasons and relatively dispersed during others. This can
-make visualizing distributions a challenge. The lambda_i parameter
-transforms intensity values via the <code><a href='https://scales.r-lib.org//reference/boxcox_trans.html'>scales::modulus_trans()</a></code> function,
-allowing users to adjust the relative visual weight of high and low
-intensity values.</p>
+    <p>The <code>lambda_i</code> parameter allows for visual tuning of intensity
+values with unusual distributions. For example, distributions often
+contain highly skewed intensity values because individuals spend a vast
+majority of their time within a relatively small area or because
+populations are relatively dense during some seasons and relatively
+dispersed during others. This can make visualizing distributions a
+challenge. The <code>lambda_i</code> parameter transforms intensity values via the
+<code><a href='https://scales.r-lib.org//reference/boxcox_trans.html'>scales::modulus_trans()</a></code> function, allowing users to adjust the relative
+visual weight of high and low intensity values.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other map: 

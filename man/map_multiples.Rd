@@ -15,9 +15,9 @@ map_multiples(x, palette, ncol, lambda_i = 0, labels = NULL, return_df = FALSE)
 \item{ncol}{integer specifying the number of columns in the grid of plots.}
 
 \item{lambda_i}{number that allows visual tuning of intensity values via the
-\code{\link[scales:boxcox_trans]{scales::modulus_trans()}} function (see Details). Negative numbers decrease
-apparent skew of intensity values. Positive numbers increase apparent skew
-of intensity values.}
+\code{\link[scales:boxcox_trans]{scales::modulus_trans()}} function (see Details). Negative numbers increase
+the opacity of cells with low intensity values. Positive numbers decrease
+the opacity of cells with low intensity values.}
 
 \item{labels}{character vector of layer labels for each plot. The default is
 to not show labels.}
@@ -51,15 +51,15 @@ information in a series of small multiples by combining distribution
 metrics and an HCL color palette.
 }
 \details{
-The lambda_i parameter allows for visual tuning of highly skewed
-distribution data. It is not uncommon for distributions to contain highly
-skewed intensity values because individuals spend a vast majority of their
-time within a relatively small area or because populations are relatively
-dense during some seasons and relatively dispersed during others. This can
-make visualizing distributions a challenge. The lambda_i parameter
-transforms intensity values via the \code{\link[scales:boxcox_trans]{scales::modulus_trans()}} function,
-allowing users to adjust the relative visual weight of high and low
-intensity values.
+The \code{lambda_i} parameter allows for visual tuning of intensity
+values with unusual distributions. For example, distributions often
+contain highly skewed intensity values because individuals spend a vast
+majority of their time within a relatively small area or because
+populations are relatively dense during some seasons and relatively
+dispersed during others. This can make visualizing distributions a
+challenge. The \code{lambda_i} parameter transforms intensity values via the
+\code{\link[scales:boxcox_trans]{scales::modulus_trans()}} function, allowing users to adjust the relative
+visual weight of high and low intensity values.
 }
 \examples{
 # load fisher data
