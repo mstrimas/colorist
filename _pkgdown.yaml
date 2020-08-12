@@ -2,8 +2,10 @@ navbar:
   title: ~
   type: default
   left:
-  - text: Vignette
+  - text: Introduction
     href: articles/introduction.html
+  - text: Tuning Visualizations
+    href: articles/tuning.html
   - text: Function Reference
     href: reference/index.html
   - text: Changelog
