@@ -84,7 +84,7 @@ The `palette_timecycle()` function returns a data frame with three fields: `spec
 
 To visualize our distributions in individual facets, we provide the `map_multiples()` function with distribution metrics and palette information. The structure of the plot and labels for each distribution within the plot can be specified using the `ncol` and `labels` arguments, respectively.
 
-```{r fiespa-mapmult}
+```{r fiespa-mapmult, dpi = 300}
 # map each of the layers
 map_multiples(m1, p1, ncol = 4, labels = names(fiespa_occ))
 ```
