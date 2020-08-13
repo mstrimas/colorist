@@ -38,7 +38,7 @@ Below, we provide two hypothetical mapping problems that can be addressed by cha
 
 ### Map monthly distributions of a species in the southern hemisphere
 
-The sample Field Sparrow data included with `colorist` describe monthly occurrence probabilities for a partially migratory bird in the eastern United States, but we are going to pretend that they describe monthly distributions of a species that occurs in temperate regions of the southern hemisphere. Our goal is to change the assignments of hues to months so that they better indicate the seasons experienced by our hypothetical species.
+The sample Field Sparrow data included with `colorist` describe monthly occurrence probabilities for a partially migratory bird species in the eastern United States, but we are going to pretend that they describe monthly distributions of a species that occurs in temperate regions of the southern hemisphere. Our goal is to change the assignments of hues to months so that they better indicate the seasons experienced by our hypothetical species.
 
 To begin, we calculate distribution metrics with `metrics_pull()` and adopt the default HCL-based color palette provided by `palette_timecycle()`. Then we visualize our monthly distribution data using the `map_multiples()` function. 
 
@@ -77,26 +77,24 @@ Here, we turn to data describing utilization distributions for two African Eleph
 # pull metrics, generate default palette, map layers
 m2 <- metrics_pull(elephant_ud)
 p2 <- palette_set(2)
-map_multiples(m2, p2, labels = c("'Purple People-eater'", 
-                                 "'Jolly Green Giant'"), ncol = 2)
+map_multiples(m2, p2, labels = c("'Purple People-eater'", "'Jolly Green Giant'"), ncol = 2)
 ```
 
-To communicate a coherent signal of identity across the labels and the maps, we need to override the default hue settings in `palette_set()`. We can achieve this by providing the `custom_hues` argument with a vector of integers indicating where on a rainbow color wheel the function should sample hues. "Purple" hues are found near 280 and "greens" are found near 120, so we specify those values in the appropriate order and visualize our adjustments.
+To communicate a consistent signal of identity across the labels and the maps, we need to override the default hue settings in `palette_set()`. We can achieve this by providing the `custom_hues` argument with a vector of integers indicating where on a rainbow color wheel the function should sample hues. "Purple" hues are found near 280 and "greens" are found near 120, so we specify those values in the appropriate order and visualize our adjustments.
 
 ```{r hues-elephant-custom}
 # use custom_hues argument to make specific hue choices
 p2_custom <- palette_set(2, custom_hues = c(280, 120))
 
 # map layers
-map_multiples(m2, p2_custom, labels = c("'Purple People-eater'", 
-                                        "'Jolly Green Giant'"), ncol = 2)
+map_multiples(m2, p2_custom, labels = c("'Purple People-eater'", "'Jolly Green Giant'"), ncol = 2)
 ```
 
 The result: cognitive harmony.
 
 ## 2. Change the relationship between intensity and opacity
 
-The second type of adjustment we explore involves changing the relationship between intensity and opacity values, a modification that can be made in the `map_single()` and `map_multiple()` functions. 
+The second type of adjustment we explore involves changing the relationship between intensity and opacity values, a modification that can be made in the `map_single()` and `map_multiples()` functions. 
 
 There are a variety of contexts in which it is difficult to visualize important information about populations or individuals because intensity values (i.e., relative abundance, occurrence, or probability density values) have unusual distributions. For example, it can be difficult to indicate the extent to which a species or individual uses an entire landscape when changing availability of resources or inconsistent social interaction causes an extremely skewed distribution of intensity values. Conversely, it can be a challenge to indicate areas of particular importance to species or individuals when they appear at first glance to use an entire landscape relatively evenly. 
 
@@ -166,7 +164,7 @@ p3 <- palette_timeline(fisher_ud)
 map_multiples(m3, p3, labels = names(fisher_ud))
 ```
 
-It is clear that the Fisher is using different parts of its territory to different degrees, within and among nights, but if we want to more clearly understand and illustrate which areas were used most intensively we need to change the relationship between intensity and opacity values. In order to highlight intensively used cells, we provide the `lambda_i` argument in `map_multiples()` with a positive number rather than accept the default value of 0. 
+It is clear that the Fisher is using different parts of its territory to different degrees within and among nights, but if we want to more clearly understand and illustrate which areas were used most intensively we need to change the relationship between intensity and opacity values. In order to highlight intensively used cells, we provide the `lambda_i` argument in `map_multiples()` with a positive number rather than accept the default value of 0. 
 
 ```{r opacity-fisher-custom}
 # map layers with adjustment to lambda_i
@@ -179,9 +177,9 @@ At first glance, it may appear that we have made a mistake of some kind. Nearly 
 
 The third type of adjustment we explore involves changing the relationship between specificity and chroma values, a modification that can be made in the `map_single()` function. In mechanical terms, the transformation is nearly identical to the one used for changing the relationship between intensity and opacity values. The visual and narrative impacts are quite different, however.
 
-Remember that specificity values indicate whether a cell contains similar intensities (low specificity) or dissimilar intensities (high specificity) across raster layers and that variation in specificity values is indicated by varying the chroma of cell colors. Cells with low specificity values are indicated using low chroma values and appear "gray". Cells with high specificity values are indicated using high chroma values and appear brightly colored. 
+Remember that specificity values indicate the degree to which intensity values are unevenly distributed across raster layers and that variation in specificity values is indicated by varying the chroma of cell colors. Low specificity values indicate intensity values are similar in all layers of a cell, are linked to low chroma values, and appear "gray". High specificity values indicate intensity values are concentrated in a single layer, are linked to high chroma values, and appear as "bright" colors. 
 
-Depending on the nature of the data contained in a `Rasterstack`, specificity values can take on a variety of meanings, including, seasonal use of a cell, ephemeral use of a cell, or differential use of a cell by multiple species or individuals. Thus, changing the relationship between specificity and chroma values can have important consequences for how viewers interpret patterns of spatiotemporal overlap among raster layers.
+Depending on the nature of the data contained in a `Rasterstack`, specificity values can take on a variety of meanings, including, seasonal use of a cell, ephemeral use of a cell, or differential use of a cell by multiple species or individuals. Changing the relationship between specificity and chroma values can have important consequences for how viewers interpret patterns of spatiotemporal overlap among raster layers.
 
 The relationship between specificity and chroma values is controlled with a `lambda_s` argument in the `map_single()` function. Again, the default setting of 0 prescribes a linear relationship between specificity and chroma values, analogous to the default relationship between intensity and opacity. Specifying negative values for `lambda_s` increases the chroma and apparent specificity values in cells with moderate specificity values, making them more “colorful“. Specifying positive values for `lambda_s` reduces the chroma and apparent specificity values of cells with moderate specificity values, making them more “gray“.
 
@@ -214,7 +212,7 @@ Using the sample Fisher data which contain utilization distributions for nine se
 # distill metrics, visualize metrics in a single map, create legend
 m3_distill <- metrics_distill(fisher_ud)
 map_single(m3_distill, p3, lambda_i = -5)
-legend_timeline(p3)
+legend_timeline(p3, time_labels = c("April 7", "April 15"))
 ```
 
 The abundance of brightly colored cells indicates that the Fisher used different parts of its territory almost every night, and the different hues indicate which night each cell was used most intensively. If we want to more clearly indicate which parts of the Fisher territory were used repeatedly, we need to adjust how specificity values are represented using the `lambda_s` argument in `map_single()`. To emphasize patterns of consistent use across nights we need to specify a positive number for `lambda_s`, an adjustment that decreases chroma and apparent specificity values in cells that contain moderate specificity values, making them appear more “gray“. 
@@ -236,7 +234,7 @@ As with the Fisher, we start by calculating distribution metrics with `metrics_d
 # distill metrics, visualize metrics in a single map, create legend
 m1_distill <- metrics_distill(fiespa_occ)
 map_single(m1_distill, p1)
-legend_timecycle(p1)
+legend_timecycle(p1, origin_label = "Jan 1")
 ```
 
 Cells where populations of Field Sparrows persist at approximately the same level throughout the year have low specificity values and low chroma values and appear “gray“ in our map. Cells where populations occur only seasonally have high specificity values and high chroma values and appear “colorful“ with the hue in a cell indicating the month of peak occurrence. 
