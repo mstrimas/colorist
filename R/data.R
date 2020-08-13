@@ -11,7 +11,7 @@
 #'
 #' For further details on these data, and to access the data for more species,
 #' consult the [documentation for the `ebirdst`
-#' package](https://cornelllabofornithology.github.io/ebirdst).
+#' package](https://cornelllabofornithology.github.io/ebirdst/).
 #'
 #' @source <https://ebird.org/science/status-and-trends>
 #' @references Fink, D., T. Auer, A. Johnston, M. Strimas-Mackey, O. Robinson,

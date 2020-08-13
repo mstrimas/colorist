@@ -24,7 +24,7 @@ resolution.
 }
 \details{
 For further details on these data, and to access the data for more species,
-consult the \href{https://cornelllabofornithology.github.io/ebirdst}{documentation for the \code{ebirdst} package}.
+consult the \href{https://cornelllabofornithology.github.io/ebirdst/}{documentation for the \code{ebirdst} package}.
 }
 \references{
 Fink, D., T. Auer, A. Johnston, M. Strimas-Mackey, O. Robinson,

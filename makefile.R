@@ -8,7 +8,6 @@ devtools::document()
 devtools::install_local(force = TRUE)
 
 # local tests and checks
-#devtools::test()
 devtools::check(run_dont_test = TRUE)
 
 # vignettes, readme, site
