@@ -240,7 +240,7 @@ f <- "../data-raw/etosha-features.gpkg"
 
 We can then read the spatial data from the GeoPackage into R and ensure that the data are described by the same coordinate reference system as the elephant data.
 
-```{r elepaphant-sf, eval = nzchar(Sys.getenv("BUILD_VIGNETTES"))}
+```{r elepaphant-sf, eval = isTRUE(Sys.getenv("BUILD_VIGNETTES"))}
 pans <- read_sf(f, layer = "pans") %>% 
   st_transform(crs = st_crs(elephant_ud))
 
@@ -256,7 +256,7 @@ roads <- read_sf(f, layer = "roads") %>%
 
 Then we use `map_single()` to reproduce our map of LA11 and LA14 distributions, but we append `geom_sf()` line objects to our `map_single()` function. These additional lines of code allow us to add environmental context to our underlying elephant map (which is a `ggplot` object) and communicate additional information about how elephants LA11 and LA14 navigate Etosha National Park. 
 
-```{r elephant-pretty, dpi = 150, fig.width = 6, fig.height = 3.5, eval = nzchar(Sys.getenv("BUILD_VIGNETTES"))}
+```{r elephant-pretty, dpi = 150, fig.width = 6, fig.height = 3.5, eval = isTRUE(Sys.getenv("BUILD_VIGNETTES"))}
 # visualize both distributions on a single map and add environmental data 
 elephant_map <- map_single(m3_distill, p3, lambda_i = -5) +
   geom_sf(data = pans, alpha = 0.2, size = 0.15, color = "gray40") + 

@@ -14,7 +14,7 @@ An object of class \code{RasterStack} of dimension 208 x 193 x 2.
 elephant_ud
 }
 \description{
-A \link[raster:Raster-classes]{RasterStack} of the \href{https://en.wikipedia.org/wiki/Utilization_distribution}{utilization distribution} for two
+A \link[raster:Raster-classes]{RasterStack} of \href{https://en.wikipedia.org/wiki/Utilization_distribution}{utilization distributions} for two
 individual African Elephants in Etosha National Park in 2011. Cell values
 represent the probability density that an elephant was found at a given
 location within the year and the two layers contain data for the two
