@@ -42,7 +42,7 @@ The sample Field Sparrow data included with `colorist` describe monthly occurren
 
 To begin, we calculate distribution metrics with `metrics_pull()` and adopt the default HCL-based color palette provided by `palette_timecycle()`. Then we visualize our monthly distribution data using the `map_multiples()` function. 
 
-```{r hues-fiespa-default}
+```{r hues-fiespa-default, dpi = 150}
 library(colorist)
 library(ggplot2)
 library(RColorBrewer)
@@ -57,7 +57,7 @@ The default settings for `palette_timecycle()` produce a palette of hues that be
 
 We can change the alignment of hues and months in `palette_timecycle()`, while retaining the sequence of seasons, by adjusting the `start_hue` argument. All we have to do is specify a value of 60 rather than accept the default value of 240. This change tells `palette_timecycle()` to begin assigning hues to layers on the opposite side of the color wheel, 180 degrees, and six months away, from the default setting.
 
-```{r hues-fiespa-custom}
+```{r hues-fiespa-custom, dpi = 150}
 # change palette start position on color wheel
 p1_custom <- palette_timecycle(12, start_hue = 60)
 
