@@ -18,6 +18,7 @@ knitr::opts_chunk$set(warning = FALSE,
                       fig.height = 4, 
                       fig.width = 7, 
                       fig.align = "center")
+BUILD_VIGNETTES <- isTRUE(as.logical(Sys.getenv("BUILD_VIGNETTES")))
 ```
 
 Maps play a central role in research aimed at understanding how and why wildlife distributions shift through space and time. They give form to complex sets of assumptions, hypotheses, and predictions and, in doing so, offer the promise of embodying detailed knowledge about species and individuals. Traditionally, biologists have used range maps, and home range maps, to describe animal distributions in space and time. Despite their historical success as representational forms, they are increasingly incapable of communicating our knowledge of wildlife distributions. 
@@ -84,7 +85,7 @@ The `palette_timecycle()` function returns a data frame with three fields: `spec
 
 To visualize our distributions in individual facets, we provide the `map_multiples()` function with distribution metrics and palette information. The structure of the plot and labels for each distribution within the plot can be specified using the `ncol` and `labels` arguments, respectively.
 
-```{r fiespa-mapmult, dpi = 150}
+```{r fiespa-mapmult, dpi = 150, eval = BUILD_VIGNETTES}
 # map each of the layers
 map_multiples(m1, p1, ncol = 4, labels = names(fiespa_occ))
 ```
@@ -240,7 +241,7 @@ f <- "../data-raw/etosha-features.gpkg"
 
 We can then read the spatial data from the GeoPackage into R and ensure that the data are described by the same coordinate reference system as the elephant data.
 
-```{r elepaphant-sf, eval = isTRUE(Sys.getenv("BUILD_VIGNETTES"))}
+```{r elepaphant-sf, eval = BUILD_VIGNETTES}
 pans <- read_sf(f, layer = "pans") %>% 
   st_transform(crs = st_crs(elephant_ud))
 
@@ -256,7 +257,7 @@ roads <- read_sf(f, layer = "roads") %>%
 
 Then we use `map_single()` to reproduce our map of LA11 and LA14 distributions, but we append `geom_sf()` line objects to our `map_single()` function. These additional lines of code allow us to add environmental context to our underlying elephant map (which is a `ggplot` object) and communicate additional information about how elephants LA11 and LA14 navigate Etosha National Park. 
 
-```{r elephant-pretty, dpi = 150, fig.width = 6, fig.height = 3.5, eval = isTRUE(Sys.getenv("BUILD_VIGNETTES"))}
+```{r elephant-pretty, dpi = 150, fig.width = 6, fig.height = 3.5, eval = BUILD_VIGNETTES}
 # visualize both distributions on a single map and add environmental data 
 elephant_map <- map_single(m3_distill, p3, lambda_i = -5) +
   geom_sf(data = pans, alpha = 0.2, size = 0.15, color = "gray40") + 

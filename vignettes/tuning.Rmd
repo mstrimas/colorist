@@ -18,6 +18,7 @@ knitr::opts_chunk$set(warning = FALSE,
                       fig.height = 4, 
                       fig.width = 7, 
                       fig.align = "center")
+BUILD_VIGNETTES <- isTRUE(as.logical(Sys.getenv("BUILD_VIGNETTES")))
 ```
 
 In the [Introduction to colorist](https://strimas.com/colorist/articles/introduction.html) vignette we offered an overview of `colorist` functionality and several examples of how functions can be combined to map distributions. Here, we explore in more detail how metrics of spatiotemporal distributions (i.e., layer, intensity, and specificity information) are visualized using color attributes (i.e., hue, opacity, and chroma, respectively), and how users can modify visualizations to emphasize different narrative goals.
@@ -34,21 +35,29 @@ Three palette functions are available in `colorist`, each created with a differe
 
 To ensure that viewers can make “fair“ visual comparisons of distributions through space and time, `colorist` functions impose rather strict constraints on how palette hues are assigned to layers, and how they are deployed in subsequent maps. There are opportunities for users to modify default settings, however, so that hues facilitate specific communication goals.
 
-Below, we provide two hypothetical mapping problems that can be addressed by changing how hues are assigned to raster layers.
+Below, we provide two hypothetical mapping problems that can be addressed by changing how hues are assigned to raster layers. We start by loading the necessary libraries.
+
+```{r libraries}
+library(colorist)
+library(ggplot2)
+library(RColorBrewer)
+```
 
 ### Map monthly distributions of a species in the southern hemisphere
 
 The sample Field Sparrow data included with `colorist` describe monthly occurrence probabilities for a partially migratory bird in the eastern United States. We can explore the data visually by calculating distribution metrics with `metrics_pull()`, adopting the default HCL-based color palette provided by `palette_timecycle()`, and mapping each of the data layers using the `map_multiples()` function.  
 
-```{r hues-fiespa-default, dpi = 150}
-library(colorist)
-library(ggplot2)
-library(RColorBrewer)
-
+```{r hues-fiespa-default, dpi = 150, eval = BUILD_VIGNETTES}
 # pull metrics, generate default palette, map layers
 m1 <- metrics_pull(fiespa_occ)
 p1 <- palette_timecycle(12)
 map_multiples(m1, p1, labels = names(fiespa_occ), ncol = 4)
+```
+
+```{r dpi = 150, echo = FALSE}
+# pull metrics, generate default palette, map layers
+m1 <- metrics_pull(fiespa_occ)
+p1 <- palette_timecycle(12)
 ```
 
 The default settings for `palette_timecycle()` produce a palette of hues that begins at “blue” in January and moves progressively toward “green”, “yellow”, and “red”, before returning toward “blue”. These hues align with our general sense of seasonal progression in northern temperate regions, where we move from “winter” toward “spring”, “summer”, “fall”, and back to “winter”. 
@@ -58,7 +67,7 @@ Now, let us assume that our bird species actually occurs in temperate regions of
 To realign seasonal hues and months for a southern temperate species, we need to modify the `start_hue` argument in `palette_timecycle()`. So, we specify a value of 60 rather than accept the default value of 240. This change tells `palette_timecycle()` to begin assigning hues to layers on the opposite side of the color wheel, 180 degrees, and six months away, from the default setting.
 
 
-```{r hues-fiespa-custom, dpi = 150}
+```{r hues-fiespa-custom, dpi = 150, eval = BUILD_VIGNETTES}
 # change palette start position on color wheel
 p1_custom <- palette_timecycle(12, start_hue = 60)
 
