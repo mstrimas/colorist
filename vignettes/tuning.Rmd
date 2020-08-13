@@ -38,7 +38,7 @@ Below, we provide two hypothetical mapping problems that can be addressed by cha
 
 ### Map monthly distributions of a species in the southern hemisphere
 
-The sample Field Sparrow data included with colorist describe monthly occurrence probabilities for a partially migratory bird in the eastern United States. We can explore the data visually by calculating distribution metrics with `metrics_pull()`, adopting the default HCL-based color palette provided by `palette_timecycle()`, and mapping each of the data layers using the `map_multiples()` function.  
+The sample Field Sparrow data included with `colorist` describe monthly occurrence probabilities for a partially migratory bird in the eastern United States. We can explore the data visually by calculating distribution metrics with `metrics_pull()`, adopting the default HCL-based color palette provided by `palette_timecycle()`, and mapping each of the data layers using the `map_multiples()` function.  
 
 ```{r hues-fiespa-default, dpi = 150}
 library(colorist)
