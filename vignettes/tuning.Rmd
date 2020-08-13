@@ -38,9 +38,7 @@ Below, we provide two hypothetical mapping problems that can be addressed by cha
 
 ### Map monthly distributions of a species in the southern hemisphere
 
-The sample Field Sparrow data included with `colorist` describe monthly occurrence probabilities for a partially migratory bird species in the eastern United States, but we are going to pretend that they describe monthly distributions of a species that occurs in temperate regions of the southern hemisphere. Our goal is to change the assignments of hues to months so that they better indicate the seasons experienced by our hypothetical species.
-
-To begin, we calculate distribution metrics with `metrics_pull()` and adopt the default HCL-based color palette provided by `palette_timecycle()`. Then we visualize our monthly distribution data using the `map_multiples()` function. 
+The sample Field Sparrow data included with colorist describe monthly occurrence probabilities for a partially migratory bird in the eastern United States. We can explore the data visually by calculating distribution metrics with `metrics_pull()`, adopting the default HCL-based color palette provided by `palette_timecycle()`, and mapping each of the data layers using the `map_multiples()` function.  
 
 ```{r hues-fiespa-default, dpi = 150}
 library(colorist)
@@ -53,9 +51,12 @@ p1 <- palette_timecycle(12)
 map_multiples(m1, p1, labels = names(fiespa_occ), ncol = 4)
 ```
 
-The default settings for `palette_timecycle()` produce a palette of hues that begins at "blue" in January and moves progressively toward "green", "yellow", and "red", before returning toward "blue". These hues align with our general sense of seasonal progression in northern temperate regions, where we move from winter toward spring, summer, fall, and back to winter. The timing of the seasons does not make sense for a species that occurs in southern temperate regions, however. 
+The default settings for `palette_timecycle()` produce a palette of hues that begins at “blue” in January and moves progressively toward “green”, “yellow”, and “red”, before returning toward “blue”. These hues align with our general sense of seasonal progression in northern temperate regions, where we move from “winter” toward “spring”, “summer”, “fall”, and back to “winter”. 
 
-We can change the alignment of hues and months in `palette_timecycle()`, while retaining the sequence of seasons, by adjusting the `start_hue` argument. All we have to do is specify a value of 60 rather than accept the default value of 240. This change tells `palette_timecycle()` to begin assigning hues to layers on the opposite side of the color wheel, 180 degrees, and six months away, from the default setting.
+Now, let us assume that our bird species actually occurs in temperate regions of the southern hemisphere. The timing of seasonal progression is offset by approximately six months from northern temperate regions. Clearly, the default settings in `palette_timecycle()` are no longer appropriate because the hues indicating particular seasons are not aligned with the correct months.
+
+To realign seasonal hues and months for a southern temperate species, we need to modify the `start_hue` argument in `palette_timecycle()`. So, we specify a value of 60 rather than accept the default value of 240. This change tells `palette_timecycle()` to begin assigning hues to layers on the opposite side of the color wheel, 180 degrees, and six months away, from the default setting.
+
 
 ```{r hues-fiespa-custom, dpi = 150}
 # change palette start position on color wheel
