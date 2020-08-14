@@ -23,13 +23,13 @@ BUILD_VIGNETTES <- isTRUE(as.logical(Sys.getenv("BUILD_VIGNETTES")))
 
 Maps play a central role in research aimed at understanding how and why wildlife distributions shift through space and time. They give form to complex sets of assumptions, hypotheses, and predictions and, in doing so, offer the promise of embodying detailed knowledge about species and individuals. Traditionally, biologists have used range maps, and home range maps, to describe animal distributions in space and time. Despite their historical success as representational forms, they are increasingly incapable of communicating our knowledge of wildlife distributions. 
 
-Technologies for acquiring and modeling wildlife distribution data have improved dramatically in recent years. As a result, we possess ever more detailed descriptions of animal occurrence, abundance, and density in space and time. This glut of high-resolution spatial-temporal information comes with its own set of visualization challenges, however. Intuitively, we might try to reveal patterns of spatial-temporal stasis and change by stacking distributions on top of each other, but this strategy often results in underlying data being occluded or muddied, depending on whether and how layers are combined.
+Technologies for acquiring and modeling wildlife distribution data have improved dramatically in recent years. As a result, we possess ever more detailed descriptions of animal occurrence, abundance, and density in space and time. This glut of high-resolution spatiotemporal information comes with its own set of visualization challenges, however. Intuitively, we might try to reveal patterns of spatiotemporal stasis and change by stacking distributions on top of each other, but this strategy often results in underlying data being occluded or muddied, depending on whether and how layers are combined.
 
 We developed the `colorist` package to provide researchers with a variety of options for exploring and communicating information about wildlife distributions in space and time. `colorist` emphasizes the use of color to indicate where, when, and how consistently species, individuals, or groups of animals can be found. In order to do this effectively, colorist takes information from a stack of rasters, processes it, and links it to HCL (hue-chroma-luminance) color palettes in specific ways so that occurrence, abundance, or density values have nearly equal perceptual weights in resulting maps. 
 
 ## Usage
 
-Like other visualization tools, we suggest that the `colorist` package may be useful to researchers in different ways throughout the process of building knowledge. Researchers may want to use `colorist` to explore preliminary data through visualizations, with the goal of developing or refining research questions. Alternatively, researchers may come to `colorist` having already discovered something interesting about wildlife distributions that they would like to communicate in visualizations. Regardless of where researchers are in the process of discovery, it is important to remember that `colorist` functions were built to handle and display data. People are still in charge of their interpretation (at least for now).
+Like other visualization tools, we suggest that the `colorist` package may be useful to researchers in different ways throughout the process of building knowledge. Researchers may want to use `colorist` to explore preliminary data through visualizations, with the goal of developing or refining research questions. Alternatively, researchers may come to `colorist` having already discovered something interesting about wildlife distributions that they would like to communicate in visualizations. Regardless of where researchers are in the process of discovery, it is important to remember that `colorist` functions were built to handle and display data. People are still in charge of their interpretation.
 
 The `colorist` package works on raster data stored as `RasterStack` objects. Individual raster layers might represent an ordered temporal sequence of species distributions or utilization distributions. Alternatively, raster layers might represent an unordered set of distributions for multiple species, or individuals, within a single time period. Whatever temporal or identity relationships exist within the stack, all raster layers should contain values in the same units (e.g., abundance, occurrence, or probability density) to ensure that they can be meaningfully compared. 
 
@@ -97,7 +97,7 @@ If we want to extract one month of data for closer inspection, we can use `map_s
 map_single(m1, p1, layer = 6)
 ```
 
-To generate a single annual cycle map that synthesizes spatial-temporal information about Field Sparrow occurrence, we need to "distill" the distributional information in our `RasterStack` using `metrics_distill()`. 
+To generate a single annual cycle map that synthesizes spatiotemporal information about Field Sparrow occurrence, we need to "distill" the distributional information in our `RasterStack` using `metrics_distill()`. 
 
 The `metrics_distill()` function calculates distribution metrics across all layers in every raster cell and returns three metrics for subsequent visualization: 
 
@@ -135,7 +135,7 @@ With an annual cycle map and legend in hand, we can now figure out where to find
 
 ### 2. Map individual behavior over time
 
-Researchers have been placing devices on animals for more than a half century to record individual movements through space and time. In recent years, tracking devices have become smaller, lighter, and increasingly capable of recording data with high spatial-temporal resolution. As a result, it is now possible to understand and communicate how individual animals use their environments in much more detail than was feasible with coarse tracking data and traditional home range maps. 
+Researchers have been placing devices on animals for more than a half century to record individual movements through space and time. In recent years, tracking devices have become smaller, lighter, and increasingly capable of recording data with high spatiotemporal resolution. As a result, it is now possible to understand and communicate how individual animals use their environments in much more detail than was feasible with coarse tracking data and traditional home range maps. 
 
 Here, we use `colorist` to explore how an individual Fisher (*Pekania pennanti*) living in upstate New York moved through its local environment over a period of nine sequential nights in 2011. Fisher are omnivorous mammals in the weasel family that occur in boreal forests throughout Canada and the United States. They tend to be solitary throughout most of the year but males and females will sometimes inhabit overlapping territories. 
 
@@ -194,7 +194,7 @@ In the previous examples, we used `colorist` to explore the distributions of a s
 
 Here, we use GPS tracking data collected from African Elephants (*Loxodonta africana*) in Etosha National Park, Namibia during 2011 to explore how two individuals used the landscape over the course of a year. The African Elephant is an iconic species with a complex social system that remains a target of poachers throughout much of Africa. Many populations of African Elephants move seasonally along specific migratory routes, tracking availability of seasonally abundant resources. 
 
-To begin, we load the `elephant_ud` data set which contains utilization distributions for two individual elephants (LA11 and LA14) during 2011. Because the utilization distributions form an unordered set (i.e., they need not be presented in any specific cyclical or linear sequence), we use the `palette_set()` function to assign them colors. Then, we map the two distributions using `map_multiples()` while adding visual emphasis to rarely used areas with the lambda_i argument and adding identifiers to each map with the labels argument.
+To begin, we load the `elephant_ud` data set which contains utilization distributions for two individual elephants (LA11 and LA14) during 2011. Because the utilization distributions form an unordered set (i.e., they need not be presented in any specific cyclical or linear sequence), we use the `palette_set()` function to assign them colors. Then, we map the two distributions using `map_multiples()` while adding visual emphasis to rarely used areas with the `lambda_i` argument and adding identifiers to each map with the labels argument.
 
 ```{r elephant-pull}
 # load data
