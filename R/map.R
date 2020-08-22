@@ -369,13 +369,14 @@ map_multiples <- function(x, palette, ncol, lambda_i = 0, labels = NULL,
                    panel.background = ggplot2::element_rect(fill = "white"),
                    panel.border = ggplot2::element_rect(fill = NA,
                                                         color = "white"),
+                   panel.spacing = ggplot2::unit(0, "lines"),
                    legend.key = ggplot2::element_blank(),
                    axis.title = ggplot2::element_blank(),
                    axis.text = ggplot2::element_blank(),
                    axis.ticks = ggplot2::element_blank()) +
     ggplot2::xlab("Longitude") +
     ggplot2::ylab("Latitude") +
-    ggplot2::coord_equal()
+    ggplot2::coord_equal(expand = F)
 
   return(m)
 }
