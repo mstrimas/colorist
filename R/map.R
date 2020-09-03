@@ -178,9 +178,9 @@ map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0,
     }
 
     # fill stack with values
-    rgban[[1]][r_pal$cell_number] <- grDevices::rgb[seq(1, 3 * nrow(r_pal), 3)]
-    rgban[[2]][r_pal$cell_number] <- grDevices::rgb[seq(2, 3 * nrow(r_pal), 3)]
-    rgban[[3]][r_pal$cell_number] <- grDevices::rgb[seq(3, 3 * nrow(r_pal), 3)]
+    rgban[[1]][r_pal$cell_number] <- rgb[seq(1, 3 * nrow(r_pal), 3)]
+    rgban[[2]][r_pal$cell_number] <- rgb[seq(2, 3 * nrow(r_pal), 3)]
+    rgban[[3]][r_pal$cell_number] <- rgb[seq(3, 3 * nrow(r_pal), 3)]
     rgban[[4]][r_pal$cell_number] <- lint * 255
     rgban[[5]] <- x[[4]]
 
