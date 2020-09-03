@@ -74,7 +74,7 @@ color palette." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">colorist</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -124,7 +124,14 @@ information in a single map by combining distribution metrics and an HCL
 color palette.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>map_single</span>(<span class='no'>x</span>, <span class='no'>palette</span>, <span class='no'>layer</span>, <span class='kw'>lambda_i</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>lambda_s</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>return_df</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>map_single</span>(
+  <span class='no'>x</span>,
+  <span class='no'>palette</span>,
+  <span class='no'>layer</span>,
+  <span class='kw'>lambda_i</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>lambda_s</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>return_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"plot"</span>, <span class='st'>"stack"</span>, <span class='st'>"df"</span>)
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -161,18 +168,29 @@ increase the chroma of cells with low specificity values. Positive numbers
 decrease the chroma of cells with low specificity values.</p></td>
     </tr>
     <tr>
-      <th>return_df</th>
-      <td><p>logical specifying whether the function should return a
-ggplot2 plot object (FALSE) or a data frame containing the raster data and
-associated cell colors.</p></td>
+      <th>return_type</th>
+      <td><p>character specifying whether the function should return a
+<code>ggplot2</code> plot object ("plot"), <code>RasterStack</code> ("stack"), or data frame
+("df"). The default is to return a <code>ggplot2</code> object.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A ggplot2 plot object of the map. Alternatively, with <code>return_df = TRUE</code> the function returns a data frame containing the raster data in
-data frame format along with the associated cell colors. The data frame
-columns are:</p><ul>
+    <p>By default, or when <code>return_type = "plot"</code>, the function returns a
+map that is a <code>ggplot2</code> plot object.</p>
+<p>When <code>return_type = "stack"</code>, the function returns a <code>RasterStack</code>
+containing five layers that enable RGBa visualization of a map using other
+R packages or external GIS software:</p><ul>
+<li><p><code>R</code>: red, integer values (0-255).</p></li>
+<li><p><code>G</code>: green, integer values (0-255).</p></li>
+<li><p><code>B</code>: blue, integer values (0-255).</p></li>
+<li><p><code>alpha</code>: opacity, numeric values (0-255).</p></li>
+<li><p><code>n_layers</code>: number of layers in <code>x</code> with non-NA values.</p></li>
+</ul>
+
+<p>When <code>return_type = "df"</code>, the function returns a data frame containing
+seven columns:</p><ul>
 <li><p><code>x</code>,<code>y</code>: coordinates of raster cell centers.</p></li>
 <li><p><code>cell_number</code>: integer indicating the cell number within the raster.</p></li>
 <li><p><code>intensity</code>: maximum cell value across layers divided by the maximum
@@ -218,7 +236,12 @@ to viewers. USE WITH CAUTION!</p>
 
 <span class='co'># produce map, adjusting lambda_i to make areas that were used less</span>
 <span class='co'># intensively more conspicuous</span>
-<span class='fu'>map_single</span>(<span class='no'>r</span>, <span class='no'>pal</span>, <span class='kw'>lambda_i</span> <span class='kw'>=</span> -<span class='fl'>5</span>)</div><div class='img'><img src='map_single-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>map_single</span>(<span class='no'>r</span>, <span class='no'>pal</span>, <span class='kw'>lambda_i</span> <span class='kw'>=</span> -<span class='fl'>5</span>)</div><div class='img'><img src='map_single-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># return RasterStack containing RGBa values</span>
+<span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'>map_single</span>(<span class='no'>r</span>, <span class='no'>pal</span>, <span class='kw'>lambda_i</span> <span class='kw'>=</span> -<span class='fl'>5</span>, <span class='kw'>return_type</span> <span class='kw'>=</span> <span class='st'>"stack"</span>)
+
+<span class='co'># visualize RGBa values</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>raster</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: sp</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/raster/man/plotRGB.html'>plotRGB</a></span>(<span class='no'>m</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/as.matrix.html'>as.vector</a></span>(<span class='no'>m</span><span class='kw'>[[</span><span class='fl'>4</span>]]))</div><div class='img'><img src='map_single-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">colorist</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -191,7 +191,7 @@
 <div id="emphasize-differences-in-how-consistently-locations-are-used-by-an-individual-animal" class="section level3">
 <h3 class="hasAnchor">
 <a href="#emphasize-differences-in-how-consistently-locations-are-used-by-an-individual-animal" class="anchor"></a>Emphasize differences in how consistently locations are used by an individual animal</h3>
-<p>Using the sample Fisher data which contain utilization distributions for nine sequential nights, we can visualize patterns of spatiotemporal overlap by calculating distribution metrics using <code><a href="../reference/metrics_distill.html">metrics_distill()</a></code>, creating a palette using <code><a href="../reference/palette_set.html">palette_set()</a></code>, and generating a map with <code><a href="../reference/map_single.html">map_single()</a></code>. To make rarely used areas more conspicuous we also set <code>lambda_i = -5</code> in <code><a href="../reference/map_single.html">map_single()</a></code> and then we create a legend to aid interpretation of our map using <code><a href="../reference/legend_timeline.html">legend_timeline()</a></code>.</p>
+<p>Using the sample Fisher data which contain utilization distributions for nine sequential nights, we can visualize patterns of spatiotemporal overlap by calculating distribution metrics using <code><a href="../reference/metrics_distill.html">metrics_distill()</a></code>, creating a palette using <code><a href="../reference/palette_timeline.html">palette_timeline()</a></code>, and generating a map with <code><a href="../reference/map_single.html">map_single()</a></code>. To make rarely used areas more conspicuous we also set <code>lambda_i = -5</code> in <code><a href="../reference/map_single.html">map_single()</a></code> and then we create a legend to aid interpretation of our map using <code><a href="../reference/legend_timeline.html">legend_timeline()</a></code>.</p>
 <div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="co"># distill metrics, visualize metrics in a single map, create legend</span>
 <span class="no">m3_distill</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/metrics_distill.html">metrics_distill</a></span>(<span class="no">fisher_ud</span>)
 <span class="fu"><a href="../reference/map_single.html">map_single</a></span>(<span class="no">m3_distill</span>, <span class="no">p3</span>, <span class="kw">lambda_i</span> <span class="kw">=</span> -<span class="fl">5</span>)</pre></body></html></div>
