@@ -216,7 +216,7 @@ Below, we provide two examples of how users may modify the `lambda_s` argument t
 
 ### Emphasize differences in how consistently locations are used by an individual animal
 
-Using the sample Fisher data which contain utilization distributions for nine sequential nights, we can visualize patterns of spatiotemporal overlap by calculating distribution metrics using `metrics_distill()`, creating a palette using `palette_set()`, and generating a map with `map_single()`. To make rarely used areas more conspicuous we also set `lambda_i = -5` in `map_single()` and then we create a legend to aid interpretation of our map using `legend_timeline()`.
+Using the sample Fisher data which contain utilization distributions for nine sequential nights, we can visualize patterns of spatiotemporal overlap by calculating distribution metrics using `metrics_distill()`, creating a palette using `palette_timeline()`, and generating a map with `map_single()`. To make rarely used areas more conspicuous we also set `lambda_i = -5` in `map_single()` and then we create a legend to aid interpretation of our map using `legend_timeline()`.
 
 ```{r chroma-fisher-default}
 # distill metrics, visualize metrics in a single map, create legend

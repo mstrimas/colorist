@@ -4,7 +4,14 @@
 \alias{map_multiples}
 \title{Visualize multiple distributions in a series of maps}
 \usage{
-map_multiples(x, palette, ncol, lambda_i = 0, labels = NULL, return_df = FALSE)
+map_multiples(
+  x,
+  palette,
+  ncol,
+  lambda_i = 0,
+  labels = NULL,
+  return_type = c("plot", "df")
+)
 }
 \arguments{
 \item{x}{RasterStack of distributions processed by \code{\link[=metrics_pull]{metrics_pull()}}.}
@@ -22,14 +29,16 @@ the opacity of cells with low intensity values.}
 \item{labels}{character vector of layer labels for each plot. The default is
 to not show labels.}
 
-\item{return_df}{logical specifying whether the function should return a
-ggplot2 plot object (FALSE) or a data frame containing the raster data and
-associated cell colors.}
+\item{return_type}{character specifying whether the function should return a
+\code{ggplot2} plot object ("plot") or data frame ("df"). The default is to
+return a \code{ggplot2} object.}
 }
 \value{
-A ggplot2 plot object of the map. Alternatively, \code{return_df = TRUE}
-will return a data frame containing the raster data in data frame format
-along with the associated cell colors. The data frame columns are:
+By default, or when \code{return_type = "plot"}, the function returns a
+map that is a \code{ggplot2} plot object.
+
+When \code{return_type = "df"}, the function returns a data frame containing
+eight columns:
 \itemize{
 \item \code{x},\code{y}: coordinates of raster cell centers.
 \item \code{cell_number}: integer indicating the cell number.

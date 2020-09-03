@@ -20,9 +20,9 @@
 #'   the [scales::modulus_trans()] function (see Details). Negative numbers
 #'   increase the chroma of cells with low specificity values. Positive numbers
 #'   decrease the chroma of cells with low specificity values.
-#' @param return_df logical specifying whether the function should return a
-#'   ggplot2 plot object (FALSE) or a data frame containing the raster data and
-#'   associated cell colors.
+#' @param return_type character specifying whether the function should return a
+#'   `ggplot2` plot object ("plot"), `RasterStack` ("stack"), or data frame
+#'   ("df"). The default is to return a `ggplot2` object.
 #'
 #' @details The `lambda_i` parameter allows for visual tuning of intensity
 #'   values with unusual distributions. For example, distributions often
@@ -40,10 +40,20 @@
 #'   relatively low and high specificity, thus modifying information available
 #'   to viewers. USE WITH CAUTION!
 #'
-#' @return A ggplot2 plot object of the map. Alternatively, with `return_df =
-#'   TRUE` the function returns a data frame containing the raster data in
-#'   data frame format along with the associated cell colors. The data frame
-#'   columns are:
+#' @return By default, or when `return_type = "plot"`, the function returns a
+#'   map that is a `ggplot2` plot object.
+#'
+#'   When `return_type = "stack"`, the function returns a `RasterStack`
+#'   containing five layers that enable RGBa visualization of a map using other
+#'   R packages or external GIS software:
+#'   - `R`: red, integer values (0-255).
+#'   - `G`: green, integer values (0-255).
+#'   - `B`: blue, integer values (0-255).
+#'   - `alpha`: opacity, numeric values (0-255).
+#'   - `n_layers`: number of layers in `x` with non-NA values.
+#'
+#'   When `return_type = "df"`, the function returns a data frame containing
+#'   seven columns:
 #'   - `x`,`y`: coordinates of raster cell centers.
 #'   - `cell_number`: integer indicating the cell number within the raster.
 #'   - `intensity`: maximum cell value across layers divided by the maximum
@@ -70,8 +80,15 @@
 #' # produce map, adjusting lambda_i to make areas that were used less
 #' # intensively more conspicuous
 #' map_single(r, pal, lambda_i = -5)
+#'
+#' # return RasterStack containing RGBa values
+#' m <- map_single(r, pal, lambda_i = -5, return_type = "stack")
+#'
+#' # visualize RGBa values
+#' library(raster)
+#' plotRGB(m, 1, 2, 3, alpha = as.vector(m[[4]]))
 map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0,
-                       return_df = FALSE) {
+                       return_type = c("plot", "stack", "df")) {
   stopifnot(inherits(x, c("RasterStack", "RasterBrick")))
   stopifnot(inherits(palette, "data.frame"),
             inherits(palette, c("palette_timeline",
@@ -80,6 +97,7 @@ map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0,
             c("specificity", "layer_id", "color") %in% names(palette))
   stopifnot(length(lambda_i) == 1, is.numeric(lambda_i))
   stopifnot(length(lambda_s) == 1, is.numeric(lambda_s))
+  return_type <- match.arg(return_type)
 
   # convert raster to data frame, pull vs. distill
   if (isTRUE(attr(x, "metric") == "pull")) {
@@ -139,9 +157,38 @@ map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0,
   r_pal <- r_pal[r_pal$intensity > 0, ]
 
   # return the underlying data frame if requested
-  if (isTRUE(return_df)) {
+  if (return_type == "df") {
     return(r_pal)
-  }
+  } else if (return_type == "stack") {
+
+    # convert hex to rgb and fill empty stack with data
+    rgb <- do.call(cbind, lapply(r_pal$color, grDevices::col2rgb))
+
+    # create template using input raster
+    template <- x[[1]]
+    template[] <- 0
+    rgban <- raster::stack(template, template, template, template, template)
+
+    # adjust lambda_i if appropriate, typically done by scales within ggplot
+    lint <- r_pal$intensity
+
+    if (lambda_i != 0) {
+      rint <- modulus(1, lambda_i + 1)
+      lint <- modulus(r_pal$intensity, lambda_i + 1) / rint
+    }
+
+    # fill stack with values
+    rgban[[1]][r_pal$cell_number] <- rgb[seq(1, 3 * nrow(r_pal), 3)]
+    rgban[[2]][r_pal$cell_number] <- rgb[seq(2, 3 * nrow(r_pal), 3)]
+    rgban[[3]][r_pal$cell_number] <- rgb[seq(3, 3 * nrow(r_pal), 3)]
+    rgban[[4]][r_pal$cell_number] <- lint * 255
+    rgban[[5]] <- x[[4]]
+
+    names(rgban) <- c("R", "G", "B", "alpha", "n_layers")
+
+    return(rgban)
+
+  } else {
 
   # make vector of colors for geom_tile
   map_colors <- r_pal$color
@@ -172,6 +219,8 @@ map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0,
     ggplot2::coord_equal()
 
   return(m)
+
+  }
 }
 
 
@@ -191,13 +240,15 @@ map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0,
 #'   the opacity of cells with low intensity values.
 #' @param labels character vector of layer labels for each plot. The default is
 #'   to not show labels.
-#' @param return_df logical specifying whether the function should return a
-#'   ggplot2 plot object (FALSE) or a data frame containing the raster data and
-#'   associated cell colors.
+#' @param return_type character specifying whether the function should return a
+#'   `ggplot2` plot object ("plot") or data frame ("df"). The default is to
+#'   return a `ggplot2` object.
 #'
-#' @return A ggplot2 plot object of the map. Alternatively, `return_df = TRUE`
-#'   will return a data frame containing the raster data in data frame format
-#'   along with the associated cell colors. The data frame columns are:
+#' @return By default, or when `return_type = "plot"`, the function returns a
+#'   map that is a `ggplot2` plot object.
+#'
+#'   When `return_type = "df"`, the function returns a data frame containing
+#'   eight columns:
 #'   - `x`,`y`: coordinates of raster cell centers.
 #'   - `cell_number`: integer indicating the cell number.
 #'   - `layer_cell`: a unique ID for the cell within the layer in the format
@@ -237,7 +288,7 @@ map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0,
 #' # intensively more conspicuous
 #' map_multiples(r, pal, lambda_i = -5, labels = paste("night", 1:9))
 map_multiples <- function(x, palette, ncol, lambda_i = 0, labels = NULL,
-                          return_df = FALSE) {
+                          return_type = c("plot", "df")) {
   stopifnot(inherits(x, c("RasterStack", "RasterBrick")))
   stopifnot(inherits(palette, "data.frame"),
             inherits(palette, c("palette_timeline",
@@ -245,6 +296,8 @@ map_multiples <- function(x, palette, ncol, lambda_i = 0, labels = NULL,
                                 "palette_set")),
             c("specificity", "layer_id", "color") %in% names(palette))
   stopifnot(length(lambda_i) == 1, is.numeric(lambda_i))
+  return_type <- match.arg(return_type)
+
   if (missing(ncol)) {
     ncol <- round(sqrt(raster::nlayers(x)))
   } else {
@@ -281,7 +334,7 @@ map_multiples <- function(x, palette, ncol, lambda_i = 0, labels = NULL,
   r_pal <- r_pal[r_pal$intensity > 0, ]
 
   # return the underlying data frame if requested
-  if (isTRUE(return_df)) {
+  if (return_type == "df") {
     return(r_pal)
   }
 
@@ -317,13 +370,14 @@ map_multiples <- function(x, palette, ncol, lambda_i = 0, labels = NULL,
                    panel.background = ggplot2::element_rect(fill = "white"),
                    panel.border = ggplot2::element_rect(fill = NA,
                                                         color = "white"),
+                   panel.spacing = ggplot2::unit(0, "lines"),
                    legend.key = ggplot2::element_blank(),
                    axis.title = ggplot2::element_blank(),
                    axis.text = ggplot2::element_blank(),
                    axis.ticks = ggplot2::element_blank()) +
     ggplot2::xlab("Longitude") +
     ggplot2::ylab("Latitude") +
-    ggplot2::coord_equal()
+    ggplot2::coord_equal(expand = F)
 
   return(m)
 }

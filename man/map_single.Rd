@@ -4,7 +4,14 @@
 \alias{map_single}
 \title{Visualize distributions in a single map}
 \usage{
-map_single(x, palette, layer, lambda_i = 0, lambda_s = 0, return_df = FALSE)
+map_single(
+  x,
+  palette,
+  layer,
+  lambda_i = 0,
+  lambda_s = 0,
+  return_type = c("plot", "stack", "df")
+)
 }
 \arguments{
 \item{x}{RasterStack of distributions processed by \code{\link[=metrics_pull]{metrics_pull()}} or
@@ -28,14 +35,27 @@ the \code{\link[scales:boxcox_trans]{scales::modulus_trans()}} function (see Det
 increase the chroma of cells with low specificity values. Positive numbers
 decrease the chroma of cells with low specificity values.}
 
-\item{return_df}{logical specifying whether the function should return a
-ggplot2 plot object (FALSE) or a data frame containing the raster data and
-associated cell colors.}
+\item{return_type}{character specifying whether the function should return a
+\code{ggplot2} plot object ("plot"), \code{RasterStack} ("stack"), or data frame
+("df"). The default is to return a \code{ggplot2} object.}
 }
 \value{
-A ggplot2 plot object of the map. Alternatively, with \code{return_df = TRUE} the function returns a data frame containing the raster data in
-data frame format along with the associated cell colors. The data frame
-columns are:
+By default, or when \code{return_type = "plot"}, the function returns a
+map that is a \code{ggplot2} plot object.
+
+When \code{return_type = "stack"}, the function returns a \code{RasterStack}
+containing five layers that enable RGBa visualization of a map using other
+R packages or external GIS software:
+\itemize{
+\item \code{R}: red, integer values (0-255).
+\item \code{G}: green, integer values (0-255).
+\item \code{B}: blue, integer values (0-255).
+\item \code{alpha}: opacity, numeric values (0-255).
+\item \code{n_layers}: number of layers in \code{x} with non-NA values.
+}
+
+When \code{return_type = "df"}, the function returns a data frame containing
+seven columns:
 \itemize{
 \item \code{x},\code{y}: coordinates of raster cell centers.
 \item \code{cell_number}: integer indicating the cell number within the raster.
@@ -84,6 +104,13 @@ pal <- palette_set(elephant_ud)
 # produce map, adjusting lambda_i to make areas that were used less
 # intensively more conspicuous
 map_single(r, pal, lambda_i = -5)
+
+# return RasterStack containing RGBa values
+m <- map_single(r, pal, lambda_i = -5, return_type = "stack")
+
+# visualize RGBa values
+library(raster)
+plotRGB(m, 1, 2, 3, alpha = as.vector(m[[4]]))
 }
 \seealso{
 Other map: 
