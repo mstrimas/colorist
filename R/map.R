@@ -21,8 +21,8 @@
 #'   increase the chroma of cells with low specificity values. Positive numbers
 #'   decrease the chroma of cells with low specificity values.
 #' @param return_type character specifying whether the function should return a
-#'   `ggplot2` plot object ("plot"), RasterStack ("stack"), or data frame ("df").
-#'   The default value is "plot".
+#'   `ggplot2` plot object ("plot"), `RasterStack` ("stack"), or data frame
+#'   ("df"). The default is to return a `ggplot2` object.
 #'
 #' @details The `lambda_i` parameter allows for visual tuning of intensity
 #'   values with unusual distributions. For example, distributions often
@@ -43,9 +43,9 @@
 #' @return By default, or when `return_type = "plot"`, the function returns a
 #'   map that is a `ggplot2` plot object.
 #'
-#'   When `return_type = "stack"`, the function returns a RasterStack containing
-#'   five layers that enable RGBa visualization of a map using other R packages
-#'   or external GIS software:
+#'   When `return_type = "stack"`, the function returns a `RasterStack`
+#'   containing five layers that enable RGBa visualization of a map using other
+#'   R packages or external GIS software:
 #'   - `R`: red, integer values (0-255).
 #'   - `G`: green, integer values (0-255).
 #'   - `B`: blue, integer values (0-255).
@@ -88,7 +88,7 @@
 #' library(raster)
 #' plotRGB(m, 1, 2, 3, alpha = as.vector(m[[4]]))
 map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0,
-                       return_type = "plot") {
+                       return_type = c("plot", "stack", "df")) {
   stopifnot(inherits(x, c("RasterStack", "RasterBrick")))
   stopifnot(inherits(palette, "data.frame"),
             inherits(palette, c("palette_timeline",
@@ -97,7 +97,7 @@ map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0,
             c("specificity", "layer_id", "color") %in% names(palette))
   stopifnot(length(lambda_i) == 1, is.numeric(lambda_i))
   stopifnot(length(lambda_s) == 1, is.numeric(lambda_s))
-  stopifnot(is.character(return_type))
+  return_type <- match.arg(return_type)
 
   # convert raster to data frame, pull vs. distill
   if (isTRUE(attr(x, "metric") == "pull")) {
@@ -162,7 +162,7 @@ map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0,
   } else if (return_type == "stack") {
 
     # convert hex to rgb and fill empty stack with data
-    rgb <- sapply(r_pal$color, col2rgb)
+    rgb <- do.call(cbind, lapply(c("#000000", "#ffffff"), grDevices::col2rgb))
 
     # create template using input raster
     template <- x[[1]]
@@ -178,9 +178,9 @@ map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0,
     }
 
     # fill stack with values
-    rgban[[1]][r_pal$cell_number] <- rgb[seq(1, 3 * nrow(r_pal), 3)]
-    rgban[[2]][r_pal$cell_number] <- rgb[seq(2, 3 * nrow(r_pal), 3)]
-    rgban[[3]][r_pal$cell_number] <- rgb[seq(3, 3 * nrow(r_pal), 3)]
+    rgban[[1]][r_pal$cell_number] <- grDevices::rgb[seq(1, 3 * nrow(r_pal), 3)]
+    rgban[[2]][r_pal$cell_number] <- grDevices::rgb[seq(2, 3 * nrow(r_pal), 3)]
+    rgban[[3]][r_pal$cell_number] <- grDevices::rgb[seq(3, 3 * nrow(r_pal), 3)]
     rgban[[4]][r_pal$cell_number] <- lint * 255
     rgban[[5]] <- x[[4]]
 
@@ -241,8 +241,8 @@ map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0,
 #' @param labels character vector of layer labels for each plot. The default is
 #'   to not show labels.
 #' @param return_type character specifying whether the function should return a
-#'   `ggplot2` plot object ("plot") or data frame ("df"). The default value
-#'   is "plot".
+#'   `ggplot2` plot object ("plot") or data frame ("df"). The default is to
+#'   return a `ggplot2` object.
 #'
 #' @return By default, or when `return_type = "plot"`, the function returns a
 #'   map that is a `ggplot2` plot object.
@@ -262,7 +262,7 @@ map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0,
 #'   - `color`: the hexadecimal color associated with the given layer and
 #'   specificity values.
 #'
-#'   #' @details The `lambda_i` parameter allows for visual tuning of intensity
+#' @details The `lambda_i` parameter allows for visual tuning of intensity
 #'   values with unusual distributions. For example, distributions often
 #'   contain highly skewed intensity values because individuals spend a vast
 #'   majority of their time within a relatively small area or because
@@ -288,7 +288,7 @@ map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0,
 #' # intensively more conspicuous
 #' map_multiples(r, pal, lambda_i = -5, labels = paste("night", 1:9))
 map_multiples <- function(x, palette, ncol, lambda_i = 0, labels = NULL,
-                          return_type = "plot") {
+                          return_type = c("plot", "df")) {
   stopifnot(inherits(x, c("RasterStack", "RasterBrick")))
   stopifnot(inherits(palette, "data.frame"),
             inherits(palette, c("palette_timeline",
@@ -296,7 +296,8 @@ map_multiples <- function(x, palette, ncol, lambda_i = 0, labels = NULL,
                                 "palette_set")),
             c("specificity", "layer_id", "color") %in% names(palette))
   stopifnot(length(lambda_i) == 1, is.numeric(lambda_i))
-  stopifnot(is.character(return_type))
+  return_type <- match.arg(return_type)
+
   if (missing(ncol)) {
     ncol <- round(sqrt(raster::nlayers(x)))
   } else {
