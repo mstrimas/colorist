@@ -162,7 +162,7 @@ map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0,
   } else if (return_type == "stack") {
 
     # convert hex to rgb and fill empty stack with data
-    rgb <- do.call(cbind, lapply(c("#000000", "#ffffff"), grDevices::col2rgb))
+    rgb <- do.call(cbind, lapply(r_pal$color, grDevices::col2rgb))
 
     # create template using input raster
     template <- x[[1]]
