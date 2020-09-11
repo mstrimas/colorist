@@ -8,6 +8,9 @@ legend_timecycle(
   palette,
   specificity = TRUE,
   origin_label = NULL,
+  label_i = "Maximum\\nintensity",
+  label_l = "Layer",
+  label_s = c("Low specificity", "Moderate specificity", "High specificity"),
   return_df = FALSE
 )
 }
@@ -22,6 +25,15 @@ value is appropriate for \link{map_multiples} visualizations.}
 
 \item{origin_label}{character vector with a single element to be used as the
 label at the 12 o'clock position of the legend wheel.}
+
+\item{label_i}{character vector with a single element describing the meaning
+of intensity values.}
+
+\item{label_l}{character vector with a single element describing the meaning
+of layer values.}
+
+\item{label_s}{character vector with three elements describing differences
+in the meaning of three specificity values (i.e., 0, 50, 100).}
 
 \item{return_df}{logical indicating whether to return the legend as a
 \code{ggplot2} object or return a data frame containing the necessary data to

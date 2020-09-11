@@ -8,6 +8,10 @@ legend_timeline(
   palette,
   specificity = TRUE,
   time_labels = NULL,
+  label_i = "Maximum\\nintensity",
+  label_l = "Layer",
+  label_s = c("Low specificity", "Moderate specificity", "High specificity"),
+  axis_i = c("low", "high"),
   return_df = FALSE
 )
 }
@@ -22,6 +26,18 @@ value is appropriate for \link{map_multiples} visualizations.}
 
 \item{time_labels}{character vector with two elements to be used as labels
 for the start and end points of the time axis (i.e. x-axis) in the legend.}
+
+\item{label_i}{character vector with a single element describing the meaning
+of intensity values.}
+
+\item{label_l}{character vector with a single element describing the meaning
+of layer values.}
+
+\item{label_s}{character vector with three elements describing differences
+in the meaning of specificity across three legend wheels.}
+
+\item{axis_i}{character vector with two elements describing the meaning of
+low and high intensity values.}
 
 \item{return_df}{logical indicating whether to return the legend as a
 \code{ggplot2} object or return a data frame containing the necessary data to
