@@ -19,7 +19,7 @@ status](https://travis-ci.org/mstrimas/colorist.svg?branch=master)](https://trav
 Maps are essential tools for communicating information about wildlife
 distributions in space and time. Visualizing patterns of stasis and
 change can be a challenge, however, especially when distributions
-exhibit different degrees of spatial-temporal overlap. The typical
+exhibit different degrees of spatiotemporal overlap. The typical
 strategy of layering distributional information from different time
 periods in a single map often results in occluded or muddied data,
 depending on how layers are combined. `colorist` is designed to address

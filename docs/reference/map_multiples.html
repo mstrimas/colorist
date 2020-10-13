@@ -74,7 +74,7 @@ metrics and an HCL color palette." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">colorist</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -124,7 +124,14 @@ information in a series of small multiples by combining distribution
 metrics and an HCL color palette.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>map_multiples</span>(<span class='no'>x</span>, <span class='no'>palette</span>, <span class='no'>ncol</span>, <span class='kw'>lambda_i</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>return_df</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>map_multiples</span>(
+  <span class='no'>x</span>,
+  <span class='no'>palette</span>,
+  <span class='no'>ncol</span>,
+  <span class='kw'>lambda_i</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>return_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"plot"</span>, <span class='st'>"df"</span>)
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -155,18 +162,19 @@ the opacity of cells with low intensity values.</p></td>
 to not show labels.</p></td>
     </tr>
     <tr>
-      <th>return_df</th>
-      <td><p>logical specifying whether the function should return a
-ggplot2 plot object (FALSE) or a data frame containing the raster data and
-associated cell colors.</p></td>
+      <th>return_type</th>
+      <td><p>character specifying whether the function should return a
+<code>ggplot2</code> plot object ("plot") or data frame ("df"). The default is to
+return a <code>ggplot2</code> object.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A ggplot2 plot object of the map. Alternatively, <code>return_df = TRUE</code>
-will return a data frame containing the raster data in data frame format
-along with the associated cell colors. The data frame columns are:</p><ul>
+    <p>By default, or when <code>return_type = "plot"</code>, the function returns a
+map that is a <code>ggplot2</code> plot object.</p>
+<p>When <code>return_type = "df"</code>, the function returns a data frame containing
+eight columns:</p><ul>
 <li><p><code>x</code>,<code>y</code>: coordinates of raster cell centers.</p></li>
 <li><p><code>cell_number</code>: integer indicating the cell number.</p></li>
 <li><p><code>layer_cell</code>: a unique ID for the cell within the layer in the format

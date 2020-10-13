@@ -73,7 +73,7 @@ a linear sequence of distributions." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">colorist</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -126,6 +126,10 @@ a linear sequence of distributions.</p>
   <span class='no'>palette</span>,
   <span class='kw'>specificity</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>time_labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>label_i</span> <span class='kw'>=</span> <span class='st'>"Maximum\nintensity"</span>,
+  <span class='kw'>label_l</span> <span class='kw'>=</span> <span class='st'>"Layer"</span>,
+  <span class='kw'>label_s</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Low specificity"</span>, <span class='st'>"Moderate specificity"</span>, <span class='st'>"High specificity"</span>),
+  <span class='kw'>axis_i</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"low"</span>, <span class='st'>"high"</span>),
   <span class='kw'>return_df</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</pre>
 
@@ -148,6 +152,26 @@ value is appropriate for <a href='map_multiples.html'>map_multiples</a> visualiz
       <th>time_labels</th>
       <td><p>character vector with two elements to be used as labels
 for the start and end points of the time axis (i.e. x-axis) in the legend.</p></td>
+    </tr>
+    <tr>
+      <th>label_i</th>
+      <td><p>character vector with a single element describing the meaning
+of intensity values.</p></td>
+    </tr>
+    <tr>
+      <th>label_l</th>
+      <td><p>character vector with a single element describing the meaning
+of layer values.</p></td>
+    </tr>
+    <tr>
+      <th>label_s</th>
+      <td><p>character vector with three elements describing differences
+in the meaning of specificity across three legend wheels.</p></td>
+    </tr>
+    <tr>
+      <th>axis_i</th>
+      <td><p>character vector with two elements describing the meaning of
+low and high intensity values.</p></td>
     </tr>
     <tr>
       <th>return_df</th>

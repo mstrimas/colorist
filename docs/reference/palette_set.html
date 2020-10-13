@@ -76,7 +76,7 @@ a set of four species distributions that depend on similar food resources)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">colorist</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -180,8 +180,10 @@ specificity values.</p></li>
 #&gt; 5           2        1 #686B6B
 #&gt; 6           2        2 #6D6A6A</div><div class='input'>
 <span class='co'># visualize the palette in HCL space with colorspace::hclplot</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>colorspace</span>)
-<span class='fu'><a href='http://colorspace.R-Forge.R-project.org//reference/hclplot.html'>hclplot</a></span>(<span class='no'>pal</span>[<span class='no'>pal</span>$<span class='no'>specificity</span> <span class='kw'>==</span> <span class='fl'>100</span>, ]$<span class='no'>color</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: the standard deviation is zero</span></div><div class='img'><img src='palette_set-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>colorspace</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘colorspace’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:raster’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    RGB</span></div><div class='input'><span class='fu'><a href='http://colorspace.R-Forge.R-project.org//reference/hclplot.html'>hclplot</a></span>(<span class='no'>pal</span>[<span class='no'>pal</span>$<span class='no'>specificity</span> <span class='kw'>==</span> <span class='fl'>100</span>, ]$<span class='no'>color</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: the standard deviation is zero</span></div><div class='img'><img src='palette_set-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
