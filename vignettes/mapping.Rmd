@@ -36,7 +36,6 @@ library(raster)
 library(rnaturalearth)
 library(sf)
 library(tigris)
-library(tmap)
 ```
 
 ## 1. Adding context
@@ -62,10 +61,12 @@ countries <- ne_download(category = "cultural", type = "countries",
                          returnclass = "sf", scale = 50) %>%
   st_transform(crs = st_crs(fiespa_occ)) %>%
   st_crop(st_bbox(fiespa_occ))
+
 rivers <- ne_download(category = "physical", type = "rivers_lake_centerlines", 
                       returnclass = "sf", scale = 50) %>%
   st_transform(crs = st_crs(fiespa_occ)) %>%
   st_crop(st_bbox(fiespa_occ))
+
 lakes <- ne_download(category = "physical", type = "lakes", returnclass = "sf", 
                      scale = 50) %>%
   st_transform(crs = st_crs(fiespa_occ)) %>%
@@ -113,9 +114,11 @@ To download spatial data using `tigris` we need to know that the Fisher study ar
 streams <- linear_water("NY", "Rensselaer") %>%
   st_transform(crs = st_crs(fisher_ud)) %>%
   st_crop(st_bbox(fisher_ud))
+
 ponds <- area_water("NY", "Rensselaer") %>%
   st_transform(crs = st_crs(fisher_ud)) %>%
   st_crop(st_bbox(fisher_ud))
+
 roads <- roads("NY", "Rensselaer") %>%
   st_transform(crs = st_crs(fisher_ud)) %>%
   st_crop(st_bbox(fisher_ud))

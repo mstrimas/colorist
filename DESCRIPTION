@@ -47,8 +47,7 @@ Suggests:
     rmarkdown,
     sf,
     rnaturalearth,
-    tigris,
-    tmap
+    tigris
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
