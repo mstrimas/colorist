@@ -45,7 +45,10 @@ Suggests:
     knitr,
     RColorBrewer,
     rmarkdown,
-    sf
+    sf,
+    rnaturalearth,
+    tigris,
+    tmap
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
