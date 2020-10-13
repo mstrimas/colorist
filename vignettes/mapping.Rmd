@@ -197,9 +197,7 @@ The strategy for editing details of `legend_timeline()` plots is similar to that
 m_fisher_distill <- metrics_distill(fisher_ud)
 
 # add more detail on human infrastructure using Microsoft building footprints
-buildings <- read_sf("~/Desktop/cugir-009073", "ms_buildings_Rensselaer") %>% write_sf("data-raw/rensselaer-buildings.gpkg")
-  st_transform(crs = st_crs(fisher_ud)) %>%
-  st_crop(st_bbox(fisher_ud))
+readRDS()
 
 # make a map
 map_fisher <- map_single(m2_distill, p2, lambda_i = -5, lambda_s = 10) +
