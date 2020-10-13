@@ -55,7 +55,6 @@ Here, we use aggregated [eBird Status and Trends](https://ebird.org/science) dat
 We start by loading the `fiespa_occ` data set. It contains twelve raster layers, one for each month of the year. Cell values in each layer indicate the modeled probability of Field Sparrow occurrence. Additional Status and Trends data can be accessed using the [`ebirdst` R package](https://cornelllabofornithology.github.io/ebirdst/).
 
 ```{r fiespa-data}
-# install packages
 library(sf)
 library(ggplot2)
 library(colorist)
