@@ -6,6 +6,8 @@ navbar:
     href: articles/introduction.html
   - text: Tuning Visualizations
     href: articles/tuning.html
+  - text: Customizing Maps
+    href: articles/mapping.html
   - text: Function Reference
     href: reference/index.html
   - text: Changelog

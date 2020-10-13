@@ -56,7 +56,7 @@ map_fiespa <- map_single(m_fiespa, p_fiespa)
 
 Then, we use the `ne_download()` function from `rnaturalearth` to download country, river, and lake spatial data as `sf` (simple features) objects, which are easy to incorporate into our existing map. In the process, we project and crop each data set to the same projection and extent as our Field Sparrow data. To avoid annoying topology and projection issues, we create our own ocean polygon by calculating the difference between a polygon describing the extent of the Field Sparrow map and the polygon describing countries.
 
-```{r ne-downloads}
+```{r ne-downloads, results = "hide"}
 # download, transform, and crop spatial data
 countries <- ne_download(category = "cultural", type = "countries", 
                          returnclass = "sf", scale = 50) %>%
@@ -108,7 +108,7 @@ map_fisher <- map_multiples(m_fisher, p_fisher, lambda_i = -5,
 
 To download spatial data using `tigris` we need to know that the Fisher study area is located in Rensselaer County, New York. Then, we can access linear water features, areal water features, and roads for the county using `tigris` functions, projecting and cropping our supplementary spatial data along the way. `tigris` functions provide data formatted as `sf` objects.
 
-```{r tigris-download}
+```{r tigris-download, results="hide"}
 # download, transform, and crop spatial data
 streams <- linear_water("NY", "Rensselaer") %>%
   st_transform(crs = st_crs(fisher_ud)) %>%
@@ -123,18 +123,15 @@ roads <- roads("NY", "Rensselaer") %>%
 
 As in the previous example, we add our spatial data to the underlying `colorist` map using `geom_sf()` elements and we add an unobtrusive bounding box to more clearly define the facets of our plot.
 
-```{r fisher-multiples-tigris}
+```{r fisher-multiples-tigris, fig.height=6}
 # add supplementary spatial data to the series of maps
-map_fisher_tigris <- map_fisher + 
+map_fisher + 
   geom_sf(data = streams, linetype = 6, color = "lightblue4", size = 0.25) +
   geom_sf(data = ponds, linetype = 6, color = "lightblue4", fill = "lightblue", 
           size = 0.25) +
   geom_sf(data = roads, size = 0.25, color = alpha("black", 0.5)) +
   geom_sf(data = st_as_sfc(st_bbox(fisher_ud)), fill = NA, color = "gray", 
-          size = 0.25) 
-
-# show the map
-map_fisher_tigris
+          size = 0.25)
 ```
 
 Now we can clearly see how the Fisher moved throughout its territory across nights and in relation to the locations of roads, streams, and ponds.
@@ -162,13 +159,13 @@ Remember, we have distilled distribution metrics from a stack of monthly occurre
 # change labels on legend
 l_fiespa <- legend_timecycle(p_fiespa, 
                              origin_label = "Jan 1",
-                             # specificity
+                             # specificity labels
                              label_s = c("Low\nseasonality", 
                                          "Moderate\nseasonality", 
                                          "High\nseasonality"), 
-                             # intensity
+                             # intensity label
                              label_i = "Peak occurrence", 
-                             # layers
+                             # layers label
                              label_l = "Month of peak occurrence")
 
 # show legend
@@ -179,7 +176,7 @@ Better.
 
 Now, we need to decide where to position the legend in relation to the map describing the spatiotemporal distribution of Field Sparrow. After playing with several ideas, we place the legend beneath the main map. This requires expanding the spatial extent of the plot using the `coord_sf()` function and then inserting the legend into the “empty landscape” using `annotation_custom()`. Note that the values in `coord_sf()` and `annotation_custom()` are in projected map coordinates.
 
-```{r fiespa-map}
+```{r fiespa-map, fig.height = 7, fig.width = 7}
 # position legend below map
 map_fiespa_ne +
   coord_sf(ylim = c(-3153281, 1405830)) +
@@ -196,11 +193,17 @@ The strategy for editing details of `legend_timeline()` plots is similar to that
 # calculate distribution metrics  
 m_fisher_distill <- metrics_distill(fisher_ud)
 
-# add more detail on human infrastructure using Microsoft building footprints
-readRDS()
+# download building footprints
+f_buildings <- file.path(tempdir(), "buildings.rds")
+download.file(paste0("https://github.com/mstrimas/colorist/raw/master/",
+                     "data-raw/buildings.rds"),
+              f_buildings)
+buildings <- readRDS(f_buildings)
+unlink(f_buildings)
 
 # make a map
-map_fisher <- map_single(m2_distill, p2, lambda_i = -5, lambda_s = 10) +
+map_fisher_distill <- map_single(m_fisher_distill, p_fisher, 
+                                 lambda_i = -5, lambda_s = 10) +
   geom_sf(data = streams, linetype = 6, color = "lightblue4", size = 0.25) +
   geom_sf(data = ponds, linetype = 6, color = "lightblue4", fill = "lightblue", 
           size = 0.25) +
@@ -210,42 +213,44 @@ map_fisher <- map_single(m2_distill, p2, lambda_i = -5, lambda_s = 10) +
           size = 0.25)
 
 # show the map
-map_fisher
+print(map_fisher_distill)
 ```
 
-Adjustments to `lambda_i = -5` make rarely used parts of the landscape more conspicuous and adjustments to `lambda_s = 10` emphasize differences in how consistently areas were used across nights. Spatial data for Rensselaer County are added to the map using `geom_sf()` elements, just as in the previous section.
+Setting `lambda_i = -5` makes rarely used parts of the landscape more conspicuous and setting `lambda_s = 10` emphasizes differences in how consistently areas were used across nights. Spatial data for Rensselaer County are added to the map using `geom_sf()` elements, just as in the previous section.
 
 Now, let us generate a default legend for our Fisher data using `legend_timeline()`.
 
 ```{r fisher-legend}
 # create a legend using default settings
-l2 <- legend_timeline(p2)
-
-#show legend
-l2
+legend_timeline(p_fisher)
 ```
 
-To make the legend more helpful as a guide to interpreting the spatiotemporal distribution of the Fisher, we need to edit intensity, specificity, and layer labels. So, we modify `label_s`, `label_i`, and `label_l` in `legend_timeline()` to reflect their meaning with respect to the Fisher data. We also prescribe how the ends of the timeline are labelled using the`time_labels` argument.
+To make the legend more helpful as a guide to interpreting the spatiotemporal distribution of the Fisher, we need to edit intensity, specificity, and layer labels. So, we modify `label_s`, `label_i`, and `label_l` in `legend_timeline()` to reflect their meanings with respect to the Fisher data. We also prescribe how the ends of the timeline are labeled using the`time_labels` argument.
 
 ```{r fisher-legend-custom}
 # change labels of legend
-l2_custom <- legend_timeline(p2, 
-                             time_labels = c("Apr 7", "Apr 15"),
-                             label_i = "Peak use", 
-                             label_l = "Night of peak use",
-                             label_s = c("Consistent use", "Occasional use", "Ephemeral use")) 
+l_fisher <- legend_timeline(p_fisher, 
+                            time_labels = c("Apr 7", "Apr 15"),
+                            # intensity label
+                            label_i = "Peak use", 
+                            # layer label
+                            label_l = "Night of peak use",
+                            # specificity labels
+                            label_s = c("Consistent use", "Occasional use", "Ephemeral use")) 
 
 # show legend
-l2_custom
+print(l_fisher)
 ```
 
 To place our legend next to the map, we expand the extent of our plot by modifying `coord_sf()` and we specify its position using the `annotation_custom()` function.
 
-```{r map-fisher}
+```{r map-fisher, fig.width=8, fig.height=8}
 # position legend to the left of the map
-map_fisher +
+map_fisher_distill +
   coord_sf(xlim = c(-4300, 2150)) +
-  annotation_custom(ggplotGrob(l2_custom), xmin = -4400, xmax = -2500, ymin = 5100266, ymax = 5104666) 
+  annotation_custom(ggplotGrob(l_fisher), 
+                    xmin = -4400, xmax = -2500, 
+                    ymin = 5100266, ymax = 5104666) 
 ```
 
 ### `legend_set()`
@@ -254,9 +259,9 @@ Here, we return to data describing the utilization distributions of two African 
 
 ```{r elephants}
 # calculate metrics, choose a palette, make a series of maps
-m3_distill <- metrics_distill(elephant_ud)
-p3 <- palette_set(elephant_ud)
-map_elephants <- map_single(m3_distill, p3, lambda_i = -5)
+m_elephants <- metrics_distill(elephant_ud)
+p_elephants <- palette_set(elephant_ud)
+map_elephants <- map_single(m_elephants, p_elephants, lambda_i = -5)
 ```
 
 This should all seem familiar. 
@@ -265,7 +270,7 @@ Next, we build a legend using our palette and the default settings in `legend_se
 
 ```{r elephants-legend}
 # create a legend using default settings
-legend_set(p3)
+legend_set(p_elephants)
 ```
 
 The legend is meant to tell us how the two individuals partitioned space in Etosha National Park over the course of a year, allowing viewers to understand locations that were used predominantly by one individual, or the other, and locations that were used equally by both individuals. 
@@ -274,99 +279,84 @@ To help communicate this information more clearly, we should make some adjustmen
 
 ```{r elephant-legend-custom}
 # change labels of legend
-l3_custom <- legend_set(p3, 
-                        group_labels = names(elephant_ud),
-                        label_i = "Intensity of use",
-                        label_s = "Share of use",
-                        axis_s = c("equal", "sole"))
+l_elephants <- legend_set(p_elephants, 
+                          group_labels = names(elephant_ud),
+                          # intensity label
+                          label_i = "Intensity of use",
+                          # specificity label
+                          label_s = "Share of use",
+                          # specificty axis
+                          axis_s = c("equal", "sole"))
 
 # show legend
-l3_custom
+print(l_elephants)
 ```
 
 Now, we have a legend that further reveals the narrative of space use by LA11 and LA14 in 2011 and we can position it within the map using `annotation_custom()`. 
 
-```{r elephants-map}
+```{r elephants-map, fig.width=8, fig.height=6}
 # position legend within map
 map_elephants +
-     annotation_custom(ggplotGrob(l3_custom), xmin = -3000, xmax = 37000, ymin = -2347500, ymax = -2305000)
+  annotation_custom(ggplotGrob(l_elephants), 
+                    xmin = -3000, xmax = 37000, 
+                    ymin = -2347500, ymax = -2305000)
 ```
 
 ## 3. Displaying `colorist` maps in other software
 
-`colorist` uses `ggplot2` to construct visualizations because it is an incredibly flexible visualization tool that enables maps and legends to be amended and adjusted in many different ways. However, some users may want to employ other frameworks for visualizing `colorist` outputs, because of their greater familiarity with those frameworks or because of specific features that are not available in `colorist` or `ggplot2`. 
+`colorist` uses `ggplot2` to construct visualizations because it is an incredibly flexible visualization tool that enables maps and legends to be amended and adjusted in many different ways. However, some users may want to employ other tools for visualizing `colorist` outputs, because of their greater familiarity with those tools or because of specific features that are not available in `colorist` or `ggplot2`. 
 
-Many of the R packages that enable plotting of spatial data (and most external GIS software) rely on RGBa descriptions of color and opacity instead of the hexadecimal-alpha descriptions used in `colorist` functions. To accommodate display of `colorist` maps in these other frameworks, the `map_single()` function can be used to return a RasterStack object containing layers of red, green, blue, and alpha information. Users can then visualize those data in a variety of other frameworks.
+Many of the R packages that enable plotting of spatial data (and most external GIS software) rely on RGBa descriptions of color and opacity instead of the hexadecimal-alpha descriptions used in `colorist` functions. To accommodate display of `colorist` maps in these other tools, the `map_single()` function can be used to return a `RasterStack` object containing layers of red, green, blue, and alpha information. Users can then visualize those data in a variety of other tools.
 
 ### `raster` package
 
-The `raster` package is a workhorse for handling and analyzing gridded spatial data in R. Here, we return to our Field Sparrow data, but instead of accepting the default `colorist` map output, we specify `return_type = “stack”` in the `map_single()` function. This change directs `map_single()` to return an RGBa stack instead of a `ggplot2` plot object. 
+The `raster` package is a workhorse for handling and analyzing gridded spatial data in R. Here, we return to our Field Sparrow data, but instead of accepting the default `colorist` map output, we specify `return_type = "stack"` in the `map_single()` function. This change directs `map_single()` to return an RGBa stack instead of a `ggplot2` plot object. 
 
 ```{r fiespa-rgban}
-# ask for map as a RasterStack object
-s1 <- map_single(m1_distill, p1, return_type = "stack")
+# ask for map as a raster stack
+s_fiesp <- map_single(m_fiespa, p_fiespa, return_type = "stack")
 
 # show stack information
-s1
+s_fiesp
 ```
 
-With a RasterStack describing our map in RGBa values, we can now opt to visualize the data using plot functions available in the `raster` package. The standard `raster::plot()` function illustrates each layer of the RasterStack in a standard color palette. In addition to the R, G, B, and alpha layers, note the last layer (i.e., n_layers) which describes, in every cell, the number of layers in the original `fiespa_occ` dat set containing non-NA occurrence values. 
+With a `RasterStack` describing our map in RGBa values, we can now opt to visualize the data using plot functions available in the `raster` package. The standard `raster::plot()` function illustrates each layer of the RasterStack in a standard color palette. In addition to the R, G, B, and alpha layers, note the last layer (i.e., `n_layers`) which describes, in every cell, the number of layers in the original `fiespa_occ` data set containing non-NA occurrence values.
 
 ```{r fiespa-rgban-raster}
 # plot layers using raster plot function
-plot(s1)
+plot(s_fiesp)
 ```
 
-To reconstruct our `colorist` map with the appropriate color scheme, we visualize the stack using `raster::plotRGB`, which requires specification of R, G, and B layers. It also requires specification of alpha values as a vector. If all has gone well, the resulting plot should look the same as the `ggplot2` plot generated within `colorist`.
+To reconstruct our `colorist` map with the appropriate color scheme, we visualize the stack using `raster::plotRGB()`, which requires specification of R, G, and B layers. It also requires specification of alpha values as a vector. If all has gone well, the resulting plot should look the same as the `ggplot2` plot generated within `colorist`.
 
 ```{r fiespa-rgban-map}
-# plot R, G, B, and alpha layers to reconstruct `colorist` map
-plotRGB(s1, 1, 2, 3, alpha = as.vector(s1[[4]]))
+# plot r, g, b, and alpha layers to reconstruct colorist map
+plotRGB(s_fiesp, 1, 2, 3, alpha = as.vector(s_fiesp[["alpha"]]))
 ```
 
-Users can then add supplementary spatial data to their raster using other plot functions within `raster` and related packages.
-
-### `tmap` package
-
-The `tmap` package was created specifically to display spatial data using `ggplot2`-like syntax and thinking. So, recreating our Fisher map from the previous section should be relatively straightforward. We just have to request a RasterStack from the `map_single()` function and then display it using the `tm_shape()` and `tm_rgba()` functions from `tmap`. Adding and symbolizing data for ponds, roads, and streams is easy as well.
-
-```{r fisher-rgban-tmap}
-# ask for map as a RasterStack object
-s2 <- map_single(m2_distill, p2, lambda_i = -5, lambda_s = 10, return_type = "stack")
-
-# plot R, G, B, and alpha layers to reconstruct `colorist` map and add spatial data
-tm_shape(s2) + 
-  tm_rgba(1, 2, 3, 4) +
-tm_shape(ponds) + 
-  tm_fill("lightblue") + tm_borders("lightblue4", lty = 6) +
-tm_shape(roads) + 
-  tm_lines(col = "black") +
-tm_shape(streams) + 
-  tm_lines("lightblue4", lty = 6) +
-tm_shape(buildings) +
-	tm_fill("gray") + tm_borders("black", lwd = 0.25, alpha = 0.5) 
-```
+You can then add supplementary spatial data to your raster using other plot functions within `raster` and related packages.
 
 ### QGIS
 
-There are situations in which users may want to use external GIS software instead of R to create a refined cartographic visualization of `colorist` output. Here, we show how to recreate colorist maps in QGIS, a powerful and free GIS.
+There are situations in which you may want to use external GIS software instead of R to create a refined cartographic visualization of `colorist` output. Here, we show how to recreate `colorist` maps in QGIS, a powerful and free GIS.
 
 Here, we reuse metrics and palette information that we have already generated for two African Elephants to create a map. Instead of accepting the default settings in the `map_single()` function, however, we specify `return_type = "stack"` and save the output as a `RasterStack`. 
 
-```{r elephants-rgban-qgis}
+```{r elephants-rgban-qgis, eval = FALSE}
 # ask for map as a RasterStack object
-s3 <- map_single(m3_distill, p3, lambda_i = -5, return_type = "stack")
+s_elephants <- map_single(m_elephants, p_elephants, lambda_i = -5, 
+                          return_type = "stack")
 
 # save RasterStack to R working directory
-writeRaster(s3, "elephants_rgba.grd")
+writeRaster(s_elephants, "elephants_rgba.grd")
 ```
 
 Then, we drag the resulting file into an empty QGIS workspace to begin the visualization process. 
 
-##### insert first screenshot
+![](qgis-screenshot-default.png)
 
 The default symbology assigned to the multiband raster by QGIS makes it appear as if our map were created using a box of pastels. To correct the appearance of the map colors, double-click on the elephant_rgba layer to open Layer Properties and ensure that data are being rendered in multiband color, RGB bands are in the correct order, and min and max values for all three bands are 0 and 255, respectively. In addition, be sure that band 4 (i.e., alpha) is specified as the transparency band in the Transparency tab of Layer Properties.
 
-##### insert second screenshot
+![](qgis-screenshot-symbology.png)
 
 After clicking Apply, the thumbnail at the base of the layer properties interface should correctly reproduce the map we were able to generate in R. Click OK. Avoid making further changes to the symbology of elephant_rgba, otherwise map colors will not match those generated in the `colorist` palette and the map will become difficult to interpret. Now, users can add and symbolize spatial data using sophisticated cartographic tools available within QGIS. 

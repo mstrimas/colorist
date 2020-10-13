@@ -44,6 +44,9 @@
   <a href="../articles/tuning.html">Tuning Visualizations</a>
 </li>
 <li>
+  <a href="../articles/mapping.html">Customizing Maps</a>
+</li>
+<li>
   <a href="../reference/index.html">Function Reference</a>
 </li>
 <li>
@@ -67,7 +70,7 @@
 
       
 
-      </header><script src="introduction_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="introduction_files/header-attrs-2.3/header-attrs.js"></script><script src="introduction_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to colorist</h1>
@@ -111,8 +114,7 @@
 <p>There is growing interest in characterizing wildlife distributions across the full-annual cycle, as opposed to one or two seasons, so that we can better understand the places and times at which populations are vulnerable. Maps play an important role in that process. In the past, range maps for resident species typically contained a single block of color along with political boundaries that indicated where a species can be found throughout the year. In contrast, range maps for migratory species typically contained several blocks of color indicating where a species might be found during a particular season, or throughout the entire year.</p>
 <p>Here, we use aggregated <a href="https://ebird.org/science">eBird Status and Trends</a> data for <a href="https://ebird.org/science/status-and-trends">Field Sparrow</a> (<em>Spizella pusilla</em>) to illustrate a different strategy for creating annual cycle maps, one that leverages continuous occurrence data (rather than categorical presence-absence data) to describe where and when viewers might be able to find a species. Field Sparrow is a relatively small bird that is commonly found in open habitats throughout eastern North America. It is often considered a partial migrant in that some populations move throughout the year, while others are stationary. This results in heterogeneity in when, where, and how consistently birds can be found in space-time.</p>
 <p>We start by loading the <code>fiespa_occ</code> data set. It contains twelve raster layers, one for each month of the year. Cell values in each layer indicate the modeled probability of Field Sparrow occurrence. Additional Status and Trends data can be accessed using the <a href="https://cornelllabofornithology.github.io/ebirdst/"><code>ebirdst</code> R package</a>.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co"># install packages</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">sf</span>)
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">sf</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">colorist</span>)
 
