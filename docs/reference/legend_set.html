@@ -73,7 +73,7 @@ an unordered set of distributions." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">colorist</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -122,7 +122,16 @@ an unordered set of distributions." />
 an unordered set of distributions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>legend_set</span>(<span class='no'>palette</span>, <span class='kw'>specificity</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>group_labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>return_df</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>legend_set</span>(
+  <span class='no'>palette</span>,
+  <span class='kw'>specificity</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>group_labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>label_i</span> <span class='kw'>=</span> <span class='st'>"Maximum\nintensity"</span>,
+  <span class='kw'>label_s</span> <span class='kw'>=</span> <span class='st'>"Specificity"</span>,
+  <span class='kw'>axis_i</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"low"</span>, <span class='st'>"high"</span>),
+  <span class='kw'>axis_s</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"low"</span>, <span class='st'>"high"</span>),
+  <span class='kw'>return_df</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -141,7 +150,27 @@ specificity value is appropriate for <a href='map_multiples.html'>map_multiples<
     </tr>
     <tr>
       <th>group_labels</th>
-      <td><p>character vector with labels for each distribution.</p></td>
+      <td><p>(axis_l) character vector with labels for each distribution.</p></td>
+    </tr>
+    <tr>
+      <th>label_i</th>
+      <td><p>character vector with a single element describing the meaning
+of specificity.</p></td>
+    </tr>
+    <tr>
+      <th>label_s</th>
+      <td><p>character vector with a single element describing the meaning
+of intensity values.</p></td>
+    </tr>
+    <tr>
+      <th>axis_i</th>
+      <td><p>character vector with two elements describing the meaning of
+low and high intensity values.</p></td>
+    </tr>
+    <tr>
+      <th>axis_s</th>
+      <td><p>character vector with two elements describing the meaning of
+low and high specificity values.</p></td>
     </tr>
     <tr>
       <th>return_df</th>

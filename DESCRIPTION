@@ -1,6 +1,6 @@
 Package: colorist
 Title: Coloring Wildlife Distributions in Space-Time
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: 
     c(person(given = "Justin",
              family = "Schuetz",
@@ -45,7 +45,10 @@ Suggests:
     knitr,
     RColorBrewer,
     rmarkdown,
-    sf
+    sf,
+    rnaturalearth,
+    tigris,
+    tmap
 VignetteBuilder: 
     knitr
 Encoding: UTF-8

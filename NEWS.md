@@ -1,3 +1,9 @@
+# colorist 0.1.2
+
+- Mapping functions now return RGBa RasterStack objects for plotting with the raster package
+- Better control of legend labels
+- New vignette on customizing maps
+
 # colorist 0.1.1
 
 - Two vignettes added
