@@ -1,16 +1,15 @@
-# colorist 0.1.1
+# colorist 0.1.2
 
-- Two vignettes added
-- Adding an additional lambda parameter to control specificity
-- Added custom_hues argument to palette_set function
-- Bug fixes
+- Mapping functions now return RGBa RasterStack objects for plotting with the raster package
+- Better control of legend labels
+- New vignette on customizing maps
 
 ## Test environments
 
-- local OS X install, R 4.0.2
-- OS X (travis-ci), R 4.0.2
-- ubuntu 16.04 (travis-ci), 4.0.2
-- Windows (appveyor), R 4.0.2
+- local OS X install, R 4.0.3
+- OS X (travis-ci), R 4.0.3
+- ubuntu 16.04 (travis-ci), 4.0.3
+- Windows (appveyor), R 4.0.3
 - Rhub
   - Ubuntu Linux 16.04 LTS, R-release, GCC
   - Fedora Linux, R-devel, clang, gfortran
