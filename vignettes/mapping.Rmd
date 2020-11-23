@@ -10,15 +10,16 @@ editor_options:
 ---
 
 ```{r, include = FALSE}
+BUILD_VIGNETTES <- isTRUE(as.logical(Sys.getenv("BUILD_VIGNETTES")))
 knitr::opts_chunk$set(warning = FALSE, 
                       message = FALSE,
                       collapse = TRUE,
+                      eval = BUILD_VIGNETTES,
                       comment = "#>",
                       out.width = "\\textwidth", 
                       fig.height = 4, 
                       fig.width = 7, 
                       fig.align = "center")
-BUILD_VIGNETTES <- isTRUE(as.logical(Sys.getenv("BUILD_VIGNETTES")))
 ```
 
 In the [Introduction to colorist](https://strimas.com/colorist/articles/introduction.html) and [Tuning visualizations in colorist](https://strimas.com/colorist/articles/tuning.html) vignettes, we provided an overview of `colorist` functionality and explored how users might adjust visualizations to address specific narrative goals. Here, we focus on several issues that users may confront when making finished visualizations: 
