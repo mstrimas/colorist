@@ -127,14 +127,14 @@ information in a series of small multiples by combining distribution
 metrics and an HCL color palette.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>map_multiples</span>(
-  <span class='no'>x</span>,
-  <span class='no'>palette</span>,
-  <span class='no'>ncol</span>,
-  <span class='kw'>lambda_i</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>return_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"plot"</span>, <span class='st'>"df"</span>)
-)</pre>
+    <pre class="usage"><span class='fu'>map_multiples</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>palette</span>,
+  <span class='va'>ncol</span>,
+  lambda_i <span class='op'>=</span> <span class='fl'>0</span>,
+  labels <span class='op'>=</span> <span class='cn'>NULL</span>,
+  return_type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"plot"</span>, <span class='st'>"df"</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -210,17 +210,18 @@ visual weight of high and low intensity values.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># load fisher data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"fisher_ud"</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"fisher_ud"</span><span class='op'>)</span>
 
 <span class='co'># prepare data</span>
-<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='metrics_pull.html'>metrics_pull</a></span>(<span class='no'>fisher_ud</span>)
+<span class='va'>r</span> <span class='op'>&lt;-</span> <span class='fu'><a href='metrics_pull.html'>metrics_pull</a></span><span class='op'>(</span><span class='va'>fisher_ud</span><span class='op'>)</span>
 
 <span class='co'># generate palette</span>
-<span class='no'>pal</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='palette_timeline.html'>palette_timeline</a></span>(<span class='no'>fisher_ud</span>)
+<span class='va'>pal</span> <span class='op'>&lt;-</span> <span class='fu'><a href='palette_timeline.html'>palette_timeline</a></span><span class='op'>(</span><span class='va'>fisher_ud</span><span class='op'>)</span>
 
 <span class='co'># produce maps, adjusting lambda_i to make areas that were used less</span>
 <span class='co'># intensively more conspicuous</span>
-<span class='fu'>map_multiples</span>(<span class='no'>r</span>, <span class='no'>pal</span>, <span class='kw'>lambda_i</span> <span class='kw'>=</span> -<span class='fl'>5</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='st'>"night"</span>, <span class='fl'>1</span>:<span class='fl'>9</span>))</div><div class='img'><img src='map_multiples-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>map_multiples</span><span class='op'>(</span><span class='va'>r</span>, <span class='va'>pal</span>, lambda_i <span class='op'>=</span> <span class='op'>-</span><span class='fl'>5</span>, labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"night"</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>9</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='map_multiples-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -236,7 +237,7 @@ visual weight of high and low intensity values.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

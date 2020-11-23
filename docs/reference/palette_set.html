@@ -131,7 +131,7 @@ describing space use by five separate individuals in the same population or
 a set of four species distributions that depend on similar food resources).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>palette_set</span>(<span class='no'>x</span>, <span class='no'>custom_hues</span>)</pre>
+    <pre class="usage"><span class='fu'>palette_set</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>custom_hues</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -171,11 +171,12 @@ specificity values.</p></li>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># load elephant data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>elephant_ud</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>elephant_ud</span><span class='op'>)</span>
 
 <span class='co'># generate hcl color palette</span>
-<span class='no'>pal</span> <span class='kw'>&lt;-</span> <span class='fu'>palette_set</span>(<span class='no'>elephant_ud</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>pal</span>)</div><div class='output co'>#&gt;   specificity layer_id   color
+<span class='va'>pal</span> <span class='op'>&lt;-</span> <span class='fu'>palette_set</span><span class='op'>(</span><span class='va'>elephant_ud</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/headtail.html'>head</a></span><span class='op'>(</span><span class='va'>pal</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   specificity layer_id   color
 #&gt; 1           0        1 #6A6A6A
 #&gt; 2           0        2 #6A6A6A
 #&gt; 3           1        1 #696B6B
@@ -183,10 +184,12 @@ specificity values.</p></li>
 #&gt; 5           2        1 #686B6B
 #&gt; 6           2        2 #6D6A6A</div><div class='input'>
 <span class='co'># visualize the palette in HCL space with colorspace::hclplot</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>colorspace</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://colorspace.R-Forge.R-project.org'>colorspace</a></span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘colorspace’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:raster’:</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    RGB</span></div><div class='input'><span class='fu'><a href='http://colorspace.R-Forge.R-project.org//reference/hclplot.html'>hclplot</a></span>(<span class='no'>pal</span>[<span class='no'>pal</span>$<span class='no'>specificity</span> <span class='kw'>==</span> <span class='fl'>100</span>, ]$<span class='no'>color</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: the standard deviation is zero</span></div><div class='img'><img src='palette_set-1.png' alt='' width='700' height='433' /></div></pre>
+#&gt; <span class='message'>    RGB</span></div><div class='input'><span class='fu'><a href='http://colorspace.R-Forge.R-project.org//reference/hclplot.html'>hclplot</a></span><span class='op'>(</span><span class='va'>pal</span><span class='op'>[</span><span class='va'>pal</span><span class='op'>$</span><span class='va'>specificity</span> <span class='op'>==</span> <span class='fl'>100</span>, <span class='op'>]</span><span class='op'>$</span><span class='va'>color</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: the standard deviation is zero</span></div><div class='img'><img src='palette_set-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -202,7 +205,7 @@ specificity values.</p></li>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

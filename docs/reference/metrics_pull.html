@@ -129,7 +129,7 @@ intensity values. All the distributional information in the original raster
 stack is preserved for visualization.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>metrics_pull</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>metrics_pull</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -158,9 +158,10 @@ layers.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># load elephant data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"elephant_ud"</span>)
-<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'>metrics_pull</span>(<span class='no'>elephant_ud</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>r</span>)</div><div class='output co'>#&gt; class      : RasterBrick 
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"elephant_ud"</span><span class='op'>)</span>
+<span class='va'>r</span> <span class='op'>&lt;-</span> <span class='fu'>metrics_pull</span><span class='op'>(</span><span class='va'>elephant_ud</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>r</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; class      : RasterBrick 
 #&gt; dimensions : 208, 193, 40144, 2  (nrow, ncol, ncell, nlayers)
 #&gt; resolution : 500, 500  (x, y)
 #&gt; extent     : -58642.18, 37857.82, -2376938, -2272938  (xmin, xmax, ymin, ymax)
@@ -170,7 +171,8 @@ layers.</p>
 #&gt; min values :         0,         0 
 #&gt; max values : 0.8525854, 1.0000000 
 #&gt; </div><div class='input'><span class='co'># maximum value for the stack stored as an attribute</span>
-<span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>r</span>, <span class='st'>"maximum"</span>)</div><div class='output co'>#&gt; [1] 0.002409927</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span><span class='op'>(</span><span class='va'>r</span>, <span class='st'>"maximum"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.002409927</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -186,7 +188,7 @@ layers.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

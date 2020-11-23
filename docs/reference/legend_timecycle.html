@@ -125,15 +125,15 @@ a cyclical sequence of distributions." />
 a cyclical sequence of distributions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>legend_timecycle</span>(
-  <span class='no'>palette</span>,
-  <span class='kw'>specificity</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>origin_label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>label_i</span> <span class='kw'>=</span> <span class='st'>"Maximum\nintensity"</span>,
-  <span class='kw'>label_l</span> <span class='kw'>=</span> <span class='st'>"Layer"</span>,
-  <span class='kw'>label_s</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Low specificity"</span>, <span class='st'>"Moderate specificity"</span>, <span class='st'>"High specificity"</span>),
-  <span class='kw'>return_df</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>legend_timecycle</span><span class='op'>(</span>
+  <span class='va'>palette</span>,
+  specificity <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  origin_label <span class='op'>=</span> <span class='cn'>NULL</span>,
+  label_i <span class='op'>=</span> <span class='st'>"Maximum\nintensity"</span>,
+  label_l <span class='op'>=</span> <span class='st'>"Layer"</span>,
+  label_s <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Low specificity"</span>, <span class='st'>"Moderate specificity"</span>, <span class='st'>"High specificity"</span><span class='op'>)</span>,
+  return_df <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -203,13 +203,14 @@ value across all layers and cells; mapped to alpha level.</p></li>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># load field sparrow data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>fiespa_occ</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>fiespa_occ</span><span class='op'>)</span>
 
 <span class='co'># generate hcl palette</span>
-<span class='no'>pal</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='palette_timecycle.html'>palette_timecycle</a></span>(<span class='no'>fiespa_occ</span>)
+<span class='va'>pal</span> <span class='op'>&lt;-</span> <span class='fu'><a href='palette_timecycle.html'>palette_timecycle</a></span><span class='op'>(</span><span class='va'>fiespa_occ</span><span class='op'>)</span>
 
 <span class='co'># create legend for palette</span>
-<span class='fu'>legend_timecycle</span>(<span class='no'>pal</span>)</div><div class='img'><img src='legend_timecycle-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>legend_timecycle</span><span class='op'>(</span><span class='va'>pal</span><span class='op'>)</span>
+</div><div class='img'><img src='legend_timecycle-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -225,7 +226,7 @@ value across all layers and cells; mapped to alpha level.</p></li>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
