@@ -287,14 +287,16 @@ palette_set.integer <- function(x, custom_hues) {
                         stringsAsFactors = FALSE)
 
     # generate palettes for each chroma value
-    for (i in 0:100) {
-      idx <- seq(i * n + 1, (i + 1) * n, by = 1)
-      wheel[["color"]][idx] <- colorspace::rainbow_hcl(n,
+    for (j in 1:n) {
+      for (i in 0:100) {
+        idx <- n * i + j
+        wheel[["color"]][idx] <- colorspace::rainbow_hcl(1,
                                                        c = i,
                                                        l = 45,
-                                                       start = custom_hues[layer],
-                                                       end = custom_hues[layer],
+                                                       start = custom_hues[j],
+                                                       end = custom_hues[j],
                                                        fixup = TRUE)
+      }
     }
   }
 
