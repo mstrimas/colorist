@@ -19,7 +19,8 @@ knitr::opts_chunk$set(warning = FALSE,
                       out.width = "\\textwidth", 
                       fig.height = 4, 
                       fig.width = 7, 
-                      fig.align = "center")
+                      fig.align = "center",
+                      dpi = 300)
 ```
 
 In the [Introduction to colorist](https://strimas.com/colorist/articles/introduction.html) and [Tuning visualizations in colorist](https://strimas.com/colorist/articles/tuning.html) vignettes, we provided an overview of `colorist` functionality and explored how users might adjust visualizations to address specific narrative goals. Here, we focus on several issues that users may confront when making finished visualizations: 
@@ -59,17 +60,17 @@ Then, we use the `ne_download()` function from `rnaturalearth` to download count
 ```{r ne-downloads, results = "hide"}
 # download, transform, and crop spatial data
 countries <- ne_download(category = "cultural", type = "countries", 
-                         returnclass = "sf", scale = 50) %>%
+                         returnclass = "sf", scale = 110) %>%
   st_transform(crs = st_crs(fiespa_occ)) %>%
   st_crop(st_bbox(fiespa_occ))
 
 rivers <- ne_download(category = "physical", type = "rivers_lake_centerlines", 
-                      returnclass = "sf", scale = 50) %>%
+                      returnclass = "sf", scale = 110) %>%
   st_transform(crs = st_crs(fiespa_occ)) %>%
   st_crop(st_bbox(fiespa_occ))
 
 lakes <- ne_download(category = "physical", type = "lakes", returnclass = "sf", 
-                     scale = 50) %>%
+                     scale = 110) %>%
   st_transform(crs = st_crs(fiespa_occ)) %>%
   st_crop(st_bbox(fiespa_occ))
 
@@ -86,7 +87,8 @@ map_fiespa_ne <- map_fiespa +
   geom_sf(data = ocean, fill = "gray95", color = "black", size = 0.25) +
   geom_sf(data = rivers, size = 0.25, color = "gray35") +
   geom_sf(data = lakes, fill = "gray95", size = 0.25, color = "gray35") + 
-  geom_sf(data = st_as_sfc(st_bbox(fiespa_occ)), fill = NA, color = "black", size = 0.25) 
+  geom_sf(data = st_as_sfc(st_bbox(fiespa_occ)), fill = NA, color = "black", 
+          size = 0.25) 
 
 # show the map
 print(map_fiespa_ne)

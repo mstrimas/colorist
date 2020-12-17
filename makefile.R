@@ -6,7 +6,6 @@ pkgdown::clean_site()
 # rebuild docs and install
 devtools::document()
 Sys.unsetenv("BUILD_VIGNETTES")
-devtools::build_vignettes()
 devtools::install_local(force = TRUE)
 
 # local tests and checks

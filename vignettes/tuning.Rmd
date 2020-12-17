@@ -17,7 +17,8 @@ knitr::opts_chunk$set(warning = FALSE,
                       out.width = "\\textwidth", 
                       fig.height = 4, 
                       fig.width = 7, 
-                      fig.align = "center")
+                      fig.align = "center",
+                      dpi = 300)
 BUILD_VIGNETTES <- isTRUE(as.logical(Sys.getenv("BUILD_VIGNETTES")))
 ```
 
