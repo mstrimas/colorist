@@ -48,14 +48,14 @@ library(RColorBrewer)
 
 The sample Field Sparrow data included with `colorist` describe monthly occurrence probabilities for a partially migratory bird in the eastern United States. We can explore the data visually by calculating distribution metrics with `metrics_pull()`, adopting the default HCL-based color palette provided by `palette_timecycle()`, and mapping each of the data layers using the `map_multiples()` function.  
 
-```{r hues-fiespa-default, dpi = 150, eval = BUILD_VIGNETTES}
+```{r hues-fiespa-default, eval = BUILD_VIGNETTES}
 # pull metrics, generate default palette, map layers
 m1 <- metrics_pull(fiespa_occ)
 p1 <- palette_timecycle(12)
 map_multiples(m1, p1, labels = names(fiespa_occ), ncol = 4)
 ```
 
-```{r dpi = 150, echo = FALSE}
+```{r echo = FALSE}
 # pull metrics, generate default palette, map layers
 m1 <- metrics_pull(fiespa_occ)
 p1 <- palette_timecycle(12)
@@ -68,7 +68,7 @@ Now, let us assume that our bird species actually occurs in temperate regions of
 To realign seasonal hues and months for a southern temperate species, we need to modify the `start_hue` argument in `palette_timecycle()`. So, we specify a value of 60 rather than accept the default value of 240. This change tells `palette_timecycle()` to begin assigning hues to layers on the opposite side of the color wheel, 180 degrees, and six months away, from the default setting.
 
 
-```{r hues-fiespa-custom, dpi = 150, eval = BUILD_VIGNETTES}
+```{r hues-fiespa-custom, eval = BUILD_VIGNETTES}
 # change palette start position on color wheel
 p1_custom <- palette_timecycle(12, start_hue = 60)
 
