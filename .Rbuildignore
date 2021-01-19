@@ -3,8 +3,6 @@
 ^data-raw$
 ^README\.Rmd$
 ^LICENSE\.md$
-^appveyor\.yml$
-^\.travis\.yml$
 ^docs$
 ^makefile.R$
 ^cran-comments\.md$
@@ -12,3 +10,4 @@
 ^CRAN-RELEASE$
 ^doc$
 ^Meta$
+^\.github$
