@@ -8,12 +8,8 @@ status](https://www.r-pkg.org/badges/version/colorist)](https://CRAN.R-project.o
 [![License: GPL
 v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 [![Lifecycle:
-maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
-[![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/mstrimas/colorist?branch=master&svg=true)](https://ci.appveyor.com/project/mstrimas/colorist)
-[![Travis build
-status](https://travis-ci.org/mstrimas/colorist.svg?branch=master)](https://travis-ci.org/mstrimas/colorist)
-
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
+[![R-CMD-check](https://github.com/mstrimas/colorist/workflows/R-CMD-check/badge.svg)](https://github.com/mstrimas/colorist/actions)
 <!-- badges: end -->
 
 Maps are essential tools for communicating information about wildlife
@@ -108,11 +104,11 @@ pal <- palette_timecycle(fiespa_occ)
 map_single(r, pal, lambda_i = -2)
 ```
 
-<img src="man/figures/README-elephant-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-elephant-1.png" width="100%" />
 
 ``` r
 # legend
 legend_timecycle(pal)
 ```
 
-<img src="man/figures/README-elephant-2.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-elephant-2.png" width="100%" />
