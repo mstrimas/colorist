@@ -107,6 +107,7 @@ map_single(r, pal, lambda_i = -2)
 <img src="man/figures/README-elephant-1.png" width="100%" />
 
 ``` r
+
 # legend
 legend_timecycle(pal)
 ```

@@ -190,35 +190,34 @@ map_single <- function(x, palette, layer, lambda_i = 0, lambda_s = 0,
 
   } else {
 
-  # make vector of colors for geom_tile
-  map_colors <- r_pal$color
-  names(map_colors) <- r_pal$cell_number
+    # make vector of colors for geom_tile
+    map_colors <- r_pal$color
+    names(map_colors) <- r_pal$cell_number
 
-  # generate plot
-  m <- ggplot2::ggplot() +
-    ggplot2::geom_tile(data = r_pal,
-                       ggplot2::aes_(x = ~ x, y = ~ y,
-                                     fill = ~ factor(cell_number),
-                                     alpha = ~ intensity)) +
-    ggplot2::scale_fill_manual(values = map_colors) +
-    ggplot2::scale_color_manual(values = map_colors) +
-    ggplot2::scale_alpha_continuous(trans = scales::modulus_trans(lambda_i + 1),
-                                    range = c(0, 1)) +
-    ggplot2::guides(fill = FALSE, alpha = FALSE) +
-    ggplot2::theme(strip.background = ggplot2::element_rect(fill = "white"),
-                   plot.background = ggplot2::element_rect(fill = "white"),
-                   panel.background = ggplot2::element_rect(fill = "white"),
-                   panel.border = ggplot2::element_rect(fill = NA,
-                                                        color = "white"),
-                   legend.key = ggplot2::element_blank(),
-                   axis.title = ggplot2::element_blank(),
-                   axis.text = ggplot2::element_blank(),
-                   axis.ticks = ggplot2::element_blank()) +
-    ggplot2::xlab("Longitude") +
-    ggplot2::ylab("Latitude") +
-    ggplot2::coord_equal()
+    # generate plot
+    m <- ggplot2::ggplot() +
+      ggplot2::geom_tile(data = r_pal,
+                         ggplot2::aes(x = .data$x, y = .data$y,
+                                      fill = factor(.data$cell_number),
+                                      alpha = .data$intensity)) +
+      ggplot2::scale_fill_manual(values = map_colors) +
+      ggplot2::scale_alpha_continuous(trans = scales::modulus_trans(lambda_i + 1),
+                                      range = c(0, 1)) +
+      ggplot2::guides(fill = "none", alpha = "none") +
+      ggplot2::theme(strip.background = ggplot2::element_rect(fill = "white"),
+                     plot.background = ggplot2::element_rect(fill = "white"),
+                     panel.background = ggplot2::element_rect(fill = "white"),
+                     panel.border = ggplot2::element_rect(fill = NA,
+                                                          color = "white"),
+                     legend.key = ggplot2::element_blank(),
+                     axis.title = ggplot2::element_blank(),
+                     axis.text = ggplot2::element_blank(),
+                     axis.ticks = ggplot2::element_blank()) +
+      ggplot2::xlab("Longitude") +
+      ggplot2::ylab("Latitude") +
+      ggplot2::coord_equal()
 
-  return(m)
+    return(m)
 
   }
 }
@@ -356,15 +355,15 @@ map_multiples <- function(x, palette, ncol, lambda_i = 0, labels = NULL,
   # generate multipanel plot
   m <- ggplot2::ggplot() +
     ggplot2::geom_tile(data = r_pal,
-                       ggplot2::aes_(x = ~ x, y = ~ y,
-                                     fill = ~ factor(layer_cell),
-                                     alpha = ~ intensity)) +
+                       ggplot2::aes(x = .data$x, y = .data$y,
+                                    fill = factor(.data$layer_cell),
+                                    alpha = .data$intensity)) +
     ggplot2::scale_fill_manual(values = map_colors) +
     ggplot2::scale_alpha_continuous(trans = scales::modulus_trans(lambda_i + 1),
                                     range = c(0, 1)) +
     ggplot2::facet_wrap(~ layer_id, ncol = ncol,
                         labeller = ggplot2::labeller(layer_id = labels)) +
-    ggplot2::guides(fill = FALSE, alpha = FALSE) +
+    ggplot2::guides(fill = "none", alpha = "none") +
     ggplot2::theme(strip.background = ggplot2::element_rect(fill = "white"),
                    plot.background = ggplot2::element_rect(fill = "white"),
                    panel.background = ggplot2::element_rect(fill = "white"),

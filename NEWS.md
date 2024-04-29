@@ -1,3 +1,7 @@
+# colorist 0.1.3
+
+- address ggplot2 deprecation warnings (GitHub issue #7)[https://github.com/mstrimas/colorist/issues/7]
+
 # colorist 0.1.2
 
 - Mapping functions now return RGBa RasterStack objects for plotting with the raster package

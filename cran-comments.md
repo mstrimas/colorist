@@ -1,21 +1,15 @@
-# colorist 0.1.2
+# colorist 0.1.3
 
-- Mapping functions now return RGBa RasterStack objects for plotting with the raster package
-- Better control of legend labels
-- New vignette on customizing maps
+- address ggplot2 deprecation warnings (GitHub issue #7)[https://github.com/mstrimas/colorist/issues/7]
 
-## Test environments
+# Test environments
 
-- local OS X install, R 4.0.3
-- OS X (travis-ci), R 4.0.3
-- ubuntu 16.04 (travis-ci), 4.0.3
-- Windows (appveyor), R 4.0.3
-- Rhub
-  - Ubuntu Linux 16.04 LTS, R-release, GCC
-  - Fedora Linux, R-devel, clang, gfortran
-  - Windows Server 2008 R2 SP1, R-devel, 32/64 bit
+- local OS X install, R 4.3
+- OS X (github actions), R 4.3
+- Windows (github actions), R 4.3
+- ubuntu 14.04 (github actions), R 4.3
 - win-builder (devel and release)
 
-## R CMD check results
+# R CMD check results
 
-0 errors | 0 warnings | 0 notes
+0 ERRORs | 0 WARNINGs | 0 NOTEs

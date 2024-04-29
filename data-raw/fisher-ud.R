@@ -13,7 +13,7 @@ output_res <- 25
 
 # load locs from gps tracking
 # focus on single fisher in 2011
-locs <- read_sf("data-raw/fisher-tracks.gpkg") %>%
+locs <- read_sf("data-raw/fisher-data/points.shp") %>%
   mutate(timestamp = ymd_hms(timestamp, tz = "GMT"),
          timestamp = with_tz(timestamp, tz = "America/New_York"),
          date = as_date(timestamp),

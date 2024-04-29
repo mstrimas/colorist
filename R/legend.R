@@ -98,8 +98,8 @@ legend_timecycle <- function(palette, specificity = TRUE, origin_label = NULL,
 
   # describe ggplot
   p <- ggplot2::ggplot(data = wheel) +
-    ggplot2::aes_(x = ~ layer_id, y = ~ intensity, fill = ~ color,
-                  alpha = ~ intensity) +
+    ggplot2::aes(x = .data$layer_id, y = .data$intensity, fill = .data$color,
+                 alpha = .data$intensity) +
     ggplot2::facet_wrap(~ specificity, nrow = 1,
                         labeller = ggplot2::labeller(specificity = label_s)) +
     ggplot2::geom_tile(size = 0) +
@@ -117,7 +117,7 @@ legend_timecycle <- function(palette, specificity = TRUE, origin_label = NULL,
                    axis.text = ggplot2::element_blank()) +
     ggplot2::xlab(label_l) +
     ggplot2::ylab(label_i) +
-    ggplot2::guides(fill = FALSE, alpha = FALSE) +
+    ggplot2::guides(fill = "none", alpha = "none") +
     ggplot2::coord_polar(theta = "x", start = 0)
 
 
@@ -238,8 +238,8 @@ legend_timeline <- function(palette, specificity = TRUE, time_labels = NULL,
 
   # describe ggplot
   p <- ggplot2::ggplot(data = wheel) +
-    ggplot2::aes_(x = ~ layer_id, y = ~ intensity, fill = ~ color,
-                  alpha = ~ intensity) +
+    ggplot2::aes(x = .data$layer_id, y = .data$intensity, fill = .data$color,
+                 alpha = .data$intensity) +
     ggplot2::facet_wrap(~ specificity, ncol = 1,
                         labeller = ggplot2::labeller(specificity = label_s)) +
     ggplot2::geom_tile(size = 0) +
@@ -264,7 +264,7 @@ legend_timeline <- function(palette, specificity = TRUE, time_labels = NULL,
                                 labels = axis_i) +
     ggplot2::xlab(label_l) +
     ggplot2::ylab(label_i) +
-    ggplot2::guides(fill = FALSE, alpha = FALSE) +
+    ggplot2::guides(fill = "none", alpha = "none") +
     ggplot2::coord_fixed(expand = F)
 
   return(p)
@@ -380,8 +380,8 @@ legend_set <- function(palette, specificity = TRUE, group_labels = NULL,
 
   # describe ggplot
   p <- ggplot2::ggplot(data = wheel) +
-    ggplot2::aes_(x = ~ specificity, y = ~ intensity, fill = ~ color,
-                  alpha = ~ intensity) +
+    ggplot2::aes(x = .data$specificity, y = .data$intensity,
+                 fill = .data$color, alpha = .data$intensity) +
     ggplot2::facet_wrap(~ layer_id, ncol = length(unique_ids),
                         labeller = ggplot2::labeller(layer_id = group_labels)) +
     ggplot2::geom_tile(size = 0) +
@@ -401,7 +401,7 @@ legend_set <- function(palette, specificity = TRUE, group_labels = NULL,
     ggplot2::scale_y_continuous(breaks = c(0.15, 0.85), labels = axis_i) +
     ggplot2::xlab(label_s) +
     ggplot2::ylab(label_i) +
-    ggplot2::guides(fill = FALSE, alpha = FALSE, color = FALSE) +
+    ggplot2::guides(fill = "none", alpha = "none", color = "none") +
     ggplot2::coord_fixed(expand = F)
 
   return(p)

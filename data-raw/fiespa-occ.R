@@ -6,9 +6,11 @@ library(raster)
 library(ebirdst)
 
 # download and load field sparrow s&t data
-dl_path <- ebirdst_download("Field Sparrow")
-map_pars <- load_fac_map_parameters(dl_path)
-occ <- load_raster("occurrence", dl_path)
+ebirdst_download_status("fiespa", pattern = "occurrence_median_3km",
+                        download_occurrence = TRUE)
+map_pars <- load_fac_map_parameters("fiespa")
+occ <- load_raster("fiespa", product = "occurrence") |>
+  stack()
 
 # aggregate
 gdal_aggregate <- function(f_in, f_out, fact, crs, ext) {
@@ -32,20 +34,20 @@ gdal_aggregate <- function(f_in, f_out, fact, crs, ext) {
   system(cmd)
   raster::stack(f_out)
 }
-f_wk <- "data-raw/fiespa_lr_wk_2018_occurrence_median.tif"
+f_wk <- "data-raw/fiespa_occurrence_median_27km_2022.tif"
 unlink(f_wk)
 # tight extent
-e <- extent(c(xmin = -1482551, xmax = 1843348,
-              ymin = -1456169, ymax = 1405830))
+e <- extent(c(xmin = -1782551, xmax = 1443348,
+              ymin = -1156169, ymax = 1505830))
 fiespa_occ_wk <- gdal_aggregate(occ[[1]]@file@name, f_wk,
-                                fact = 5,
+                                fact = 9,
                                 crs = map_pars$custom_projection,
                                 ext = e)
 names(fiespa_occ_wk) <- names(occ)
 
 # monthly mean
 f_mth <- "data-raw/fiespa-occ.tif"
-mths <- lubridate::month(parse_raster_dates(fiespa_occ_wk))
+mths <- lubridate::month(as.Date(names(fiespa_occ_wk), format = "X%Y.%m.%d"))
 fiespa_occ_mth <- stackApply(fiespa_occ_wk, indices = mths, fun = mean,
                              filename = f_mth, overwrite = TRUE)
 names(fiespa_occ_mth) <- tolower(month.abb)

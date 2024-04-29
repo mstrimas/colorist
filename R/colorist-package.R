@@ -1,4 +1,5 @@
 #' @keywords internal
+#' @importFrom rlang .data
 #' @importClassesFrom raster Raster RasterLayer RasterStack RasterBrick
 "_PACKAGE"
 

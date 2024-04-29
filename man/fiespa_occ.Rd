@@ -5,7 +5,7 @@
 \alias{fiespa_occ}
 \title{eBird Status & Trends Field Sparrow occurrence probability}
 \format{
-An object of class \code{RasterStack} of dimension 193 x 225 x 12.
+An object of class \code{RasterStack} of dimension 100 x 121 x 12.
 }
 \source{
 \url{https://ebird.org/science/status-and-trends}
@@ -19,7 +19,7 @@ occurrence of Field Sparrow from the \href{https://ebird.org/science/status-and-
 layers in the stack represent the estimated occurrence for a given month of
 the year over a regular grid of points covering the full range of the
 species. To reduce file size, these data have been aggregated from the native
-2.96 km spatial resolution and weekly temporal resolution to monthly, 14.8 km
+3 km spatial resolution and weekly temporal resolution to monthly, 27 km
 resolution.
 }
 \details{
@@ -27,10 +27,11 @@ For further details on these data, and to access the data for more species,
 consult the \href{https://cornelllabofornithology.github.io/ebirdst/}{documentation for the \code{ebirdst} package}.
 }
 \references{
-Fink, D., T. Auer, A. Johnston, M. Strimas-Mackey, O. Robinson,
-S. Ligocki, B. Petersen, C. Wood, I. Davies, B. Sullivan, M. Iliff, S.
-Kelling. 2020. eBird Status and Trends, Data Version: 2018; Released: 2020.
+Fink, D., T. Auer, A. Johnston, M. Strimas-Mackey, S. Ligocki,
+O. Robinson, W. Hochachka, L. Jaromczyk, C. Crowley, K. Dunham,
+A. Stillman, I. Davies, A. Rodewald, V. Ruiz-Gutierrez, C. Wood. 2023.
+eBird Status and Trends, Data Version: 2022; Released: 2023.
 Cornell Lab of Ornithology, Ithaca, New York.
-\url{https://doi.org/10.2173/ebirdst.2018}
+\url{https://doi.org/10.2173/ebirdst.2022}
 }
 \keyword{datasets}

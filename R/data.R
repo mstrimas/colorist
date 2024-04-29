@@ -6,7 +6,7 @@
 #' layers in the stack represent the estimated occurrence for a given month of
 #' the year over a regular grid of points covering the full range of the
 #' species. To reduce file size, these data have been aggregated from the native
-#' 2.96 km spatial resolution and weekly temporal resolution to monthly, 14.8 km
+#' 3 km spatial resolution and weekly temporal resolution to monthly, 27 km
 #' resolution.
 #'
 #' For further details on these data, and to access the data for more species,
@@ -14,11 +14,12 @@
 #' package](https://cornelllabofornithology.github.io/ebirdst/).
 #'
 #' @source <https://ebird.org/science/status-and-trends>
-#' @references Fink, D., T. Auer, A. Johnston, M. Strimas-Mackey, O. Robinson,
-#'   S. Ligocki, B. Petersen, C. Wood, I. Davies, B. Sullivan, M. Iliff, S.
-#'   Kelling. 2020. eBird Status and Trends, Data Version: 2018; Released: 2020.
+#' @references Fink, D., T. Auer, A. Johnston, M. Strimas-Mackey, S. Ligocki,
+#'   O. Robinson, W. Hochachka, L. Jaromczyk, C. Crowley, K. Dunham,
+#'   A. Stillman, I. Davies, A. Rodewald, V. Ruiz-Gutierrez, C. Wood. 2023.
+#'   eBird Status and Trends, Data Version: 2022; Released: 2023.
 #'   Cornell Lab of Ornithology, Ithaca, New York.
-#'   <https://doi.org/10.2173/ebirdst.2018>
+#'   <https://doi.org/10.2173/ebirdst.2022>
 "fiespa_occ"
 
 

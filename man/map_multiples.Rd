@@ -22,7 +22,7 @@ map_multiples(
 \item{ncol}{integer specifying the number of columns in the grid of plots.}
 
 \item{lambda_i}{number that allows visual tuning of intensity values via the
-\code{\link[scales:boxcox_trans]{scales::modulus_trans()}} function (see Details). Negative numbers increase
+\code{\link[scales:transform_boxcox]{scales::modulus_trans()}} function (see Details). Negative numbers increase
 the opacity of cells with low intensity values. Positive numbers decrease
 the opacity of cells with low intensity values.}
 
@@ -67,7 +67,7 @@ majority of their time within a relatively small area or because
 populations are relatively dense during some seasons and relatively
 dispersed during others. This can make visualizing distributions a
 challenge. The \code{lambda_i} parameter transforms intensity values via the
-\code{\link[scales:boxcox_trans]{scales::modulus_trans()}} function, allowing users to adjust the relative
+\code{\link[scales:transform_boxcox]{scales::modulus_trans()}} function, allowing users to adjust the relative
 visual weight of high and low intensity values.
 }
 \examples{

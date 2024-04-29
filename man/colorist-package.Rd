@@ -6,16 +6,7 @@
 \alias{colorist-package}
 \title{colorist: Coloring Wildlife Distributions in Space-Time}
 \description{
-Color and visualize wildlife distributions in
-    space-time using raster data. In addition to enabling display of
-    sequential change in distributions through the use of small multiples,
-    'colorist' provides functions for extracting several features of
-    interest from a sequence of distributions and for visualizing those
-    features using HCL (hue-chroma-luminance) color palettes. Resulting
-    maps allow for "fair" visual comparison of intensity values (e.g.,
-    occurrence, abundance, or density) across space and time and can be
-    used to address questions about where, when, and how consistently a
-    species, group, or individual is likely to be found.
+Color and visualize wildlife distributions in space-time using raster data. In addition to enabling display of sequential change in distributions through the use of small multiples, 'colorist' provides functions for extracting several features of interest from a sequence of distributions and for visualizing those features using HCL (hue-chroma-luminance) color palettes. Resulting maps allow for "fair" visual comparison of intensity values (e.g., occurrence, abundance, or density) across space and time and can be used to address questions about where, when, and how consistently a species, group, or individual is likely to be found.
 }
 \seealso{
 Useful links:

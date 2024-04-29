@@ -12,7 +12,7 @@ output_res <- 500
 
 # load locs from gps tracking
 # focus on single elephant for four study years
-locs <- read_sf("data-raw/elephant-tracks.gpkg") %>%
+locs <- read_sf("data-raw/elephant-data/points.shp") %>%
   mutate(timestamp = ymd_hms(timestamp),
          year = year(timestamp),
          month = month(timestamp)) %>%
