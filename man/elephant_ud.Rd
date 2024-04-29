@@ -8,7 +8,7 @@
 An object of class \code{RasterStack} of dimension 208 x 193 x 2.
 }
 \source{
-\url{https://www.datarepository.movebank.org/handle/10255/move.812}
+\url{https://datarepository.movebank.org/handle/10255/move.812}
 }
 \usage{
 elephant_ud
@@ -27,11 +27,11 @@ visualization purposes.
 Tsalyuk, M., W. Kilian, B. Reineking, W. Marcus. 2018. Temporal variation in
 resource selection of African elephants follows long term variability in
 resource availability. Ecological Monographs.
-\url{https://doi.org/10.1002/ecm.1348}
+\url{doi:10.1002/ecm.1348}
 
 Kilian, W., W.M. Getz, R. Zidon, M. Tsalyuk. 2018. Data from: Temporal
 variation in resource selection of African elephants follows long term
 variability in resource availability. Movebank Data Repository.
-\url{https://doi.org/10.5441/001/1.3nj3qj45}
+\url{doi:10.5441/001/1.3nj3qj45}
 }
 \keyword{datasets}

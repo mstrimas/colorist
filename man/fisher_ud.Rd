@@ -8,7 +8,7 @@
 An object of class \code{RasterStack} of dimension 176 x 177 x 9.
 }
 \source{
-\url{https://www.datarepository.movebank.org/handle/10255/move.330}
+\url{https://datarepository.movebank.org/handle/10255/move.330}
 }
 \usage{
 fisher_ud
@@ -24,10 +24,10 @@ nine nights of data. Utilization distributions were generated using the
 \references{
 LaPoint, S., P. Gallery, M. Wikelski, R. Kays. 2013. Animal behavior,
 cost-based corridor models, and real corridors. Landscape Ecology 28(8):
-1615–1630. \url{https://doi.org/10.1007/s10980-013-9910-0}
+1615–1630. \url{doi:10.1007/s10980-013-9910-0}
 
 LaPoint, S., P. Gallery, M. Wikelski, R. Kays. 2013. Data from: Animal behavior,
 cost-based corridor models, and real corridors. Movebank Data Repository.
-\url{https://doi.org/10.5441/001/1.2tp2j43g}
+\url{doi:10.5441/001/1.2tp2j43g}
 }
 \keyword{datasets}

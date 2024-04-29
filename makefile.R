@@ -6,7 +6,6 @@ devtools::document()
 devtools::install_local(force = TRUE)
 
 # local tests
-devtools::test()
 tools:::.check_package_datasets(".")
 
 # vignettes, readme, site

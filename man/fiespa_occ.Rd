@@ -24,7 +24,7 @@ resolution.
 }
 \details{
 For further details on these data, and to access the data for more species,
-consult the \href{https://cornelllabofornithology.github.io/ebirdst/}{documentation for the \code{ebirdst} package}.
+consult the \href{https://ebird.github.io/ebirdst/}{documentation for the \code{ebirdst} package}.
 }
 \references{
 Fink, D., T. Auer, A. Johnston, M. Strimas-Mackey, S. Ligocki,
@@ -32,6 +32,6 @@ O. Robinson, W. Hochachka, L. Jaromczyk, C. Crowley, K. Dunham,
 A. Stillman, I. Davies, A. Rodewald, V. Ruiz-Gutierrez, C. Wood. 2023.
 eBird Status and Trends, Data Version: 2022; Released: 2023.
 Cornell Lab of Ornithology, Ithaca, New York.
-\url{https://doi.org/10.2173/ebirdst.2022}
+\url{doi:10.2173/ebirdst.2022}
 }
 \keyword{datasets}

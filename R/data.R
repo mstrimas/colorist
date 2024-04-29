@@ -11,7 +11,7 @@
 #'
 #' For further details on these data, and to access the data for more species,
 #' consult the [documentation for the `ebirdst`
-#' package](https://cornelllabofornithology.github.io/ebirdst/).
+#' package](https://ebird.github.io/ebirdst/).
 #'
 #' @source <https://ebird.org/science/status-and-trends>
 #' @references Fink, D., T. Auer, A. Johnston, M. Strimas-Mackey, S. Ligocki,
@@ -19,7 +19,7 @@
 #'   A. Stillman, I. Davies, A. Rodewald, V. Ruiz-Gutierrez, C. Wood. 2023.
 #'   eBird Status and Trends, Data Version: 2022; Released: 2023.
 #'   Cornell Lab of Ornithology, Ithaca, New York.
-#'   <https://doi.org/10.2173/ebirdst.2022>
+#'   <doi:10.2173/ebirdst.2022>
 "fiespa_occ"
 
 
@@ -35,17 +35,17 @@
 #' Zidon, and M. Tsalyuk graciously provided permission to use their data for
 #' visualization purposes.
 #'
-#' @source <https://www.datarepository.movebank.org/handle/10255/move.812>
+#' @source <https://datarepository.movebank.org/handle/10255/move.812>
 #' @references
 #' Tsalyuk, M., W. Kilian, B. Reineking, W. Marcus. 2018. Temporal variation in
 #' resource selection of African elephants follows long term variability in
 #' resource availability. Ecological Monographs.
-#' <https://doi.org/10.1002/ecm.1348>
+#' <doi:10.1002/ecm.1348>
 #'
 #' Kilian, W., W.M. Getz, R. Zidon, M. Tsalyuk. 2018. Data from: Temporal
 #' variation in resource selection of African elephants follows long term
 #' variability in resource availability. Movebank Data Repository.
-#' <https://doi.org/10.5441/001/1.3nj3qj45>
+#' <doi:10.5441/001/1.3nj3qj45>
 "elephant_ud"
 
 
@@ -59,13 +59,13 @@
 #' nine nights of data. Utilization distributions were generated using the
 #' `adehabitatHR` package from GPS tracking data.
 #'
-#' @source <https://www.datarepository.movebank.org/handle/10255/move.330>
+#' @source <https://datarepository.movebank.org/handle/10255/move.330>
 #' @references
 #' LaPoint, S., P. Gallery, M. Wikelski, R. Kays. 2013. Animal behavior,
 #' cost-based corridor models, and real corridors. Landscape Ecology 28(8):
-#' 1615–1630. <https://doi.org/10.1007/s10980-013-9910-0>
+#' 1615–1630. <doi:10.1007/s10980-013-9910-0>
 #'
 #' LaPoint, S., P. Gallery, M. Wikelski, R. Kays. 2013. Data from: Animal behavior,
 #' cost-based corridor models, and real corridors. Movebank Data Repository.
-#' <https://doi.org/10.5441/001/1.2tp2j43g>
+#' <doi:10.5441/001/1.2tp2j43g>
 "fisher_ud"
